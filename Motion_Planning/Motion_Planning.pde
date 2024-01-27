@@ -3,6 +3,17 @@ int nfigura = 0;
 
 //dimensioni oggetti
 float lato;
+float incr = 0;
+float kp = 5;
+
+//per modificare la camera
+float eyeY = 0;
+float eyeX = 0;
+// parametri visualizzazione
+float angoloX = 0;
+float angoloY = 0;
+float angoloXpartenza = 0;
+float angoloYpartenza = 0;
 
 void setup() 
 {
@@ -14,6 +25,9 @@ void setup()
 
 void draw()
 {
+  camera((width/2.0)+eyeX, height/2 - eyeY, (height/2.0) / tan(PI*60.0 / 360.0), width/2.0, height/2.0, 0, 0, 1, 0);
+  
+  background(#A8DDEA);
   // mi posiziono al centro 
   translate(width/2, height/2, -50); //per uscire premi esc
   
@@ -26,13 +40,19 @@ void draw()
   // x verso dx, y verso uscente, z verso alto
   rotateX(PI/4);
   rotateZ(PI/10);
-  drawAxes(40);
-    
-    
   
+  //posso spostare la visuale con il cursore
+    rotateY(-angoloY);
+  rotateX(angoloX);
+    
+  //SPOSTIAMO IL SIST RIF PIù IN ALTO 
   
   // spazio di lavoro
   forma(nfigura, false);
+  
+  // posizionamento sulla superficie del tavolo
+  translate(0, 0, 10);
+  drawAxes(40);
   
   
   //ostacoli
@@ -43,44 +63,7 @@ void draw()
   
 }
 
-void keyPressed() 
-{
-  if (keyCode == '1') nfigura = 1;
-  if (keyCode == '2') nfigura = 2;
-  if (keyCode == '3') nfigura = 3;
-  if (keyCode == '4') nfigura = 4;
-  if (keyCode == '5') nfigura = 5;
-  if (keyCode == '6') nfigura = 6;
-  
-  /*
-  if (keyCode == RIGHT) 
-  {
-    if (giunto == 1) qr1 += incr;
-    if (giunto == 2) qr2 += incr;
-    if (giunto == 3) qr3 += incr;
-    if (giunto == 4) qr4 += incr;
-    if (giunto == 5) qr5 += incr;
-    if (giunto == 6) qr6 += incr;
-  }
-  
-  if (keyCode == LEFT) 
-  {
-    if (giunto == 1) qr1 -= incr;
-    if (giunto == 2) qr2 -= incr;
-    if (giunto == 3) qr3 -= incr;
-    if (giunto == 4) qr4 -= incr;
-    if (giunto == 5) qr5 -= incr;
-    if (giunto == 6) qr6 -= incr;
-  }
-  
-  if (keyCode == ENTER) 
-  {
-    qr1 = PI/2;
-    qr2 = PI/2;
-    qr3 = 2;
-  }
-  */
-}
+
 
 //funzione che disegna gli assi
 //input -> lunghezza asse
