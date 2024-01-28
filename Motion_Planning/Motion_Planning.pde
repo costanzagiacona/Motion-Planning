@@ -78,10 +78,8 @@ void drawAxes(float lineLenght) {
   popMatrix();
 
   //disegno in giallo l'asse z
-  //stroke(0, 0, 255);
   stroke(255, 255, 55);
   fill(255, 255, 55);
-  //fill(0, 0, 255);
   pushMatrix();
   line(0, 0, 0, 0, 0, lineLenght);
   popMatrix();
