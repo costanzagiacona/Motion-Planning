@@ -1,7 +1,7 @@
 
 void mouseDragged() {
-  angoloY = angoloYpartenza - PI*mouseX/float(10); //DA MODIFICARE <===  !!!!!!
-  angoloX = angoloXpartenza - PI*mouseY/float(10);
+  angoloY = angoloYpartenza - PI*mouseX/float(1000); //DA MODIFICARE <===  !!!!!!
+  angoloX = angoloXpartenza - PI*mouseY/float(1000);
 }
 
 void keyPressed() 
