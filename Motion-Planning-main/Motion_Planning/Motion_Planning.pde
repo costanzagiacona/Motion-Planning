@@ -16,8 +16,8 @@ float xsp = 0;
 float ysp = 0;
 
 //vettore dimensione lati figure
-float[] posxsp = new float[6]; //inzializzazione
-float[] posysp = new float[6];
+float[] posxsp; //inzializzazione
+float[] posysp;
 
 //dimensioni oggetti
 float lato;
@@ -52,6 +52,15 @@ void setup()
   //fullScreen(P3D); //al posto di size
   size(900, 900, P3D);
   background(#A8DDEA);
+  
+  posxsp = new float[6];
+  posysp = new float[6];
+  
+  for(int i=0; i<6; i++)
+  {
+    posxsp[i] = 0;
+    posysp[i] = 0;
+  }
 }
 
 void draw()
@@ -82,6 +91,8 @@ void draw()
 
   // spazio di lavoro
   formasp(nfigurasp);
+  println(posxsp[nfigurasp]);
+  println(posysp[nfigurasp]);
 
   // posizionamento sulla superficie del tavolo
   translate(0, 0, 10);

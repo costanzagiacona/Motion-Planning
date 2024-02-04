@@ -9,5 +9,5 @@
 
 //cose da fare
 /*
-
+ Capire perché i vettori posxsp e posysp non cambiano valore globalmente
 */

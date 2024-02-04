@@ -14,6 +14,8 @@ void formasp(int nfigura) //input -> numero figura
     figura(4, 500, 500,incrsp);
     posxsp[0] = 500+incrsp;
     posysp[0] = 500+incrsp;
+    println(posxsp[0]);
+    println(posysp[0]);
     break;
 
   case 2:
