@@ -1,9 +1,28 @@
 //variabile che indica quale figura hai scelto
-int nfigura = 0;
+int nfigurasp = 1;
+int nfiguraost = 1;
+
+
+//orientamento ostacolo
+float orientamento = 0; //radianti
+ArrayList<Ostacolo> ostacolo_ArrayList= new ArrayList<Ostacolo>(); //vettore di ostacoli
+int MAX_OST = 6; //numero massimo di ostacoli
+
+//posizione ostacolo
+float x = 0;
+float y = 0;
+//posizione spazio di lavoro
+float xsp = 0;
+float ysp = 0;
+
+//vettore dimensione lati figure
+float[] posxsp; //inzializzazione
+float[] posysp;
 
 //dimensioni oggetti
 float lato;
-float incr = 0;
+float incrsp = 0;
+float incrost = 0;
 float kp = 5;
 
 //per modificare la camera
@@ -15,10 +34,34 @@ float angoloY = 0;
 float angoloXpartenza = 0;
 float angoloYpartenza = 0;
 
+//semaforo modifica spazio di lavoro
+boolean semsp= true;
+//semaforo modifica ostacoli
+boolean semost = false;
+//semaforo inserimento ostacoli
+boolean semins = true; 
+//semaforo passaggio da orientamento a posizione ostacolo
+boolean sempos = false;
+
+//contatori
+int i = 0;
+int numero_ostacoli = 0;
+
 void setup()
 {
-  fullScreen(P3D); //al posto di size
+  //per uscire premi esc
+  //fullScreen(P3D); //al posto di size
+  size(1000, 900, P3D);
   background(#A8DDEA);
+  
+  posxsp = new float[6];
+  posysp = new float[6];
+  
+  for(int i=0; i<6; i++)
+  {
+    posxsp[i] = 0;
+    posysp[i] = 0;
+  }
 }
 
 void draw()
@@ -27,7 +70,7 @@ void draw()
 
   background(#A8DDEA);
   // mi posiziono al centro
-  translate(width/2, height/2, -50); //per uscire premi esc
+  translate(width/2, height/2, -50);
 
   // scegli luci
 
@@ -43,10 +86,12 @@ void draw()
   rotateY(-angoloY);
   rotateX(angoloX);
 
-  //SPOSTIAMO IL SIST RIF PIù IN ALTO
+  //spostiamo il riferimento più in alto per far vedere meglio le figure
+  translate(0, -100, 0);
+
 
   // spazio di lavoro
-  forma(nfigura, false);
+  formasp(nfigurasp);
 
   // posizionamento sulla superficie del tavolo
   translate(0, 0, 10);
@@ -54,6 +99,18 @@ void draw()
 
 
   //ostacoli
+  
+
+  if ( semost == true)
+  {
+
+    //disegno ostacolo al centro e cambia le misure
+    numero_ostacoli = 1;
+    Ostacolo_creazione(numero_ostacoli, x, y, 180, 150, orientamento, nfiguraost);
+
+  }
+  
+
 }
 
 
