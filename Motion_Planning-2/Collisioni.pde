@@ -52,9 +52,10 @@ float[] intersectionWall(float x, float y, float len_x, float len_y) {
   float[] sx = new float[3];
   float[] up = new float[3];
   float[] down = new float[3];
+ 
   
-  len_x = (ostacolo_ArrayList.get(numero_ostacoli-1)).lato1;
-  len_y = (ostacolo_ArrayList.get(numero_ostacoli-1)).lato2;
+  len_x = (ostacolo_ArrayList.get(numero_ostacoli-1)).lato1/2;
+  len_y = (ostacolo_ArrayList.get(numero_ostacoli-1)).lato2/2;
 
   float[] wall_collision = new float[3];
   wall_collision[0] = 0; //presenza o meno della collisione
@@ -63,12 +64,12 @@ float[] intersectionWall(float x, float y, float len_x, float len_y) {
   
   //è sufficiente ci sia una sola collisione
   dx = intersectionLine(posxsp[nfigurasp-1]/2 - x, -posysp[nfigurasp-1]/2 - y, posxsp[nfigurasp-1]/2 - x, posysp[nfigurasp-1]/2 - y, 0, 0, len_x, len_y);
-  if (dx[0]==1) { //se ho una collisione a dx la salvo
+  if (dx[0] == 1) { //se ho una collisione a dx la salvo
     wall_collision[0] = 1;
     wall_collision[1] = dx[1];
     wall_collision[2] = dx[2];
   }
-  sx = intersectionLine(-posxsp[nfigurasp-1]/2 - x, -posysp[nfigurasp-1]/2 -y, -posxsp[nfigurasp-1]/2 -x, posysp[nfigurasp-1]/2 - y, 0, 0, len_x, len_y);
+  sx = intersectionLine(-posxsp[nfigurasp-1]/2 - x, -posysp[nfigurasp-1]/2 - y, -posxsp[nfigurasp-1]/2 - x, posysp[nfigurasp-1]/2 - y, 0, 0, len_x, len_y);
   if (sx[0]==1) {
     wall_collision[0] = 1;
     wall_collision[1] = sx[1];

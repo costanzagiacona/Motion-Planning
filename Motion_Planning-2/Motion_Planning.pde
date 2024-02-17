@@ -106,14 +106,14 @@ void draw()
 
     //disegno ostacolo al centro e cambia le misure
     numero_ostacoli = 1;
-    Ostacolo_creazione(numero_ostacoli, x, y, 180, 150, orientamento, nfiguraost);
+    Ostacolo_creazione(numero_ostacoli, x, y, 120, 100, orientamento, nfiguraost);
 
     //println(x,y,posxsp[nfigurasp-1], posysp[nfigurasp-1]); //0,0,500,500
 
-    float[] intersezione = intersectionWall(x+180/3, y+150/3, posxsp[nfigurasp-1], posysp[nfigurasp-1]);
+    float[] intersezione = intersectionWall(x, y, 0,0);
 
     fill(0,255,0);
-    if (intersezione[0] == 0) sphere(70);
+    if (intersezione[0] == 1) sphere(70);
   }
 }
 
