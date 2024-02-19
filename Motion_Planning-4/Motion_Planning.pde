@@ -43,8 +43,8 @@ boolean semost = false;
 int semins = 0;
 /*
 1 - dimensione e orientamento
-2 - posizione
-*/
+ 2 - posizione
+ */
 
 
 //contatori
@@ -93,51 +93,50 @@ void draw()
   //spostiamo il riferimento più in alto per far vedere meglio le figure
   translate(0, -100, 0);
 
-
+  pushMatrix();
   /*SPAZIO DI LAVORO*/
-  //rotateZ(PI/4);
+  rotateZ(PI/4);
   formasp(nfigurasp);
+  popMatrix();
 
   // posizionamento sulla superficie del tavolo
   translate(0, 0, 10);
   drawAxes(40);
 
 
- /*CREAZIONE OSTACOLI*/
+  /*CREAZIONE OSTACOLI*/
 
   //
   //println(ostacolo_ArrayList);
-  
-  
- 
- Ostacolo_creazione(0, x, y, 50+incrost, 70+incrost, orientamento, nfiguraost);
- 
- //println("stampo lista");
- for (Ostacolo o : ostacolo_ArrayList) 
+
+
+  if (semost == true)
+  {
+    Ostacolo_creazione(0, x, y, 50+incrost, 70+incrost, orientamento, nfiguraost);
+  }
+
+  //println("stampo lista");
+  for (Ostacolo o : ostacolo_ArrayList)
   {
     //non mostriamo il primo ostacolo poichè lo mostriamo alla riga 112
-    if(o.id != 0) Ostacolo_creazione(o.id, o.posx, o.posy, o.lato1,o.lato2, o.alpha, o.forma);
+    if (o.id != 0) Ostacolo_creazione(o.id, o.posx, o.posy, o.lato1, o.lato2, o.alpha, o.forma);
     //println("oggetto ->" ,o.id,o.posx, o.posy);
-    
   }
- 
- /*
+
+  /*
   if ( semsp == false)
-  {
-    //disegno ostacolo al centro e cambia le misure
-    numero_ostacoli = 1;
-    Ostacolo_creazione(numero_ostacoli, x, y, 120, 100, orientamento, nfiguraost);
-    
-    // va inserito altrimenti non disegna gli ostacoli una volta tolto semost, forse va tolta la parte prima dell'if  
-  
-  }
-  */
+   {
+   //disegno ostacolo al centro e cambia le misure
+   numero_ostacoli = 1;
+   Ostacolo_creazione(numero_ostacoli, x, y, 120, 100, orientamento, nfiguraost);
+   
+   // va inserito altrimenti non disegna gli ostacoli una volta tolto semost, forse va tolta la parte prima dell'if
+   
+   }
+   */
   //println(semins);
   //println(numero_ostacoli);
   //println(ostacolo_ArrayList);
-  
-  
-
 }
 
 

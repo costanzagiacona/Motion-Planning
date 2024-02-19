@@ -27,7 +27,7 @@ void formasp(int nfigura) //input -> numero figura
 
   case 3:
     //rombo
-    figura(4, 550, 150,incrsp); //sides, lato1, lato2, incr
+    figura(4, 570, 350,incrsp); //sides, lato1, lato2, incr
     posxsp[2] = 550+incrsp;
     posysp[2] = 150+incrsp;
     break;

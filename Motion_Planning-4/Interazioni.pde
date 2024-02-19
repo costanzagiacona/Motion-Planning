@@ -79,6 +79,7 @@ void keyPressed()
         y = 0;
         orientamento = 0;
         incrost = 0 ;
+        nfiguraost = 1;
         //println("semins ->", semins, "x ->", x, "y->", y);
         semins = 1;
       }
@@ -94,7 +95,7 @@ void keyPressed()
       if (key == '+') //aumento dimensione spazio lavoro o ostacolo
       {
         incrost += kp;
-        if (incrost > 100) incrost=100;
+        if (incrost > 100) incrost = 100;
       }
 
       if (key == '-') //diminuisco dimensione spazio lavoro o ostacolo
