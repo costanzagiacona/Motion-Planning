@@ -52,7 +52,7 @@ void infoi()
       text("Premi RIGHT e LEFT per l'orientamento", 0, 280);
       text ("Premi 'w' per passare alla posizione", 0, 310);
     }
-    if (semins == 2) text("Premi UP, DOWN, RIGHT e LEFT per lo spostamento ", 0, 250);
+    if (semins == 2) text("Premi UP, DOWN, RIGHT e LEFT per lo spostamento ", 0, 250); text("Premi ENTER per confermare", 0, 280);
 
 
     if (sovrapposizioneost) {

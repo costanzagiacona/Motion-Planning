@@ -13,8 +13,8 @@
 
 //cose da fare
 /*
- sistemare la collisione con il tavolo (anche con glu ostacoli)
- forse orientamento sistema e tavolo
+il laser non interseca il tavolo
+abbiamo inserito la scheda scan e aggiornato collisioni grafo, il resto funziona
 */
 
 //proposte

@@ -79,12 +79,12 @@ void draw()
   translate(width/2, height/2, -50);
 
   // scegli luci
- // directionalLight(126, 126, 126, 0, 0, -1);
+  // directionalLight(126, 126, 126, 0, 0, -1);
   //ambientLight(122, 122, 122);
   //directionalLight(126,126,126,0,0,0.7);
   //ambientLight(200,200,200);
   //directionalLight(0, 0, 0, 0, 0, -1);
-   
+
   //testo che mostra le istruzioni
   infoi();
 
@@ -112,20 +112,20 @@ void draw()
   /*CREAZIONE OSTACOLI*/
 
 
- Ostacolo_creazione(0, -200, 10, 50, 70, PI/4, 1);
- 
- 
+  Ostacolo_creazione(0, -200, 10, 50, 70, PI/4, 1);
+
+
   if (semost == true && semins != 0)
   {
-   pushMatrix();
-   fill(#6920E0);
-   translate(x,y,10);
-   rotateZ(orientamento);
-   formaost(nfiguraost,50+incrost,70+incrost);
-   fill(GRAY);
-   translate(0,0,-5);
-   //formaost(nfiguraost,50+incrost+k,70+incrost+k); //ombra
-   popMatrix();
+    pushMatrix();
+    fill(#6920E0);
+    translate(x, y, 10);
+    rotateZ(orientamento);
+    formaost(nfiguraost, 50+incrost, 70+incrost);
+    fill(GRAY);
+    translate(0, 0, -5);
+    //formaost(nfiguraost,50+incrost+k,70+incrost+k); //ombra
+    popMatrix();
   }
 
 
@@ -135,10 +135,23 @@ void draw()
     if (o.id != 0) Ostacolo_creazione(o.id, o.posx, o.posy, o.lato1, o.lato2, o.alpha, o.forma);
     //println("oggetto ->" ,o.id,o.posx, o.posy);
   }
-  
- 
-  
- 
+
+
+  //SCAN
+  if (!semost && !semsp ) //se abbiamo scelto il tavolo e gli ostacoli
+  {
+    //DISEGNO ROBOT
+    pushMatrix();
+    translate(180, -180);
+    figura(60, 5, 5, 0);
+    popMatrix();
+
+    //FASE DI SCANNEr
+    s = scan(180, -180, 6000, #6920E0);
+  }
+
+
+
   //println(semins);
   //println(numero_ostacoli);
   //println(ostacolo_ArrayList);
