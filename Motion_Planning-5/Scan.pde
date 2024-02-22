@@ -44,7 +44,7 @@ boolean scan(float x, float y, float len_max, color colore)
   {
     xi = intersection_obstacles[1];
     yi = intersection_obstacles[2];
-    println("intersezione ostacolo");
+    //println("intersezione ostacolo");
     
 
   } else 
@@ -52,8 +52,8 @@ boolean scan(float x, float y, float len_max, color colore)
     //intersection_wall[0];  dal momento che se non interseca un ostacolo  SICURAMENTE ci sarà un intersezione col bordo
     xi = intersection_wall[1];
     yi = intersection_wall[2];
-    println("intersezione tavolo --> misura tavolo x", posxsp[nfigurasp-1], " misure calcolate x ->>>", xi);
-    println("misura tavolo y",posysp[nfigurasp-1], " misure calcolate y ->>>", yi);
+    //println("intersezione tavolo --> misura tavolo x", posxsp[nfigurasp-1], " misure calcolate x ->>>", xi);
+    //println("misura tavolo y",posysp[nfigurasp-1], " misure calcolate y ->>>", yi);
   }
 
 //coordinate di xi rispetto a SR0
@@ -84,7 +84,7 @@ same_obstacle = false;
     circle(xi, yi, 5); //pallino finale laser
     stroke(180, 0, 0);
     strokeWeight(2);
-    line(0, 0, xi, yi);
+    line(0, 0, xi, yi); //laser
     stroke(0, 0, 255);
    // detect_vert(xi_0, yi_0);
   }

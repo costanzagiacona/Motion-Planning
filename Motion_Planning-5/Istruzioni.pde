@@ -13,8 +13,9 @@
 
 //cose da fare
 /*
-il laser non interseca il tavolo
-abbiamo inserito la scheda scan e aggiornato collisioni grafo, il resto funziona
+il laser non interseca tutti i tavoli
+da rivedere le sovrapposizioni poichè abbiamo modificato il programma aggiungendo lato1, lato2 e messo 2 al posto di 1.45 in collisioni grafo
+vedere se il laser attraversa ostacoli come il rettangolo o altre forme 
 */
 
 //proposte

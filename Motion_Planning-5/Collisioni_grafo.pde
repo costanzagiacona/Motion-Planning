@@ -1,4 +1,86 @@
 //Intersezione tra due rette
+float[] intersectionLinechatgpt(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4)
+{
+  float[] ret = new float[3]; // ret[0] = flag di intersezione, ret[1] e ret[2] sono le coordinate dell'intersezione
+  float t_numeratore = ((x4-x3)*(y1-y3) - (y4-y3)*(x1-x3));
+  float t_denominatore = ((y4-y3)*(x2-x1) - (x4-x3)*(y2-y1));
+  float u_numeratore = ((x2-x1)*(y1-y3) - (y2-y1)*(x1-x3));
+  float u_denominatore = ((y4-y3)*(x2-x1) - (x4-x3)*(y2-y1));
+ 
+  if (t_denominatore != 0 && u_denominatore != 0) {
+    float t = t_numeratore / t_denominatore;
+    float u = u_numeratore / u_denominatore;
+ 
+    if (t >= 0 && t <= 1 && u >= 0 && u <= 1) {
+      ret[0] = 1;
+      ret[1] = x1 + (t * (x2 - x1));
+      ret[2] = y1 + (t * (y2 - y1));
+    }
+  }
+ 
+  return ret;
+}
+
+float[] intersectionWallchatgot(float x, float y, float len_x, float len_y) 
+{
+  float floor_x = posxsp[nfigurasp-1];
+  float floor_y = posysp[nfigurasp-1];
+  
+  float[] wall_collision = new float[3];
+  wall_collision[0] = 0; // Flag di presenza di collisione
+  wall_collision[1] = 0; // Coordinata x dell'intersezione
+  wall_collision[2] = 0; // Coordinata y dell'intersezione
+ 
+  // Calcola le coordinate dei vertici del muro
+  float x1 = x - floor_x / 2;
+  float y1 = y - floor_y / 2;
+  float x2 = x + floor_x / 2;
+  float y2 = y - floor_y / 2;
+  float x3 = x + floor_x / 2;
+  float y3 = y + floor_y / 2;
+  float x4 = x - floor_x / 2;
+  float y4 = y + floor_y / 2;
+ 
+  // Controlla l'intersezione con ciascun lato del muro
+  float[] intersection1 = intersectionLine(x1, y1, x2, y2, 0, 0, len_x, len_y);
+  float[] intersection2 = intersectionLine(x2, y2, x3, y3, 0, 0, len_x, len_y);
+  float[] intersection3 = intersectionLine(x3, y3, x4, y4, 0, 0, len_x, len_y);
+  float[] intersection4 = intersectionLine(x4, y4, x1, y1, 0, 0, len_x, len_y);
+ 
+  // Trova la prima intersezione valida
+  if (intersection1[0] == 1) {
+    wall_collision[0] = 1;
+    wall_collision[1] = intersection1[1];
+    wall_collision[2] = intersection1[2];
+  } else if (intersection2[0] == 1) {
+    wall_collision[0] = 1;
+    wall_collision[1] = intersection2[1];
+    wall_collision[2] = intersection2[2];
+  } else if (intersection3[0] == 1) {
+    wall_collision[0] = 1;
+    wall_collision[1] = intersection3[1];
+    wall_collision[2] = intersection3[2];
+  } else if (intersection4[0] == 1) {
+    wall_collision[0] = 1;
+    wall_collision[1] = intersection4[1];
+    wall_collision[2] = intersection4[2];
+  }
+ 
+  return wall_collision;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 float[] intersectionLine(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4) 
 { //retta 1 (x1,y1)-----(x2,,y2) & retta 2 (x3,y3) ----- (x4,y4)
@@ -21,7 +103,7 @@ float[] intersectionLine(float x1, float y1, float x2, float y2, float x3, float
 
   //se entrambi compresi tra 0 e 1 c'è una intersezione, ovvero c'è una collisione:
   //u >= 0.05 significa che l'intersezione non può stare nell'origine della seconda retta 
-  //(che per come passiamo i parametri noi è il raggio laser) ->> DA RIVEDEREEEEEEEEEEEEE
+  //(che per come passiamo i parametri noi è il raggio laser) 
 
   if (t >=0 && t <= 1 && u >= 0.01 && u <= 1) 
   {
@@ -52,6 +134,8 @@ float[] intersectionWall(float x, float y, float len_x, float len_y) {
   float[] up = new float[3];
   float[] down = new float[3];
  
+ /*qui il confronto con il min non serve perchè il robot sta dentro al tavolo, non vedrà mai due bordi contemporaneamente
+ */
   
   //len_x = (ostacolo_ArrayList.get(numero_ostacoli-1)).lato1/2;
   //len_y = (ostacolo_ArrayList.get(numero_ostacoli-1)).lato2/2;
@@ -64,6 +148,11 @@ float[] intersectionWall(float x, float y, float len_x, float len_y) {
   //è sufficiente ci sia una sola collisione
   dx = intersectionLine(posxsp[nfigurasp-1]/2 - x, -posysp[nfigurasp-1]/2 - y, posxsp[nfigurasp-1]/2 - x, posysp[nfigurasp-1]/2 - y, 0, 0, len_x, len_y);
   if (dx[0] == 1) { //se ho una collisione a dx la salvo
+  //stroke(0,255,0);
+  //strokeWeight(50);
+  //line(posxsp[nfigurasp-1]/2 - x, -posysp[nfigurasp-1]/2 - y, posxsp[nfigurasp-1]/2 - x, posysp[nfigurasp-1]/2 - y);
+  //line( 0, 0, len_x, len_y);
+  //println("dx");
     wall_collision[0] = 1;
     wall_collision[1] = dx[1];
     wall_collision[2] = dx[2];
@@ -107,6 +196,10 @@ float[] intersectionObstacles(float x, float y, float len_x, float len_y) //x,y 
   closest_collision[0] = 0;
   closest_collision[1] = 600000; //raggio laser
   closest_collision[2] = 600000;
+  
+  /* prima verifica per ogni ostacolo se il raggio attraversa l'ostacolo, se vede più punti di intersezione si 
+  ferma a quello più vicino a lui
+  */
 
   for (int i=0; i< ostacolo_ArrayList.size(); i++) //per ogni ostacolo
   {
@@ -116,38 +209,47 @@ float[] intersectionObstacles(float x, float y, float len_x, float len_y) //x,y 
 //alla posizione corrente del robot. Questo è fondamentale per il calcolo delle intersezioni e 
 //per determinare la posizione dell'ostacolo rispetto al robot in un sistema di coordinate relativo al robot stesso.   
 
-    sx = intersectionLine(o.vert_SR0[0] -x, o.vert_SR0[1] -y, o.vert_SR0[4] -x, o.vert_SR0[5] - y, 0, 0, len_x, len_y);
+    sx = intersectionLine(o.vert_SR0_om[0] -x, o.vert_SR0_om[1] -y, o.vert_SR0_om[4] -x, o.vert_SR0_om[5] - y, 0, 0, len_x, len_y);
     if (sx[0]==1) {
-      if (min_distance(sx[1], sx[2], closest_collision[1], closest_collision[2])) {
+      //println("sx");
+      //println(sx[1], sx[2], closest_collision[1], closest_collision[2]);
+      if (min_distance(sx[1], sx[2], closest_collision[1], closest_collision[2])) { 
         closest_collision[0] = 1;
         closest_collision[1] = sx[1]; //se c'è ostacolo il raggio del laser diminuisce e non oltrepassa l'ostacolo
         closest_collision[2] = sx[2];
       }
     }
-    dx = intersectionLine(o.vert_SR0[0] - x, o.vert_SR0[1] - y, o.vert_SR0[2] - x, o.vert_SR0[3] - y, 0, 0, len_x, len_y);
+    dx = intersectionLine(o.vert_SR0_om[0] - x, o.vert_SR0_om[1] - y, o.vert_SR0_om[2] - x, o.vert_SR0_om[3] - y, 0, 0, len_x, len_y);
     if (dx[0]==1) {
+     // println("dx");
+     // println(dx[1], dx[2], closest_collision[1], closest_collision[2]);
       if (min_distance(dx[1], dx[2], closest_collision[1], closest_collision[2])) {
         closest_collision[0] = 1;
         closest_collision[1] = dx[1];
         closest_collision[2] = dx[2];
       }
     }
-    up = intersectionLine(o.vert_SR0[6] -x, o.vert_SR0[7] -y, o.vert_SR0[4] -x, o.vert_SR0[5] - y, 0, 0, len_x, len_y);
+    up = intersectionLine(o.vert_SR0_om[6] -x, o.vert_SR0_om[7] -y, o.vert_SR0_om[4] -x, o.vert_SR0_om[5] - y, 0, 0, len_x, len_y);
     if (up[0]==1) {
+     // println("up");
+     // println(up[1], up[2], closest_collision[1], closest_collision[2]);
       if (min_distance(up[1], up[2], closest_collision[1], closest_collision[2])) {
         closest_collision[0] = 1;
         closest_collision[1] = up[1];
         closest_collision[2] = up[2];
       }
     }
-    down = intersectionLine(o.vert_SR0[6] -x, o.vert_SR0[7] -y, o.vert_SR0[2] -x, o.vert_SR0[3] - y, 0, 0, len_x, len_y);
+    down = intersectionLine(o.vert_SR0_om[6] -x, o.vert_SR0_om[7] -y, o.vert_SR0_om[2] -x, o.vert_SR0_om[3] - y, 0, 0, len_x, len_y);
     if (down[0]==1) {
+     // println("down");
+     // println(down[1], down[2], closest_collision[1], closest_collision[2]);
       if (min_distance(down[1], down[2], closest_collision[1], closest_collision[2])) {
         closest_collision[0] = 1;
         closest_collision[1] = down[1];
         closest_collision[2] = down[2];
-      }
+      }   
     }
+    
   }
   return closest_collision;
 }

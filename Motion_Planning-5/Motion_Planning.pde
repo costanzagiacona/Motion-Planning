@@ -20,9 +20,11 @@ float ysp = 0;
 //vettore dimensione lati figure
 float[] posxsp; //inzializzazione
 float[] posysp;
+//dimensione lati
+float[] lato_figura = new float[4];
 
 //dimensioni oggetti
-float lato;
+float lato1=50,lato2=70;
 float incrsp = 0;
 float incrost = 0;
 float kp = 5;
@@ -97,7 +99,7 @@ void draw()
   rotateY(-angoloY);
   rotateX(angoloX);
 
-  //spostiamo il riferimento più in alto per far vedere meglio le figure
+  //spostiamo il sist riferimento più in alto per far vedere meglio le figure
   translate(0, -100, 0);
 
 
@@ -107,11 +109,16 @@ void draw()
   // posizionamento sulla superficie del tavolo
   translate(0, 0, 10);
   drawAxes(40);
-
+ /* 
+  stroke(0,0,255);
+  strokeWeight(10);
+  line(0,-450,0,450);
+  strokeWeight(2);
+  */
 
   /*CREAZIONE OSTACOLI*/
 
-
+  //noFill();
   Ostacolo_creazione(0, -200, 10, 50, 70, PI/4, 1);
 
 
@@ -121,7 +128,7 @@ void draw()
     fill(#6920E0);
     translate(x, y, 10);
     rotateZ(orientamento);
-    formaost(nfiguraost, 50+incrost, 70+incrost);
+    formaost(nfiguraost, lato1+incrost, lato2+incrost);
     fill(GRAY);
     translate(0, 0, -5);
     //formaost(nfiguraost,50+incrost+k,70+incrost+k); //ombra
@@ -142,12 +149,16 @@ void draw()
   {
     //DISEGNO ROBOT
     pushMatrix();
-    translate(180, -180);
-    figura(60, 5, 5, 0);
+    translate(180, -180); //SR robot
+    //figura(60, 5, 5, 0);
+    formaost(4,20,20);
     popMatrix();
 
     //FASE DI SCANNEr
-    s = scan(180, -180, 6000, #6920E0);
+    //s = scan(180, -180, 600*sqrt(2), #6920E0);
+    s = scan(180, -180, 900, #6920E0);
+    
+  
   }
 
 

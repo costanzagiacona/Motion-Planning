@@ -63,13 +63,13 @@ boolean sovrapposizione(float posx, float posy, float l1,float l2, float alpha) 
   //verifica se l'ostacolo è all'interno dello spazio di lavoro
   for (int k = 0; k < vert_ghost_obs.length; k++) 
   {
-    if (abs(vert_ghost_obs[k]) > posxsp[nfigurasp-1]/1.45)  //1.45 scelto tramite ispezione visiva 
+    if (abs(vert_ghost_obs[k]) > posxsp[nfigurasp-1]/2)  //1.45 scelto tramite ispezione visiva 
     {
       v1 = true;
       println("sovrapposizione TAVOLO x");
       return v1;
     }
-    if (abs(vert_ghost_obs[k]) > posysp[nfigurasp-1]/1.45) 
+    if (abs(vert_ghost_obs[k]) > posysp[nfigurasp-1]/2) 
     {
       v1 = true;
       println("sovrapposizione Tavolo y");

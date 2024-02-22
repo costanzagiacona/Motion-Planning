@@ -52,7 +52,9 @@ class Ostacolo
     rotateZ(alpha);
 
    
-    fill(#A70202);
+    //fill(#A70202);
+    noFill();
+
 
     //creazione ostacolo
     formaost(forma, l1, l2);
@@ -150,7 +152,7 @@ void Ostacolo_creazione(int n, float posx_o, float posy_o, float l1, float l2, f
   if (num_ost <= numero_ostacoli) //evita di inserire più volte lo stesso ostacolo poichè il draw viene eseguito 60 volte al secondo 
   {
     ostacolo_ArrayList.add(ost); //qui inserisce l'ostacolo nella lista
-    println("inserito un ostacolo");
+    //println("inserito un ostacolo");
   }
   
   /*

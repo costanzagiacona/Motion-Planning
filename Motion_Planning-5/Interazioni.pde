@@ -92,7 +92,7 @@ void keyPressed()
     //SEMINS 1
     if (semins == 1)
     {
-      sovrapposizioneost = sovrapposizione(x, y, 50+incrost, 70+incrost, orientamento);
+      sovrapposizioneost = sovrapposizione(x, y, lato1+incrost, lato2+incrost, orientamento);
 
       if (key == '+') //aumento dimensione spazio lavoro o ostacolo
       {
@@ -160,7 +160,7 @@ void keyPressed()
       }
       //println("semins ->", semins, "x ->", x, "y->", y);
 
-      sovrapposizioneost = sovrapposizione(x, y, 50+incrost, 70+incrost, orientamento);
+      sovrapposizioneost = sovrapposizione(x, y, lato1+incrost, lato2+incrost, orientamento);
       
       if (keyCode == TAB)
       {
@@ -170,7 +170,7 @@ void keyPressed()
           //println("cambio colore in true ->", ostacolo_ArrayList.get(numero_ostacoli).colore );
           numero_ostacoli++;
           if (numero_ostacoli >= MAX_OST) semost = false;
-          Ostacolo_creazione(numero_ostacoli, x, y, 50+incrost, 50+incrost, orientamento, nfiguraost);
+          Ostacolo_creazione(numero_ostacoli, x, y, lato1 ,lato2, orientamento, nfiguraost);
           
           //println("creazione nuovo ostacolo con valori -> semins ->", semins, "x ->", x, "y->", y);
           semins = 0;
