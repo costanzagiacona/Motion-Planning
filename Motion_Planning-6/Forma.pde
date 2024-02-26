@@ -99,92 +99,101 @@ void vertici_sp(int nfigura, float l1, float l2)
   {
   case 1: //QUADRATO
   case 2: //RETTANGOLO
-    println("l1 ->", l1);
-    println("l2 ->", l2);
+    //println("l1 ->", l1);
+    //println("l2 ->", l2);
     //coordinate ostacolo rispetto SR0
+
     //vertice 1
     vertici_sp[0] = (-l1/2); //in basso a sx
     vertici_sp[1] = (-l2/2);
-    fill(0);
-    pushMatrix();
-    noStroke();
-    translate(-l1/2, -l2/2);
-    sphere(15);
-    popMatrix();
+    //fill(0);
+    //pushMatrix();
+    //noStroke();
+    //translate(-l1/2, -l2/2);
+    //sphere(15);
+    //popMatrix();
+
     //vertice 2
     vertici_sp[2] = (l1/2); //in basso a dx
     vertici_sp[3] = (l2/2);
-    pushMatrix();
-    fill(#222EF2); ///Blu
-    noStroke();
-    translate(l1/2, -l2/2);
-    sphere(15);
-    popMatrix();
+    //pushMatrix();
+    //fill(#222EF2); ///Blu
+    //noStroke();
+    //translate(l1/2, -l2/2);
+    //sphere(15);
+    //popMatrix();
+
     //vertice 3
     vertici_sp[4] = (-l1/2); //in alto a sx
     vertici_sp[5] = (-l2/2);
-    pushMatrix();
-    fill(#F222F2); //rosa
-    noStroke();
-    translate(-l1/2, l2/2);
-    sphere(15);
-    popMatrix();
+    //pushMatrix();
+    //fill(#F222F2); //rosa
+    //noStroke();
+    //translate(-l1/2, l2/2);
+    //sphere(15);
+    //popMatrix();
+
     //vertice 4
     vertici_sp[6] = -(-l1/2); //in alto a dx
     vertici_sp[7] = (l2/2);
-    fill(#F4FA56); //giallo
-    noStroke();
-    pushMatrix();
-    translate(l1/2, l2/2);
-    sphere(15);
-    popMatrix();
+    //fill(#F4FA56); //giallo
+    //noStroke();
+    //pushMatrix();
+    //translate(l1/2, l2/2);
+    //sphere(15);
+    //popMatrix();
+
     break;
 
   case 3: //ROMBO
-    println("l1 ->", l1);
-    println("l2 ->", l2);
+    //println("l1 ->", l1);
+    //println("l2 ->", l2);
     //diagonale rombo
     d = sqrt(pow(l1, 2)+pow(l2, 2));
     vertici_sp[0] = 0; //in basso
     vertici_sp[1] = d/3;
-    fill(0);
-    pushMatrix();
-    noStroke();
-    translate(0,d/3);
-    sphere(15);
-    popMatrix();
+    //fill(0);
+    //pushMatrix();
+    //noStroke();
+    //translate(0,d/3);
+    //sphere(15);
+    //popMatrix();
+
     //vertice 2
     vertici_sp[2] = d/2.7; //dx
     vertici_sp[3] = 0;
-    pushMatrix();
-    fill(#222EF2); ///Blu
-    noStroke();
-    translate(d/2.7, 0);
-    sphere(15);
-    popMatrix();
+    //pushMatrix();
+    //fill(#222EF2); ///Blu
+    //noStroke();
+    //translate(d/2.7, 0);
+    //sphere(15);
+    //popMatrix();
+
     //vertice 3
     vertici_sp[4] = -d/2.7; //sx
     vertici_sp[5] = 0;
-    pushMatrix();
-    fill(#F222F2); //rosa
-    noStroke();
-    translate(-d/2.7, 0);
-    sphere(15);
-    popMatrix();
+    //pushMatrix();
+    //fill(#F222F2); //rosa
+    //noStroke();
+    //translate(-d/2.7, 0);
+    //sphere(15);
+    //popMatrix();
+
     //vertice 4
     vertici_sp[6] = 0; //avanti, quello lontano
     vertici_sp[7] = -d/3;
-    fill(#F4FA56); //giallo
-    noStroke();
-    pushMatrix();
-    translate(0, -d/3);
-    sphere(15);
-    popMatrix();
+    //fill(#F4FA56); //giallo
+    //noStroke();
+    //pushMatrix();
+    //translate(0, -d/3);
+    //sphere(15);
+    //popMatrix();
+
     break;
 
   case 5: //TRIANGOLO
-    println("l1 ->", l1);
-    println("l2 ->", l2);
+    //println("l1 ->", l1);
+    //println("l2 ->", l2);
     sphere(20);
     h = (l1*sqrt(3))/2;
     //coordinate ostacolo rispetto SR0
@@ -216,17 +225,17 @@ void vertici_sp(int nfigura, float l1, float l2)
     sphere(15);
     popMatrix();
     break;
-    
-    case 6: //TRAPEZIO
-    println("l1 ->", l1);
-    println("l2 ->", l2);
+
+  case 6: //TRAPEZIO
+    //println("l1 ->", l1);
+    //println("l2 ->", l2);
     h = l2;
     vertici_sp[0] = -l2/2; //in basso a sx
     vertici_sp[1] = h/2;
     fill(0);
     pushMatrix();
     noStroke();
-    translate(-l2/2,h/2);
+    translate(-l2/2, h/2);
     sphere(15);
     popMatrix();
     //vertice 2
@@ -343,6 +352,12 @@ void disegnaRombo(float centroX, float centroY, float lunghezzaLatoX, float lung
     vertex(centroX, centroY + metaLunghezzaY, i);
     endShape(CLOSE);
   }
+  // spigoli lungo z
+  stroke(0);
+  line(centroX - metaLunghezzaX, centroY, 0, centroX - metaLunghezzaX, centroY, 10);
+  line(centroX, centroY - metaLunghezzaY, 0, centroX, centroY - metaLunghezzaY, 10);
+  line(centroX + metaLunghezzaX, centroY, 0, centroX + metaLunghezzaX, centroY, 10);
+  line(centroX, centroY + metaLunghezzaY, 0, centroX, centroY + metaLunghezzaY, 10);
 }
 
 
@@ -365,6 +380,11 @@ void disegnaTriangolo (float x, float y, float sideLength) //x,y coordinate cent
     triangle(x1, y1, x2, y2, x3, y3);
     translate(0, 0, 1);
   }
+  // spigoli lungo z
+  stroke(0);
+  line(x1, y1, 0, x1, y1, -10);
+  line(x2, y2, 0, x2, y2, -10);
+  line(x3, y3, 0, x3, y3, -10);
 }
 
 void disegnaTrapezio(float centroX, float centroY, float larghezzaSuperiore, float larghezzaInferiore, float altezza)
@@ -384,6 +404,12 @@ void disegnaTrapezio(float centroX, float centroY, float larghezzaSuperiore, flo
     vertex(centroX - metaLarghezzaInferiore, centroY + metaAltezza, i);
     endShape(CLOSE);
   }
+  // spigoli lungo z
+  stroke(0);
+  line(centroX - metaLarghezzaSuperiore, centroY - metaAltezza, 0, centroX - metaLarghezzaSuperiore, centroY - metaAltezza, 10);
+  line(centroX + metaLarghezzaSuperiore, centroY - metaAltezza, 0, centroX + metaLarghezzaSuperiore, centroY - metaAltezza, 10);
+  line(centroX + metaLarghezzaInferiore, centroY + metaAltezza, 0, centroX + metaLarghezzaInferiore, centroY + metaAltezza, 10);
+  line(centroX - metaLarghezzaInferiore, centroY + metaAltezza, 0, centroX - metaLarghezzaInferiore, centroY + metaAltezza, 10);
 }
 
 void disegnaCerchio(float x, float y, float r)
@@ -395,153 +421,4 @@ void disegnaCerchio(float x, float y, float r)
     circle(x, y, r);
     translate(0, 0, 1);
   }
-}
-
-
-//----------------------------------------------------------------------------------------------------------------------------------------
-
-
-void figurachatgpt(int sides, float lato1, float lato2, float incr)
-{
-  float angle = 360.0 / sides;
-  float x1=0, y1=0, x2=0, y2=0;
-  // Calcola i vertici sulla circonferenza del cerchio esterno (lato1)
-  beginShape();
-  for (int i = 0; i < sides; i++) {
-    float rad = radians(i * angle);
-    x1 = cos(rad) * lato1+incr;
-    y1 = sin(rad) * lato1+incr;
-    vertex(x1, y1, 10);
-  }
-  endShape(CLOSE);
-  // Calcola i vertici sulla circonferenza del cerchio interno (lato2)
-  beginShape();
-  for (int i = 0; i < sides; i++) {
-    float rad = radians(i * angle);
-    x2 = cos(rad) * lato2+incr;
-    y2 = sin(rad) * lato2+incr;
-    vertex(x2, y2, -10);
-  }
-  endShape(CLOSE);
-  // Collega i vertici per formare i lati della figura
-  beginShape();
-  for (int i = 0; i < sides; i++) {
-    vertex(x1, y1, 10);
-    vertex(x2, y2, -10);
-    float nextRad = radians((i + 1) * angle);
-    x1 = cos(nextRad) * lato1+incr;
-    y1 = sin(nextRad) * lato1+incr;
-    x2 = cos(nextRad) * lato2+incr;
-    y2 = sin(nextRad) * lato2+incr;
-  }
-  endShape(CLOSE);
-}
-
-
-//disegna rombo, il cilindro e il triangolo
-void figuranostra(int sides, float lato1, float lato2, float incr)
-{
-  /*Calcola l'angolo in radianti per ogni lato della figura.
-   Divide 360 gradi per il numero di lati per ottenere l'angolo.*/
-  //sides -> numero segmenti
-  float angle = -360 / sides; //disegna vertici in senso antiorario
-  float x = 0, y=0;
-  float xprev, yprev;
-
-  // Disegna la figura in alto
-  beginShape();
-  for (int i = 0; i < sides; i++)
-  {
-    xprev = x;
-    yprev = y;
-    x = cos(radians(i * angle)) * (lato1+incr);
-    //println(x);
-    y = sin(radians(i * angle)) * (lato2+incr);
-    // println(y);
-    vertex(x, y, 10);
-    lato_figura[i] = calcolo_lati(xprev, yprev, x, y);
-    /*
-   if(i==0)
-     {
-     stroke(0,255,0);
-     line(xprev,yprev,x,y);
-     lato_figura[i] = calcolo_lati(xprev,yprev,x,y);
-     println("lato ",i,"dimensione ->",lato_figura[i]);
-     }
-     if(i==1)
-     {
-     stroke(0,0,255);
-     line(xprev,yprev,x,y);
-     lato_figura[i] = calcolo_lati(xprev,yprev,x,y);
-     println("lato ",i,"dimensione ->",lato_figura[i]);
-     }
-     if(i==2)
-     {
-     stroke(255,0,0);
-     line(xprev,yprev,x,y);
-     lato_figura[i] = calcolo_lati(xprev,yprev,x,y);
-     println("lato ",i,"dimensione ->",lato_figura[i]);
-     }
-     if(i==3)
-     {
-     stroke(#FAF323);
-     line(xprev,yprev,x,y);
-     lato_figura[i] = calcolo_lati(xprev,yprev,x,y);
-     println("lato ",i,"dimensione ->",lato_figura[i]);
-     }*/
-    stroke(0);
-    // posxsp[0] = lato_figura[1];
-    //posysp[0] = lato_figura[2];
-  }
-  endShape(CLOSE);
-
-  // Disegna la figura in basso
-  beginShape();
-  for (int i = 0; i < sides; i++) {
-    x = cos(radians(i * angle)) * (lato1+incr);
-    y = sin(radians(i * angle)) * (lato2+incr);
-    vertex(x, y, -10);
-  }
-  endShape(CLOSE);
-
-  // Disegna il corpo
-  beginShape(TRIANGLE_STRIP);
-  /* Genera una serie di vertici lungo la circonferenza del rombo sia nella parte superiore
-   che inferiore, collegandoli per formare una serie di triangoli.
-   Questo crea l'effetto di una figura piena */
-  for (int i = 0; i < sides+1; i++)
-  {
-    x = cos(radians(i * angle)) * (lato1+incr);
-    y = sin(radians(i * angle)) * (lato2+incr);
-    vertex(x, y, 10);
-    vertex(x, y, -10);
-  }
-  endShape(CLOSE);
-}
-
-//primo vertice
-//secondo vertice
-void trapezio(float x1, float y1, float x2, float y2)  // input -> coordinate vertici
-{
-  int n = 10;
-  for (int i = 0; i < n; i++)
-  {
-    //disegna i vertici in senso antiorario
-    beginShape();
-    //simmetrico rispetto all'asse y -> stessa x ma cambiata di segno
-    vertex(x1, -y1, i); //in alto a dx
-    vertex(-x1, -y1, i); //in alto a sx
-    //simmetrico rispetto all'asse y -> stessa x ma cambiata di segno
-    vertex(-x2, y2, i); //in basso a sx
-    vertex(x2-50, y2-50, i); //in basso a dx
-    endShape(CLOSE);
-  }
-}
-
-float calcolo_lati(float x0, float y0, float x1, float y1)
-{
-  float lato;
-  lato = sqrt(pow(x0-x1, 2) + pow(y0-y1, 2));
-
-  return lato;
 }

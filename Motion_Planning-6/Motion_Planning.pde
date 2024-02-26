@@ -25,7 +25,7 @@ float[] lato_figura = new float[4];
 float[] vertici_sp = new float[8];
 
 //dimensioni oggetti
-float lato1=50,lato2=70;
+float lato1 = 50, lato2 = 70;
 float incrsp = 0;
 float incrost = 0;
 float kp = 5;
@@ -110,12 +110,12 @@ void draw()
   // posizionamento sulla superficie del tavolo
   translate(0, 0, 10);
   drawAxes(40);
- /* 
-  stroke(0,0,255);
-  strokeWeight(10);
-  line(0,-450,0,450);
-  strokeWeight(2);
-  */
+  /*
+   stroke(0,0,255);
+   strokeWeight(10);
+   line(0,-450,0,450);
+   strokeWeight(2);
+   */
 
   /*CREAZIONE OSTACOLI*/
 
@@ -152,17 +152,13 @@ void draw()
     pushMatrix();
     translate(180, -180); //SR robot
     //figura(60, 5, 5, 0);
-    formaost(4,20,20);
+    formaost(4, 20, 20);
     popMatrix();
 
-    //FASE DI SCANNEr
+    //FASE DI SCANNER
     //s = scan(180, -180, 600*sqrt(2), #6920E0);
     s = scan(180, -180, 900, #6920E0);
-    
-  
   }
-
-
 
   //println(semins);
   //println(numero_ostacoli);
@@ -181,7 +177,7 @@ void drawAxes(float lineLenght) {
   fill(255, 0, 0);
   pushMatrix();
   strokeWeight(3);
-  line(0, 0, 0, 0, lineLenght, 0); //x1,y1,z1 , x2,y2,z2
+  line(0, 0, 0, 0, lineLenght, 0); //x1,y1,z1, x2,y2,z2
   popMatrix();
 
   //disegno in verde l'asse x

@@ -20,3 +20,10 @@ vedere se il laser attraversa ostacoli come il rettangolo o altre forme
 
 
 //TESTI da vedere con fullscreen
+
+// Cose fatte lun 26 feb
+/*
+Aggiunto gli spigoli alle figure.
+Gli ostacoli rilevano la collisione con i bordi del tavolo ------> non benissimo per aclune figure
+Per farlo ho riusato le funzioni di intersezione con il laser
+*/

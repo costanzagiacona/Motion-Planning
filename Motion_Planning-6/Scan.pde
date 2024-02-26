@@ -8,7 +8,7 @@ float alpha = start_alpha;
 float id_target = 6;
 
 boolean scan(float x, float y, float len_max, color colore)
-{    //x,y coordinate del roomba rispetto a SR0, len_max raggio max laser 
+{    //x,y coordinate del roomba rispetto a SR0, len_max raggio max laser
 
   float xi, yi, xi_0, yi_0;
   float len_x = posxsp[nfigurasp-1]/2;
@@ -38,9 +38,14 @@ boolean scan(float x, float y, float len_max, color colore)
   //x,y inizio laser --- len_x,len_y fine laser
   float[] intersection_obstacles = intersectionObstacles(x, y, len_x, len_y); //possibile intersezione con tavolo
   float[] intersection_wall = new float[3];
-  if(nfigurasp == 1 || nfigurasp == 2) {intersection_wall = intersectionWall_qr(x, y, len_x, len_y);} //possibile intersezione con ostacolo
-  else if(nfigurasp == 5) {intersection_wall = intersectionWall_3v(x, y, len_x, len_y);}
-  else {intersection_wall = intersectionWall_pol(x, y, len_x, len_y);}
+  if (nfigurasp == 1 || nfigurasp == 2) {
+    intersection_wall = intersectionWall_qr(x, y, 0, 0, len_x, len_y);
+  } //possibile intersezione con ostacolo
+  else if (nfigurasp == 5) {
+    intersection_wall = intersectionWall_3v(x, y, 0, 0, len_x, len_y);
+  } else {
+    intersection_wall = intersectionWall_pol(x, y, 0, 0, len_x, len_y);
+  }
 
 
   if (intersection_obstacles[0] == 1) //intersezione con ostacolo
@@ -48,9 +53,7 @@ boolean scan(float x, float y, float len_max, color colore)
     xi = intersection_obstacles[1];
     yi = intersection_obstacles[2];
     //println("intersezione ostacolo");
-    
-
-  } else 
+  } else
   {
     //intersection_wall[0];  dal momento che se non interseca un ostacolo  SICURAMENTE ci sarà un intersezione col bordo
     xi = intersection_wall[1];
@@ -59,26 +62,26 @@ boolean scan(float x, float y, float len_max, color colore)
     //println("misura tavolo y",posysp[nfigurasp-1], " misure calcolate y ->>>", yi);
   }
 
-//coordinate di xi rispetto a SR0
-  xi_0 = xi + x;        
+  //coordinate di xi rispetto a SR0
+  xi_0 = xi + x;
   yi_0 = yi + y;
 
   //detected_obs = is_in_obstacle(xi_0, yi_0);        // ID dell'ostacolo incontrato dal laser
   fill(200, 0, 0);
 
- 
 
-  //if (is_in_obstacle(x, y) == detected_obs && (detected_obs != -1)) {        
-    /* se il laser e l'oggetto si trovano lungo 
-     i lati dello stesso oggetto, same_obstacle è true */
+
+  //if (is_in_obstacle(x, y) == detected_obs && (detected_obs != -1)) {
+  /* se il laser e l'oggetto si trovano lungo
+   i lati dello stesso oggetto, same_obstacle è true */
   /*  same_obstacle = true;
-  } else {
-    same_obstacle = false;
-  }
-*/
+   } else {
+   same_obstacle = false;
+   }
+   */
 
-//println(same_obstacle);
-same_obstacle = false;
+  //println(same_obstacle);
+  same_obstacle = false;
 
   // laser
   if (!same_obstacle)
@@ -89,16 +92,16 @@ same_obstacle = false;
     strokeWeight(2);
     line(0, 0, xi, yi); //laser
     stroke(0, 0, 255);
-   // detect_vert(xi_0, yi_0);
+    // detect_vert(xi_0, yi_0);
   }
-/*
-  if (detected_obs == id_target) 
-  { 
-    popMatrix();
-    vertex_found = true;
-    return true;
-  }
-*/
+  /*
+  if (detected_obs == id_target)
+   {
+   popMatrix();
+   vertex_found = true;
+   return true;
+   }
+   */
   stroke(255);
   noStroke();
   popMatrix(); //mi riporto alle coordinate inerziali
