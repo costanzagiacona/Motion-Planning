@@ -76,11 +76,14 @@ void keyPressed()
         orientamento = 0;
         incrost = 0;
         nfiguraost = 1;
+        lato1 = 50;
+        lato2 = 70;
         //Ostacolo_creazione(numero_ostacoli, x, y, 50+incrost, 50+incrost, orientamento, nfiguraost,coloreost);
         //ostacolo_ArrayList.get(numero_ostacoli).colore = false;
         //println("semins ->", semins, "x ->", x, "y->", y);
         semins = 1;
         println("incrost semins 0 -> ", incrost);
+        println("l1, l2 semins 0 -> ", lato1, lato2);
       }
     }
 
@@ -116,6 +119,9 @@ void keyPressed()
       //println("semins ->", semins, "x ->", x, "y->", y);
 
       if (key == 'w') semins = 2;
+      println("incrost semins 1 -> ", incrost);
+      println("l1, l2 semins 1 -> ", lato1, lato2);
+
     }
 
     // sovrapposizioneost = sovrapposizione(x, y, 50+incrost, 70+incrost, orientamento);
@@ -167,9 +173,12 @@ void keyPressed()
           //println("cambio colore in true ->", ostacolo_ArrayList.get(numero_ostacoli).colore );
           numero_ostacoli++;
           if (numero_ostacoli >= MAX_OST) semost = false;
+          println("incrost -> ", incrost);
+          println("l1, l2 -> ", lato1, lato2);
+          
           Ostacolo_creazione(numero_ostacoli, x, y, lato1, lato2, orientamento, nfiguraost);
           
-          println("incrost -> ", incrost);
+          println("incrost semins2 -> ", incrost);
           //println("creazione nuovo ostacolo con valori -> semins ->", semins, "x ->", x, "y->", y);
           semins = 0;
         }

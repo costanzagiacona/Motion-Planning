@@ -128,30 +128,12 @@ void vertici_sp(int nfigura, float l1, float l2)
     //vertice 1
     vertici_sp[0] = 0; //in basso
     vertici_sp[1] = (-h/1.5);
-    fill(0);
-    pushMatrix();
-    noStroke();
-    translate(0, -h/1.5);
-    sphere(15);
-    popMatrix();
     //vertice 2
     vertici_sp[2] = (l1/2); //dx
     vertici_sp[3] = (h/3);
-    pushMatrix();
-    fill(#222EF2); ///Blu
-    noStroke();
-    translate(l1/2, h/3);
-    sphere(15);
-    popMatrix();
     //vertice 3
     vertici_sp[4] = -l1/2; //sx
     vertici_sp[5] = (h/3);
-    pushMatrix();
-    fill(#F222F2); //rosa
-    noStroke();
-    translate(-l1/2, h/3);
-    sphere(15);
-    popMatrix();
     break;
 
   case 6: //TRAPEZIO
