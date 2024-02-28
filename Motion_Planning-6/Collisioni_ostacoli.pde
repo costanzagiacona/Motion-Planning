@@ -91,7 +91,7 @@ boolean sovrapposizione(float posx, float posy, float l1, float l2, float alpha)
       col_sp = intersectionWall_pol(0, 0, x, y, vert_ghost_obs[k], vert_ghost_obs[k+1]);
     }
 
-    println("collisioni -> ", col_sp[0], col_sp[1], col_sp[2]);
+    //println("collisioni -> ", col_sp[0], col_sp[1], col_sp[2]);
 
     if (col_sp[0] == 1)
     {

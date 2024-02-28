@@ -18,9 +18,6 @@ class Ostacolo
   //flag per dire se abbiamo finito di crearlo o meno
   public boolean creato;
 
-  
-
-
   //coordinate vertici ostacolo rispetto SR ost
   public float[] vert_array_SR_ost = new float[8];
   //coordinate vertici SR

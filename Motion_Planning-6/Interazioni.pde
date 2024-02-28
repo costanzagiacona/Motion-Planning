@@ -38,10 +38,6 @@ void keyPressed()
     {
       semsp = false;
       semost= true;
-      x = 0;
-      y = 0;
-      orientamento = 0;
-      incrost = 0 ;
     } else if (semsp == false) //finita la creazione degli ostacoli passiamo al grafo
     {
       semsp = false;
@@ -56,7 +52,7 @@ void keyPressed()
     if (key == '+') //aumento dimensione spazio lavoro o ostacolo
     {
       incrsp += kp;
-      if (incrsp > 100) incrsp=100;
+      if (incrsp > 100) incrsp = 100;
     }
 
     if (key == '-') //diminuisco dimensione spazio lavoro o ostacolo
@@ -78,12 +74,13 @@ void keyPressed()
         x = 0;
         y = 0;
         orientamento = 0;
-        incrost = 0 ;
+        incrost = 0;
         nfiguraost = 1;
         //Ostacolo_creazione(numero_ostacoli, x, y, 50+incrost, 50+incrost, orientamento, nfiguraost,coloreost);
         //ostacolo_ArrayList.get(numero_ostacoli).colore = false;
         //println("semins ->", semins, "x ->", x, "y->", y);
         semins = 1;
+        println("incrost semins 0 -> ", incrost);
       }
     }
 
@@ -171,7 +168,8 @@ void keyPressed()
           numero_ostacoli++;
           if (numero_ostacoli >= MAX_OST) semost = false;
           Ostacolo_creazione(numero_ostacoli, x, y, lato1, lato2, orientamento, nfiguraost);
-
+          
+          println("incrost -> ", incrost);
           //println("creazione nuovo ostacolo con valori -> semins ->", semins, "x ->", x, "y->", y);
           semins = 0;
         }
