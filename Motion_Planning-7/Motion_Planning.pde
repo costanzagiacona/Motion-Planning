@@ -10,7 +10,7 @@ int MAX_OST = 5; //numero massimo di ostacoli
 //sovrapposizioni
 boolean sovrapposizioneost = false;
 
-//posizione ostacolo
+//posizione  centro ostacolo non ancora instanziato
 float x = 0;
 float y = 0;
 //posizione spazio di lavoro
@@ -179,7 +179,7 @@ void draw()
 
   for (Ostacolo o : ostacolo_ArrayList)
   {
-    //non mostriamo il primo ostacolo poichè lo mostriamo alla riga 112
+    //non mostriamo il primo ostacolo poichè lo mostriamo alla riga 163
     if (o.id != 0) Ostacolo_creazione(o.id, o.posx, o.posy, o.lato1, o.lato2, o.alpha, o.forma);
     //println("Ostacolo for MP lato1 e lato2:",lato1,lato2);
     //println("oggetto ->" ,o.id,o.posx, o.posy);
