@@ -53,9 +53,6 @@ float[] intersectionWall_qr(float x, float y, float cx, float cy, float len_x, f
   /*qui il confronto con il min non serve perchè il robot sta dentro al tavolo, non vedrà mai due bordi contemporaneamente
    */
 
-  //len_x = (ostacolo_ArrayList.get(numero_ostacoli-1)).lato1/2;
-  //len_y = (ostacolo_ArrayList.get(numero_ostacoli-1)).lato2/2;
-
   float[] wall_collision = new float[3];
   wall_collision[0] = 0; //presenza o meno della collisione
   wall_collision[1] = 0; //collisione in x
@@ -91,7 +88,7 @@ float[] intersectionWall_qr(float x, float y, float cx, float cy, float len_x, f
 }
 
 /*
-v1 ----- v2
+ v1 ----- v2
  |         |
  |         |
  v3 ----- v4
@@ -146,9 +143,9 @@ float[] intersectionWall_pol(float x, float y, float cx, float cy, float len_x, 
 }
 
 /*
-    v1
-  /    \
- /      \
+     v1
+   /    \
+  /      \
  v3 ---- v2
  */
 
