@@ -42,7 +42,6 @@ void keyPressed()
       y = 0;
       orientamento = 0;
       incrost = 0 ;
-      
     } else if (semsp == false) //finita la creazione degli ostacoli passiamo al grafo
     {
       semsp = false;

@@ -48,17 +48,17 @@ boolean semost = false;
 int semins = 0;
 /*
 1 - dimensione e orientamento
- 2 - posizione
- */
- 
- //roomba
+2 - posizione
+*/
+
+//roomba
 PShape roomba;
 float pos_x_r = -180;          //  <====
 float pos_y_r = 100;           //  <====
 float r_r = 27;  //stima del diametro del roomba, con tolleranza, per evitare le collisioni
 
 
- //parametri tree & movimento
+//parametri tree & movimento
 float x_home = pos_x_r;
 float y_home = pos_y_r;
 
@@ -104,13 +104,12 @@ void setup()
     posxsp[i] = 0;
     posysp[i] = 0;
   }
-  
+
   //grafo
   Nodo first_root = new Nodo("source", x_home, y_home);
   nodo = new ArrayList<Nodo>();
   albero = new Albero(first_root);
   nodo_corrente = first_root;
-  
 }
 
 void draw()

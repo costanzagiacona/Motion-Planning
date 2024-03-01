@@ -65,8 +65,8 @@ boolean sovrapposizione(float posx, float posy, float l1, float l2, float alpha)
   /*
  Per vedere se l'oggetto esce dal tavolo si fa uno studio diviso in due parti:
    1 - controllo sui vertici per verificare se escono dal tavolo
-   2 - controllo sul centro dell'oggetto per verificare se l'oggetto sia all'interno dello spazio di lavoro o meno 
-  Il controllo 2 è necessario poichè se l'oggetto si trova fuori dallo spazio di lavoro non deve essere istanziato, in questo caso i vertici non rilevano una sovrapposizione
+   2 - controllo sul centro dell'oggetto per verificare se l'oggetto sia all'interno dello spazio di lavoro o meno
+   Il controllo 2 è necessario poichè se l'oggetto si trova fuori dallo spazio di lavoro non deve essere istanziato, in questo caso i vertici non rilevano una sovrapposizione
    */
 
 
@@ -200,7 +200,7 @@ boolean sovrapposizione(float posx, float posy, float l1, float l2, float alpha)
 
 
   //CON ALTRI OSTACOLI
-
+/*
   //verifica se esiste una sovrapposizione di ostacoli
   for (int i = 0; i < 8; i=i+2)
   { //controllo per ogni vertice
@@ -210,7 +210,7 @@ boolean sovrapposizione(float posx, float posy, float l1, float l2, float alpha)
       println("sovrapposizione OSTACOLO");
       return v1;
     }
-  }
+  }*/
 
   /* qui verifica se l'ostacolo da inserire è compenetrato da vertici di un ostacolo esistente */
   //ostacolo OMBRA
