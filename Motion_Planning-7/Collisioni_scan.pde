@@ -145,10 +145,10 @@ float[] intersectionWall_pol(float x, float y, float cx, float cy, float len_x, 
   return wall_collision;
 }
 
-/*
-    v1
-  /    \
- /      \
+/*  
+     v1
+   /    \
+  /      \
  v3 ---- v2
  */
 

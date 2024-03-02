@@ -1,5 +1,41 @@
 /*Funzioni per il posizionamento dell'ostacolo all'interno del tavolo e non sovrapposto ad altri ostacoli*/
 
+
+/* funzione che, prese in ingresso le coordinate inerziali di un punto, resistuisce l'id
+ dell'oggetto all'interno di cui si trova, oppure -1 se non appartiene a nessun oggetto */
+int is_in_obstacle(float x_0, float y_0) //input - coordinate punto rispetto sistema di riferimento fisso SR0
+{
+
+  //x_1,y_1 sono le coordinate del punto rispetto al SR dell'ostacolo
+  float x_1, y_1, beta, px, py;
+
+  //valore di tolleranza numerica (perché sin e cos sono approssimati)
+  float tol = 1.5;
+
+  for (Ostacolo ob : ostacolo_ArrayList) //per ogni ostacolo nella lista
+  {
+    beta = ob.alpha; //orientamento ostacolo
+    px = ob.posx; //coordinata x robot
+    py = ob.posy; //coordinata y robot
+
+    //portiamo il punto nel SR oggetto
+    //trasformazione che fa ruotare un punto di beta, x_0 e y_0 coordinate punto da ruotare, px e py coordinate punto fisso
+    x_1 = cos(beta)*(x_0 - px) + sin(beta)*(y_0 - py); //coordinata x punto nel SR oggetto
+    y_1 = cos(beta)*(y_0 - py) + sin(beta)*(px - x_0); //coordinata y punto nel SR oggetto
+
+
+    //controlliamo se il punto si trova all'interno dell'ostacolo
+    if (abs(x_1) <= ((ob.lato1)/2 + tol) && abs(y_1) <= ((ob.lato2)/2 + tol))
+    {
+      println("sovrapposizione con ostacolo numero ", ob.id);
+      return ob.id; //punto all'interno dell'ostacolo
+    }
+  }
+
+  return -1;
+}
+
+
 //funzione che verifica se due ostacoli sono sovrapposti o se un ostacolo è fuori dallo spazio operativo
 boolean sovrapposizione(float posx, float posy, float l1, float l2, float alpha) //x ostacolo, y ostacolo, lati ostacolo, orientamento ostacolo (nel SR ostacolo)
 {
@@ -29,8 +65,8 @@ boolean sovrapposizione(float posx, float posy, float l1, float l2, float alpha)
   /*
  Per vedere se l'oggetto esce dal tavolo si fa uno studio diviso in due parti:
    1 - controllo sui vertici per verificare se escono dal tavolo
-   2 - controllo sul centro dell'oggetto per verificare se l'oggetto sia all'interno dello spazio di lavoro o meno
-   Il controllo 2 è necessario poichè se l'oggetto si trova fuori dallo spazio di lavoro non deve essere istanziato, in questo caso i vertici non rilevano una sovrapposizione
+   2 - controllo sul centro dell'oggetto per verificare se l'oggetto sia all'interno dello spazio di lavoro o meno 
+  Il controllo 2 è necessario poichè se l'oggetto si trova fuori dallo spazio di lavoro non deve essere istanziato, in questo caso i vertici non rilevano una sovrapposizione
    */
 
 
@@ -164,6 +200,17 @@ boolean sovrapposizione(float posx, float posy, float l1, float l2, float alpha)
 
 
   //CON ALTRI OSTACOLI
+
+  //verifica se esiste una sovrapposizione di ostacoli
+  for (int i = 0; i < 8; i=i+2)
+  { //controllo per ogni vertice
+    if (is_in_obstacle(vert_ghost_obs[i], vert_ghost_obs[i+1]) != -1 )
+    {
+      v1 = true;
+      println("sovrapposizione OSTACOLO");
+      return v1;
+    }
+  }
 
   /* qui verifica se l'ostacolo da inserire è compenetrato da vertici di un ostacolo esistente */
   //ostacolo OMBRA
