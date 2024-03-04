@@ -203,26 +203,32 @@ float[] intersectionWall_c(float x, float y, float cx, float cy, float len_x, fl
   wall_collision[1] = 0; //collisione in x
   wall_collision[2] = 0; //collisione in y
 
-  for (int i = 0; i < 15; i++) //aumentando il numero dei vertici viene più preciso lo scan (60/4 = 15)
+  //for(int i = 0; i < 120; i++) println("vediamooooo", vertici_cerchio[i]);
+  for (int i = 0; i < 120; i=i+4) //aumentando il numero dei vertici viene più preciso lo scan (60/4 = 15)
   {
-    //fill(255,0,0);
-    sphere(20);
-    
-    pushMatrix();
-     translate(vertici_cerchio[i] -x,vertici_cerchio[i+1]-y,0 );
-      sphere(20);
-      popMatrix();
-      
-      line(vertici_cerchio[i] -x, vertici_cerchio[i+1] -y, vertici_cerchio[i+2] -x, vertici_cerchio[i+3] - y);
-      
-      pushMatrix();
-     translate(vertici_cerchio[i+2]-x ,vertici_cerchio[i+3] -y,0);
-      sphere(20);
-      popMatrix();
-    
-    intersection = intersectionLine(vertici_cerchio[i] -x, vertici_cerchio[i+1] -y, vertici_cerchio[i+2] -x, vertici_cerchio[i+3] - y, cx, cy, len_x, len_y); //v3-v2
+    //println("vertici ->", vertici_cerchio[i]-x, vertici_cerchio[i+1]-y, vertici_cerchio[i+2]-x, vertici_cerchio[i+3]-y);
+    //stroke(0, 0, 255);
+    //pushMatrix();
+    ////println(vertici_cerchio[i], vertici_cerchio[i+1]);
+    //translate(vertici_cerchio[i]-x, vertici_cerchio[i+1]-y, 0);
+    //sphere(10);
+    //popMatrix();
+
+    //pushMatrix();
+    //translate(vertici_cerchio[i+2]-x, vertici_cerchio[i+3]-y, 0);
+    //sphere(10);
+    //popMatrix();
+
+    //stroke(0,255,0);
+    ////println(vertici_cerchio[i], vertici_cerchio[i+1], vertici_cerchio[i+2], vertici_cerchio[i+3]);
+    //line(vertici_cerchio[i]-x, vertici_cerchio[i+1]-y, vertici_cerchio[i+2]-x, vertici_cerchio[i+3]-y);
+
+    intersection = intersectionLine(vertici_cerchio[i]-x , vertici_cerchio[i+1]-y , vertici_cerchio[i+2]-x, vertici_cerchio[i+3]-y, cx, cy, len_x, len_y); //v3-v2
     if (intersection[0]==1)
     {
+      
+      // NON POSSIAMO AVERE TUTTI QUESTI VERTICI. 
+      // FORSE è MEGLIO USARE SOLO PER SCAN ED EVITARE GLI OSTACOLI
       wall_collision[0] = 1;
       wall_collision[1] = intersection[1];
       wall_collision[2] = intersection[2];
@@ -232,9 +238,6 @@ float[] intersectionWall_c(float x, float y, float cx, float cy, float len_x, fl
 
   return wall_collision;
 }
-
-
-
 
 
 /*il seguente blocco di controllo verifica se c'è un'intersezione di ritorno dalle intersectionLine con i contorni degli ostacoli.

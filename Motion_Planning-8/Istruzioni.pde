@@ -18,6 +18,9 @@ ci sono problemi con il cerchio con lo scan
 trova dei punti che non sono vertici (sempre scan)
 
 aumentare lunghezza laser scan
+
+// NON POSSIAMO AVERE TUTTI QUESTI VERTICI. 
+      // FORSE è MEGLIO USARE SOLO PER SCAN ED EVITARE GLI OSTACOLI
 */
 
 

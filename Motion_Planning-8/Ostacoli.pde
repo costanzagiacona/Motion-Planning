@@ -18,7 +18,7 @@ class Ostacolo
   //flag per dire se abbiamo finito di crearlo o meno
   public boolean creato;
 
-  
+
   //coordinate vertici ostacolo rispetto SR ost
   public float[] vert_array_SR_ost = new float[8];
   //coordinate vertici SR
@@ -43,20 +43,17 @@ class Ostacolo
     alpha = alpha_o;
     forma = nfigura;
     creato = true;
-  
+
 
     //orientamento
     translate(posx_o, posy_o, 5); //10 posiziona l'ostacolo sul pavimento
     rotateZ(alpha);
 
-   
     //fill(#A70202);
     noFill();
 
-
     //creazione ostacolo
     formaost(forma, l1, l2);
-
 
     //coordinate ostacolo rispetto a SR ostacolo
     //vertice 1
@@ -71,7 +68,7 @@ class Ostacolo
     //vertice 4
     vert_array_SR_ost[6] = l1/2; //in alto a dx
     vert_array_SR_ost[7] = l2/2;
-    
+
 
     //coordinate ostacolo rispetto SR0
     //vertice 1
@@ -87,25 +84,25 @@ class Ostacolo
     vert_SR0[6] = -(-l1/2)*cos(alpha) + (-l2/2)*sin(alpha)+posx;
     vert_SR0[7] = (l1/2)*cos(alpha) + (l2/2)*sin(alpha)+posy;
 
-  /* FORMULE
-  Sono trasformazioni geometriche necessarie per convertire 
-  le coordinate dell'oggetto dal sistema di riferimento ruotato a quello non ruotato.
-  Quando lo spazio di lavoro è ruotato, bisogna applicare una trasformazione di 
-  rotazione inversa alle coordinate del quadrato per riportarle al sistema di riferimento non ruotato.
-  
-  coordinate del sr non ruotato (tavolo)
-  x' = cos(θ) * (x - x0) - sin(θ) * (y - y0) + x0 
-  y' = sin(θ) * (x - x0) + cos(θ) * (y - y0) + y0
-  
-  x,y -> coordinate ostacolo ruotato rispetto al tavolo
-  x0,y0 -> coordinate del punto intorno a cui ruoti (centro sr tavolo)
-  θ -> angolo di rotazione
-  
-  */
-  
-  
-  //ostacolo OMBRA
-  //coordinate ostacolo rispetto a SR ostacolo ombra
+    /* FORMULE
+     Sono trasformazioni geometriche necessarie per convertire
+     le coordinate dell'oggetto dal sistema di riferimento ruotato a quello non ruotato.
+     Quando lo spazio di lavoro è ruotato, bisogna applicare una trasformazione di
+     rotazione inversa alle coordinate del quadrato per riportarle al sistema di riferimento non ruotato.
+     
+     coordinate del sr non ruotato (tavolo)
+     x' = cos(θ) * (x - x0) - sin(θ) * (y - y0) + x0
+     y' = sin(θ) * (x - x0) + cos(θ) * (y - y0) + y0
+     
+     x,y -> coordinate ostacolo ruotato rispetto al tavolo
+     x0,y0 -> coordinate del punto intorno a cui ruoti (centro sr tavolo)
+     θ -> angolo di rotazione
+     
+     */
+
+
+    //ostacolo OMBRA
+    //coordinate ostacolo rispetto a SR ostacolo ombra
     //vertice 1
     vert_array_SR_ost_om[0] = -l1/2-k; //in basso a sx
     vert_array_SR_ost_om[1] = -l2/2-k;
@@ -127,7 +124,7 @@ class Ostacolo
     pushMatrix();
     rotateZ(PI/4);
     noStroke();
-    translate(-l1/2,-l2/2);
+    translate(-l1/2, -l2/2);
     sphere(2);
     popMatrix();
     //vertice 2
@@ -137,7 +134,7 @@ class Ostacolo
     pushMatrix();
     rotateZ(PI/4);
     noStroke();
-    translate(l1/2,-l2/2);
+    translate(l1/2, -l2/2);
     sphere(2);
     popMatrix();
     //vertice 3
@@ -147,7 +144,7 @@ class Ostacolo
     pushMatrix();
     rotateZ(PI/4);
     noStroke();
-    translate(-l1/2,l2/2);
+    translate(-l1/2, l2/2);
     sphere(2);
     popMatrix();
     //vertice 4
@@ -157,7 +154,7 @@ class Ostacolo
     noStroke();
     pushMatrix();
     rotateZ(PI/4);
-    translate(l1/2,l2/2);
+    translate(l1/2, l2/2);
     sphere(5);
     popMatrix();
 
@@ -176,39 +173,39 @@ void Ostacolo_creazione(int n, float posx_o, float posy_o, float l1, float l2, f
   //println("dimensione lista", num_ost);
 
   // se siamo arrivati al numero massimo non inseriamo altri ostacoli
-  if (num_ost <= numero_ostacoli) //evita di inserire più volte lo stesso ostacolo poichè il draw viene eseguito 60 volte al secondo 
+  if (num_ost <= numero_ostacoli) //evita di inserire più volte lo stesso ostacolo poichè il draw viene eseguito 60 volte al secondo
   {
     ostacolo_ArrayList.add(ost); //qui inserisce l'ostacolo nella lista
     //println("inserito un ostacolo");
   }
-  
+
   /*
   switch (nfigura)
-  {
-    case 1:
-    ostacolo_ArrayList.get(numero_ostacoli).vertici = 4;
-    break;
-    
-    case 2:
-    ostacolo_ArrayList.get(numero_ostacoli).vertici = 4;
-    break;
-    
-    case 3:
-    ostacolo_ArrayList.get(numero_ostacoli).vertici = 4;
-    break;
-    
-    case 4:
-    ostacolo_ArrayList.get(numero_ostacoli).vertici = 30;
-    break;
-    
-    case 5:
-    ostacolo_ArrayList.get(numero_ostacoli).vertici = 3;
-    break;
-    
-    case 6:
-    ostacolo_ArrayList.get(numero_ostacoli).vertici = 4;
-    break;
-    
-  }
-  */
+   {
+   case 1:
+   ostacolo_ArrayList.get(numero_ostacoli).vertici = 4;
+   break;
+   
+   case 2:
+   ostacolo_ArrayList.get(numero_ostacoli).vertici = 4;
+   break;
+   
+   case 3:
+   ostacolo_ArrayList.get(numero_ostacoli).vertici = 4;
+   break;
+   
+   case 4:
+   ostacolo_ArrayList.get(numero_ostacoli).vertici = 30;
+   break;
+   
+   case 5:
+   ostacolo_ArrayList.get(numero_ostacoli).vertici = 3;
+   break;
+   
+   case 6:
+   ostacolo_ArrayList.get(numero_ostacoli).vertici = 4;
+   break;
+   
+   }
+   */
 }

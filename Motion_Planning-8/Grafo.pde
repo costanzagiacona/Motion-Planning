@@ -37,7 +37,6 @@ void print_tree() {
       strokeWeight(5);
       fill(#4BA240);
       stroke(#4BA240);
-
       circle(ni.x, ni.y, r_nodo);
       fill(0);
 

@@ -52,7 +52,7 @@ boolean scan(float x, float y, float len_max, color colore)
   } 
   else if(nfigurasp == 4) {
     pushMatrix();
-    translate(-x,-y,0);
+    //translate(-x,-y,0);
     intersection_wall = intersectionWall_c(x, y, 0, 0, len_x, len_y);
     popMatrix();
   }

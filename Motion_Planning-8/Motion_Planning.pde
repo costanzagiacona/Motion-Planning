@@ -18,12 +18,10 @@ float xsp = 0;
 float ysp = 0;
 
 //vettore dimensione lati figure
-float[] posxsp; //inzializzazione
+float[] posxsp; 
 float[] posysp;
-//dimensione lati
-float[] lato_figura = new float[4];
 float[] vertici_sp = new float[8];
-float[] vertici_cerchio = new float[60]; //numero vertici cerchio (30 sopra (x e y))
+float[] vertici_cerchio = new float[120]; //numero vertici cerchio (30 sopra (x e y))
 
 //dimensioni oggetti
 float lato1 = 50, lato2 = 70;
@@ -33,8 +31,8 @@ float kp = 5; //incremento
 float k = 10; //incremento lato per ostacolo ombra
 
 //per modificare la camera
-float eyeY = 0;
 float eyeX = 0;
+float eyeY = 0;
 // parametri visualizzazione
 float angoloX = 0;
 float angoloY = 0;
@@ -42,20 +40,16 @@ float angoloXpartenza = 0;
 float angoloYpartenza = 0;
 
 //semaforo modifica spazio di lavoro
-boolean semsp= true;
+boolean semsp = true;
 //semaforo modifica ostacoli
 boolean semost = false;
 //semaforo inserimento ostacoli
 int semins = 0;
-/*
-1 - dimensione e orientamento
- 2 - posizione
- */
 
-//roomba
+//robot
 float pos_x_r = 180;          //  <====
 float pos_y_r = -180;           //  <====
-float r_r = 27;  //stima del diametro del roomba, con tolleranza, per evitare le collisioni
+float r_r = 27;  //stima del diametro del robot rappresentato come un cerchio
 
 //Variabili target
 float xot = -110;        //        <=====
@@ -64,10 +58,12 @@ float r_target = 10;
 float h_target = 5;
 boolean ist_t = true;
 
-
-//parametri tree & movimento
+//parametri albero & movimento
 float x_home = pos_x_r;
 float y_home = pos_y_r;
+
+//lunghezza laser
+float laser_len = 1000;
 
 //grafo
 Nodo nodo_corrente, nodo_successivo;
@@ -91,7 +87,6 @@ float t = 0; // timer globale
 float Dt = 30;  //NON è un differenziale: tf = ti + Dt
 float ti;
 
-
 //contatori
 int i = 0;
 int numero_ostacoli = 0; //numero corrente di ostacoli
@@ -103,16 +98,9 @@ void setup()
   size(1500, 900, P3D);
   background(#A8DDEA);
 
+  // variabili per dimensioni spazio di lavoro
   posxsp = new float[6];
   posysp = new float[6];
-
-/*
-  for (int i=0; i<6; i++)
-  {
-    posxsp[i] = 0;
-    posysp[i] = 0;
-  }
-*/
 
   //grafo
   Nodo first_root = new Nodo("source", x_home, y_home);
@@ -152,18 +140,15 @@ void draw()
   translate(0, 0, 10);
   drawAxes(40);
 
-
   //DISEGNO ROBOT
   pushMatrix();
   translate(pos_x_r, pos_y_r); //SR robot
-  //figura(60, 5, 5, 0);
   formaost(4, 20, 20); //disegno robot
   popMatrix();
-  
+
   //target
   pushMatrix();
   translate(xot, yot); //SR target
-  //figura(60, 5, 5, 0);
   formaost(5, 20, 20); //disegno target
   popMatrix();
 
@@ -177,16 +162,16 @@ void draw()
     translate(x, y, 10);
     rotateZ(orientamento);
     formaost(nfiguraost, lato1+incrost, lato2+incrost);
-    fill(GRAY);
+    //fill(GRAY);
     //translate(0, 0, -5);
-    //formaost(nfiguraost,50+incrost+k,70+incrost+k); //ombra
+    //formaost(nfiguraost,lato1+incrost+20,lato2+incrost+20); //ombra
     popMatrix();
   }
 
 
   for (Ostacolo o : ostacolo_ArrayList)
   {
-    //non mostriamo il primo ostacolo poichè lo mostriamo alla riga 170
+    //non mostriamo il primo ostacolo poichè lo mostriamo alla riga 153
     if (o.id != 0) Ostacolo_creazione(o.id, o.posx, o.posy, o.lato1, o.lato2, o.alpha, o.forma);
   }
 
@@ -196,13 +181,12 @@ void draw()
     if (token)
     {
       //FASE DI SCANNER
-      //s = scan(180, -180, 600*sqrt(2), #6920E0);
-      s = scan(pos_x_r, pos_y_r, 900, #6920E0);
+      s = scan(pos_x_r, pos_y_r, laser_len, #6920E0);
 
       if (vertex_found)
       {
         //aggiungo nodo solo quando trovo un nuovo vertice
-        make_tree(nodo_corrente); //funzione che aggiunge il vertice eventualmente detectato ai links del current node
+        make_tree(nodo_corrente); //funzione che aggiunge il vertice eventualmente trovato ai links del current node
         vertex_found = false;
       }
       print_tree();
@@ -216,29 +200,33 @@ void draw()
         exploring_node++;
         nodo_successivo = nodo.get(exploring_node);
 
+        // trova il percorso tra il nodo corrente e il prossimo da visitare
         percorso = find_path(nodo_corrente, nodo_successivo);
 
+        // coordinate del nodo di partenza 
         x1 = percorso.get(j).x;
         y1 = percorso.get(j).y;
+        
+        // coordinate del target (punto da raggiungere)
         x2 = xot;
         y2 = yot;
 
         t = 0;
         ti = t;
-        
+
         /* Il valore dei coefficienti è stato trovato attraverso la spline cubica naturale
-           che rappresenta una scelta possibile nel caso di un polinomio di terzo ordine.
-           Supponiamo che il robot si sposti tra i punti con velocità costante e pari a 1 (v=1).
-           Usiamo ti, perché il polinomio cambia in funzione del segmento percorso.
-           Un'altra possibilità sarebbe l'uso delle derivate.
-        */
+         che rappresenta una scelta possibile nel caso di un polinomio di terzo ordine.
+         Supponiamo che il robot si sposti tra i punti con velocità costante e pari a 1 (v=1).
+         Usiamo ti, perché il polinomio cambia in funzione del segmento percorso.
+         Un'altra possibilità sarebbe l'uso delle derivate.
+         */
         A = (2*pow(ti, 3)+3*Dt*pow(ti, 2))/(pow(Dt, 3));
         B = -(6*pow(ti, 2)+6*Dt*ti)/(pow(Dt, 3));
         C = (6*ti+3*Dt)/(pow(Dt, 3));
         D = -2/(pow(Dt, 3));
       }
 
-      if (alpha >= 0 && alpha <start_alpha )
+      if (alpha >= 0 && alpha < start_alpha)
       {
         //ciclo di scan completo => cambia token per muoversi
 
@@ -252,8 +240,10 @@ void draw()
 
         percorso = find_path(nodo_corrente, nodo_successivo);
 
+        // coordinate nodo di partenza
         x1 = percorso.get(j).x;
         y1 = percorso.get(j).y;
+        //coordinate nodo di destinazione
         x2 = percorso.get(j+1).x;
         y2 = percorso.get(j+1).y;
 
@@ -272,11 +262,11 @@ void draw()
       if (!s)
       {
         //scan terminato, target non trovato
-
         if (!arrived)
         {
           print_tree();
-
+          
+          // si muove tra due nodi del grafo 
           float[] new_pos = move(x1, y1, x2, y2);
 
           // le coordinate di destinazione diventano quelle del robot, che così si sposta lì
@@ -318,7 +308,7 @@ void draw()
           }
         }
       } else
-      {  // if (s)
+      {  // if (s) -> target trovato
         float toll2 = 1;
 
         if (abs(pos_x_r - x2) < toll2 && abs(pos_y_r - y2) < toll2 )
@@ -327,7 +317,9 @@ void draw()
         } else
         {
           print_tree();
+          // x2, y2 sono le coordinate del target
           float[] new_pos = move(x1, y1, x2, y2);
+          // spostamento robot nel punto del target
           pos_x_r = new_pos[0];
           pos_y_r = new_pos[1];
         }

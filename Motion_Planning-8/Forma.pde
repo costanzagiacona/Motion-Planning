@@ -134,21 +134,25 @@ void vertici_sp(int nfigura, float l1, float l2)
     /*Calcola l'angolo in radianti per ogni lato della figura.
      Divide 360 gradi per il numero di vertici per ottenere l'angolo.*/
     //30 -> numero vertici
-    float angle = -360 / 30; //disegna vertici in senso antiorario
+    float angle = -360 / 120; //disegna vertici in senso antiorario
     float x = 0, y = 0;
     //sphere(20);
-    for (int i = 0; i < 31; i++) //aumentando il numero dei vertici viene più preciso lo scan
+    for (int i = 0; i < 120; i=i+2) //aumentando il numero dei vertici viene più preciso lo scan
     {
       x = cos(radians(i * angle)) * (l1/2);
       y = sin(radians(i * angle)) * (l1/2);
       vertici_cerchio[i] = x;
       vertici_cerchio[i+1] = y;
-      /*pushMatrix();
-      translate(x,y);
-      sphere(20);
-      popMatrix();
-      */
+      //println(vertici_cerchio[i], vertici_cerchio[i+1]);
+      //pushMatrix();
+      //translate(x,y);
+      //stroke(255,0,0);
+      //sphere(20);
+      //popMatrix();
+      
     }
+    //for(int i = 0; i < 120; i++) println("VERTICI", vertici_cerchio[i]);
+
     break;
 
   case 5: //TRIANGOLO
@@ -205,7 +209,6 @@ void formaost(int nfigura, float l1, float l2) //input -> numero figura
   case 2:
     //rettangolo
     box(l1, l2, 10); // rettangolo
-
     break;
 
   case 3:

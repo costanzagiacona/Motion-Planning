@@ -32,18 +32,18 @@ class Albero
     return radice;
   }
   
-  int size() {
-    return nodo.size();
-  }
+  //int size() {
+  //  return nodo.size();
+  //}
   
-  // restituisce il nodo identificato dal suo indice
-  Nodo getNode(int index) {
-    return nodo.get(index);
-  }
+  //// restituisce il nodo identificato dal suo indice
+  //Nodo getNode(int index) {
+  //  return nodo.get(index);
+  //}
   
-  ArrayList<Nodo> getNodes() {
-    return nodo;
-  }
+  //ArrayList<Nodo> getNodes() {
+  //  return nodo;
+  //}
   
   // aggiunge un arco tra due nodi
   boolean linkNodes(Nodo n1, Nodo n2) {

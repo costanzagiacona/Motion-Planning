@@ -79,13 +79,13 @@ boolean sovrapposizione(float posx, float posy, float l1, float l2, float alpha)
   {
   case 1: //quadrato
   case 2: //rettangolo
-    if (x > posxsp[nfigurasp-1]/2 || x < - posxsp[nfigurasp-1]/2 )
+    if (x >= posxsp[nfigurasp-1]/2 || x <= - posxsp[nfigurasp-1]/2 )
     {
       println(" TAVOLO oggetto uscito x");
       v1 = true;
       return v1;
     }
-    if (y > posysp[nfigurasp-1]/2 || y < - posysp[nfigurasp-1]/2 )
+    if (y >= posysp[nfigurasp-1]/2 || y <= - posysp[nfigurasp-1]/2 )
     {
       println(" TAVOLO oggetto uscito y");
       v1 = true;
