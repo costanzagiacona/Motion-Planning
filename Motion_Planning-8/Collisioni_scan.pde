@@ -53,6 +53,9 @@ float[] intersectionWall_qr(float x, float y, float cx, float cy, float len_x, f
   /*qui il confronto con il min non serve perchè il robot sta dentro al tavolo, non vedrà mai due bordi contemporaneamente
    */
 
+  //len_x = (ostacolo_ArrayList.get(numero_ostacoli-1)).lato1/2;
+  //len_y = (ostacolo_ArrayList.get(numero_ostacoli-1)).lato2/2;
+
   float[] wall_collision = new float[3];
   wall_collision[0] = 0; //presenza o meno della collisione
   wall_collision[1] = 0; //collisione in x
@@ -110,6 +113,7 @@ float[] intersectionWall_pol(float x, float y, float cx, float cy, float len_x, 
   wall_collision[1] = 0; //collisione in x
   wall_collision[2] = 0; //collisione in y
 
+  //line(vertici_sp[0] - x, vertici_sp[1] - y, vertici_sp[2] - x, vertici_sp[3] - y);
   //è sufficiente ci sia una sola collisione
   dx = intersectionLine(vertici_sp[0] - x, vertici_sp[1] - y, vertici_sp[2] - x, vertici_sp[3] - y, cx, cy, len_x, len_y); // v1-v2 -> in basso a sx ---- in basso a dx
   if (dx[0] == 1) { //se ho una collisione a dx la salvo
@@ -143,9 +147,9 @@ float[] intersectionWall_pol(float x, float y, float cx, float cy, float len_x, 
 }
 
 /*
-     v1
-   /    \
-  /      \
+ v1
+ /    \
+ /      \
  v3 ---- v2
  */
 
@@ -190,6 +194,44 @@ float[] intersectionWall_3v(float x, float y, float cx, float cy, float len_x, f
 }
 
 
+//intersezione tavolo CERCHIO
+float[] intersectionWall_c(float x, float y, float cx, float cy, float len_x, float len_y)
+{
+  float[] intersection = new float[3];
+  float[] wall_collision = new float[3];
+  wall_collision[0] = 0; //presenza o meno della collisione
+  wall_collision[1] = 0; //collisione in x
+  wall_collision[2] = 0; //collisione in y
+
+  for (int i = 0; i < 15; i++) //aumentando il numero dei vertici viene più preciso lo scan (60/4 = 15)
+  {
+    //fill(255,0,0);
+    sphere(20);
+    
+    pushMatrix();
+     translate(vertici_cerchio[i] -x,vertici_cerchio[i+1]-y,0 );
+      sphere(20);
+      popMatrix();
+      
+      line(vertici_cerchio[i] -x, vertici_cerchio[i+1] -y, vertici_cerchio[i+2] -x, vertici_cerchio[i+3] - y);
+      
+      pushMatrix();
+     translate(vertici_cerchio[i+2]-x ,vertici_cerchio[i+3] -y,0);
+      sphere(20);
+      popMatrix();
+    
+    intersection = intersectionLine(vertici_cerchio[i] -x, vertici_cerchio[i+1] -y, vertici_cerchio[i+2] -x, vertici_cerchio[i+3] - y, cx, cy, len_x, len_y); //v3-v2
+    if (intersection[0]==1)
+    {
+      wall_collision[0] = 1;
+      wall_collision[1] = intersection[1];
+      wall_collision[2] = intersection[2];
+      return wall_collision;
+    }
+  }
+
+  return wall_collision;
+}
 
 
 

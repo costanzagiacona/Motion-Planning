@@ -1,4 +1,4 @@
-//SPAZIO OPERATIVO
+//--------------------- SPAZIO OPERATIVO ---------------------
 //scegli la figura in base al numero
 void formasp(int nfigura) //input -> numero figura
 {
@@ -99,211 +99,117 @@ void vertici_sp(int nfigura, float l1, float l2)
   {
   case 1: //QUADRATO
   case 2: //RETTANGOLO
-    //println("l1 ->", l1);
-    //println("l2 ->", l2);
     //coordinate ostacolo rispetto SR0
-
     //vertice 1
     vertici_sp[0] = (-l1/2); //in basso a sx
     vertici_sp[1] = (-l2/2);
-    //fill(0);
-    //pushMatrix();
-    //noStroke();
-    //translate(-l1/2, -l2/2);
-    //sphere(15);
-    //popMatrix();
-
     //vertice 2
     vertici_sp[2] = (l1/2); //in basso a dx
     vertici_sp[3] = (l2/2);
-    //pushMatrix();
-    //fill(#222EF2); ///Blu
-    //noStroke();
-    //translate(l1/2, -l2/2);
-    //sphere(15);
-    //popMatrix();
-
     //vertice 3
     vertici_sp[4] = (-l1/2); //in alto a sx
     vertici_sp[5] = (-l2/2);
-    //pushMatrix();
-    //fill(#F222F2); //rosa
-    //noStroke();
-    //translate(-l1/2, l2/2);
-    //sphere(15);
-    //popMatrix();
-
     //vertice 4
     vertici_sp[6] = -(-l1/2); //in alto a dx
     vertici_sp[7] = (l2/2);
-    //fill(#F4FA56); //giallo
-    //noStroke();
-    //pushMatrix();
-    //translate(l1/2, l2/2);
-    //sphere(15);
-    //popMatrix();
-
     break;
 
   case 3: //ROMBO
-    //println("l1 ->", l1);
-    //println("l2 ->", l2);
     //diagonale rombo
     d = sqrt(pow(l1, 2)+pow(l2, 2));
     vertici_sp[0] = 0; //in basso
     vertici_sp[1] = d/3;
-    //fill(0);
-    //pushMatrix();
-    //noStroke();
-    //translate(0,d/3);
-    //sphere(15);
-    //popMatrix();
-
     //vertice 2
     vertici_sp[2] = d/2.7; //dx
     vertici_sp[3] = 0;
-    //pushMatrix();
-    //fill(#222EF2); ///Blu
-    //noStroke();
-    //translate(d/2.7, 0);
-    //sphere(15);
-    //popMatrix();
-
     //vertice 3
     vertici_sp[4] = -d/2.7; //sx
     vertici_sp[5] = 0;
-    //pushMatrix();
-    //fill(#F222F2); //rosa
-    //noStroke();
-    //translate(-d/2.7, 0);
-    //sphere(15);
-    //popMatrix();
-
     //vertice 4
     vertici_sp[6] = 0; //avanti, quello lontano
     vertici_sp[7] = -d/3;
-    //fill(#F4FA56); //giallo
-    //noStroke();
-    //pushMatrix();
-    //translate(0, -d/3);
-    //sphere(15);
-    //popMatrix();
+    break;
 
+  case 4: //CERCHIO
+    /*Calcola l'angolo in radianti per ogni lato della figura.
+     Divide 360 gradi per il numero di vertici per ottenere l'angolo.*/
+    //30 -> numero vertici
+    float angle = -360 / 30; //disegna vertici in senso antiorario
+    float x = 0, y = 0;
+    //sphere(20);
+    for (int i = 0; i < 31; i++) //aumentando il numero dei vertici viene più preciso lo scan
+    {
+      x = cos(radians(i * angle)) * (l1/2);
+      y = sin(radians(i * angle)) * (l1/2);
+      vertici_cerchio[i] = x;
+      vertici_cerchio[i+1] = y;
+      /*pushMatrix();
+      translate(x,y);
+      sphere(20);
+      popMatrix();
+      */
+    }
     break;
 
   case 5: //TRIANGOLO
-    //println("l1 ->", l1);
-    //println("l2 ->", l2);
-    sphere(20);
     h = (l1*sqrt(3))/2;
     //coordinate ostacolo rispetto SR0
     //vertice 1
     vertici_sp[0] = 0; //in basso
     vertici_sp[1] = (-h/1.5);
-    fill(0);
-    pushMatrix();
-    noStroke();
-    translate(0, -h/1.5);
-    sphere(15);
-    popMatrix();
     //vertice 2
     vertici_sp[2] = (l1/2); //dx
     vertici_sp[3] = (h/3);
-    pushMatrix();
-    fill(#222EF2); ///Blu
-    noStroke();
-    translate(l1/2, h/3);
-    sphere(15);
-    popMatrix();
     //vertice 3
     vertici_sp[4] = -l1/2; //sx
     vertici_sp[5] = (h/3);
-    pushMatrix();
-    fill(#F222F2); //rosa
-    noStroke();
-    translate(-l1/2, h/3);
-    sphere(15);
-    popMatrix();
     break;
 
   case 6: //TRAPEZIO
-    //println("l1 ->", l1);
-    //println("l2 ->", l2);
-    h = l2;
+    h = l2; //altezza
     vertici_sp[0] = -l2/2; //in basso a sx
     vertici_sp[1] = h/2;
-    fill(0);
-    pushMatrix();
-    noStroke();
-    translate(-l2/2, h/2);
-    sphere(15);
-    popMatrix();
     //vertice 2
     vertici_sp[2] = l2/2; //dx
     vertici_sp[3] = h/2;
-    pushMatrix();
-    fill(#222EF2); ///Blu
-    noStroke();
-    translate(l2/2, h/2);
-    sphere(15);
-    popMatrix();
     //vertice 3
     vertici_sp[4] = -l1/2; //sx
     vertici_sp[5] = -h/2;
-    pushMatrix();
-    fill(#F222F2); //rosa
-    noStroke();
-    translate(-l1/2, -h/2);
-    sphere(15);
-    popMatrix();
     //vertice 4
     vertici_sp[6] = l1/2; //avanti, quello lontano
     vertici_sp[7] = -h/2;
-    fill(#F4FA56); //giallo
-    noStroke();
-    pushMatrix();
-    translate(l1/2, -h/2);
-    sphere(15);
-    popMatrix();
     break;
   }
 }
 
 
-//OSTACOLI
+// --------------------- OSTACOLI ---------------------
 //scegli la figura in base al numero
 void formaost(int nfigura, float l1, float l2) //input -> numero figura
 {
-  //colore figura
-  //fill(#553B3B);
   // bordo della figura di colore nero
   stroke(0);
 
   pushMatrix();
   rotateZ(PI/4);
-  //lato1 = l1; //NON mettere qui l'aumento altrimenti gli ostacoli cambiano tutti insieme
-  //lato2 = l2;
-  //println("formaost lato1 e lato2:",lato1,lato2);
+  //NON mettere qui l'aumento altrimenti gli ostacoli cambiano tutti insieme
 
   switch(nfigura)
   {
   case 1:
     //quadrato
-    //figura(4, l1, l1,0);
     box(l1, l1, 10); //quadrato
 
     break;
 
   case 2:
     //rettangolo
-    //figura(4, l1, l2,0);
     box(l1, l2, 10); // rettangolo
 
     break;
 
   case 3:
     //rombo
-    //figura(4, l2, l2, 0); //sides, lato1, lato2
     disegnaRombo(0, 0, l1, l2);
     break;
 
@@ -315,13 +221,11 @@ void formaost(int nfigura, float l1, float l2) //input -> numero figura
 
   case 5:
     //triangolo
-    //figura(3, l1, l1,0); //sides, lato1, lato2
     disegnaTriangolo(0, 0, l1);
     break;
 
   case 6:
     //trapezio
-    //trapezio(l1+0, l2+0, l1+0, l2+0); //coordinate veritici
     disegnaTrapezio(0, 0, l1, l2, l2);
     break;
 
