@@ -1,11 +1,9 @@
 /*Funzioni per il posizionamento dell'ostacolo all'interno del tavolo e non sovrapposto ad altri ostacoli*/
 
-
 /* funzione che, prese in ingresso le coordinate inerziali di un punto, resistuisce l'id
  dell'oggetto all'interno di cui si trova, oppure -1 se non appartiene a nessun oggetto */
 int is_in_obstacle(float x_0, float y_0) //input - coordinate punto rispetto sistema di riferimento fisso SR0
 {
-
   //x_1,y_1 sono le coordinate del punto rispetto al SR dell'ostacolo
   float x_1, y_1, beta, px, py;
 
@@ -40,7 +38,7 @@ boolean sovrapposizione(float posx, float posy, float l1, float l2, float alpha)
   /* qui verifica se l'ostacolo da inserire ha vertici che compenetrano un ostacolo esistente */
   float[] vert_ghost_obs = new float[8]; //le salviamo qui poichè l'ostacolo non è ancora stato istanziato
 
-  //le calcoliamo e non le prendiamo dalla classe oggetto perchè ancora non è stato instanziato
+  //le calcoliamo e non le prendiamo dalla classe oggetto perchè ancora non è stato istanziato
   //coordinate ostacolo rispetto SR0
   //vertice 1
   vert_ghost_obs[0] = (-l1/2-k)*cos(alpha) - (-l2/2-k)*sin(alpha)+posx; //teniamo conto dell'ombra
@@ -62,8 +60,8 @@ boolean sovrapposizione(float posx, float posy, float l1, float l2, float alpha)
   /*
  Per vedere se l'oggetto esce dal tavolo si fa uno studio diviso in due parti:
    1 - controllo sui vertici per verificare se escono dal tavolo
-   2 - controllo sul centro dell'oggetto per verificare se l'oggetto sia all'interno dello spazio di lavoro o meno 
-  Il controllo 2 è necessario poichè se l'oggetto si trova fuori dallo spazio di lavoro non deve essere istanziato, in questo caso i vertici non rilevano una sovrapposizione
+   2 - controllo sul centro dell'oggetto per verificare se l'oggetto sia all'interno dello spazio di lavoro o meno
+   Il controllo 2 è necessario poichè se l'oggetto si trova fuori dallo spazio di lavoro non deve essere istanziato, in questo caso i vertici non rilevano una sovrapposizione
    */
 
 
@@ -74,18 +72,17 @@ boolean sovrapposizione(float posx, float posy, float l1, float l2, float alpha)
   float[] up = new float[3];
   float[] down = new float[3];
 
-
   switch(nfigurasp)
   {
   case 1: //quadrato
   case 2: //rettangolo
-    if (x > posxsp[nfigurasp-1]/2 || x < - posxsp[nfigurasp-1]/2 )
+    if (x >= posxsp[nfigurasp-1]/2 || x <= - posxsp[nfigurasp-1]/2 )
     {
       println(" TAVOLO oggetto uscito x");
       v1 = true;
       return v1;
     }
-    if (y > posysp[nfigurasp-1]/2 || y < - posysp[nfigurasp-1]/2 )
+    if (y >= posysp[nfigurasp-1]/2 || y <= - posysp[nfigurasp-1]/2 )
     {
       println(" TAVOLO oggetto uscito y");
       v1 = true;
@@ -141,7 +138,7 @@ boolean sovrapposizione(float posx, float posy, float l1, float l2, float alpha)
   case 5: //triangolo
     h = (posxsp[nfigurasp-1]*sqrt(3))/2;
     //x
-    dx = intersectionLine(vertici_sp[0], vertici_sp[1], vertici_sp[2], vertici_sp[3], 0, 0, x, y); // v1-v2
+    dx = intersectionLine(vertici_sp[2], vertici_sp[3], vertici_sp[0], vertici_sp[1], 0, 0, x, y); // v1-v2
     if (dx[0] == 1) {
       println(" TAVOLO oggetto uscito x");
       v1 = true;
@@ -171,10 +168,6 @@ boolean sovrapposizione(float posx, float posy, float l1, float l2, float alpha)
   float[] col_sp;
   for (int k = 0; k < vert_ghost_obs.length; k = k+2)
   {
-    stroke(0, 0, 255);
-    //line(0, 0, x, y); //da centro SR0 a centro oggetto
-    stroke(255, 0, 0);
-    //line( x, y);
     // uso la funzione di intersezione con sp per evitare che gli ostacoli vengano posizionati fuori dallo spazio di lavoro
     if (nfigurasp == 1 || nfigurasp == 2) { // quadrato o rettangolo
       col_sp = intersectionWall_qr(0, 0, x, y, vert_ghost_obs[k], vert_ghost_obs[k+1]);
@@ -186,7 +179,7 @@ boolean sovrapposizione(float posx, float posy, float l1, float l2, float alpha)
       col_sp = intersectionWall_pol(0, 0, x, y, vert_ghost_obs[k], vert_ghost_obs[k+1]);
       if (col_sp[0] == 1) println("collisioni tavolo pol4");
     }
-    
+
     if (col_sp[0] == 1)
     {
       v1 = true;
@@ -196,7 +189,7 @@ boolean sovrapposizione(float posx, float posy, float l1, float l2, float alpha)
 
 
   //CON ALTRI OSTACOLI
-  
+
   /* qui verifica se l'ostacolo da inserire è compenetrato da vertici di un ostacolo esistente */
   //ostacolo OMBRA
   float tol = 1.0;

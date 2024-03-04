@@ -22,7 +22,7 @@ void make_tree(Nodo current) {
 // visualizza a schermo l'albero
 void print_tree() {
 
-  float x_c  = albero.radice.x;
+  float x_c = albero.radice.x;
   float y_c = albero.radice.y;
 
   fill(#EFF54F);
@@ -30,7 +30,9 @@ void print_tree() {
   translate(0, 0, 2);
   circle(x_c, y_c, 40);
   translate(0, 0, -2);
-
+  textFont(myFont);
+  textSize(20);
+  
   if (print) {
     for (Nodo ni : nodo) {
 

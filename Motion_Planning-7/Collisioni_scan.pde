@@ -4,7 +4,6 @@ float[] intersectionLine(float x1, float y1, float x2, float y2, float x3, float
 
   //parametrizzazione delle rette rispetto ai parametri t e u
 
-
   float[] ret = new float[3];      //ret[0] = 1 se c'è intersezione, ret[1] e ret[2] sono le coordinate del pt di intersezione
 
   float t = ((x4-x3)*(y1-y3) - (y4-y3)*(x1-x3)) / ((y4-y3)*(x2-x1) - (x4-x3)*(y2-y1));
@@ -28,8 +27,8 @@ float[] intersectionLine(float x1, float y1, float x2, float y2, float x3, float
     ret[0] = 1;
     ret[1] = x1 + (t * (x2-x1));
     ret[2] = y1 + (t * (y2-y1));
-    fill(255);
-    noStroke();
+    //fill(255);
+    //noStroke();
 
     return ret;
   } else //non c'è collisione
@@ -52,9 +51,6 @@ float[] intersectionWall_qr(float x, float y, float cx, float cy, float len_x, f
 
   /*qui il confronto con il min non serve perchè il robot sta dentro al tavolo, non vedrà mai due bordi contemporaneamente
    */
-
-  //len_x = (ostacolo_ArrayList.get(numero_ostacoli-1)).lato1/2;
-  //len_y = (ostacolo_ArrayList.get(numero_ostacoli-1)).lato2/2;
 
   float[] wall_collision = new float[3];
   wall_collision[0] = 0; //presenza o meno della collisione
@@ -194,18 +190,14 @@ float[] intersectionWall_3v(float x, float y, float cx, float cy, float len_x, f
 
 
 
-
-
-
-
-/*il seguente blocco di controllo verifica se c'è un'intersezione di ritorno dalle intersectionLine con i contorni degli ostacoli.
- in particolare se la 0esima posizione sugli array è pari a 1, significa che c'è collisione, e le variabili globali intersectionX e intersection Y
+/*
+ Il seguente blocco di controllo verifica se c'è un'intersezione di ritorno dalle intersectionLine con i contorni degli ostacoli.
+ in particolare se la 0esima posizione sugli array è pari a 1, significa che c'è collisione, e le variabili globali intersectionX e intersectionY
  verranno impostate pari ai float in posizione 1 e 2. poi, tale valore sarà confrontato con i ritorni dalle collisioni successive, per tenere
- in memoria solamente la collisione con il bordo più vicino al robot */
+ in memoria solamente la collisione con il bordo più vicino al robot (si usa in scan per il laser) */
 
 float[] intersectionObstacles(float x, float y, float len_x, float len_y) //x,y posizione robot mentre lenx,leny sono le dimensioni del robot
 {
-
   float[] dx = new float[3];
   float[] sx = new float[3];
   float[] up = new float[3];
@@ -222,7 +214,6 @@ float[] intersectionObstacles(float x, float y, float len_x, float len_y) //x,y 
 
   for (int i=0; i< ostacolo_ArrayList.size(); i++) //per ogni ostacolo
   {
-
     Ostacolo o = ostacolo_ArrayList.get(i);
     //l'uso di -x e -y serve a trasformare le coordinate assolute dell'ostacolo in coordinate relative rispetto
     //alla posizione corrente del robot. Questo è fondamentale per il calcolo delle intersezioni e

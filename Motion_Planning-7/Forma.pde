@@ -152,32 +152,32 @@ void vertici_sp(int nfigura, float l1, float l2)
     d = sqrt(pow(l1, 2)+pow(l2, 2));
     vertici_sp[0] = 0; //in basso
     vertici_sp[1] = d/3;
-    //fill(0);
-    //pushMatrix();
-    //noStroke();
-    //translate(0,d/3);
-    //sphere(15);
-    //popMatrix();
+    fill(0);
+    pushMatrix();
+    noStroke();
+    translate(0,d/3);
+    sphere(15);
+    popMatrix();
 
     //vertice 2
     vertici_sp[2] = d/2.7; //dx
     vertici_sp[3] = 0;
-    //pushMatrix();
-    //fill(#222EF2); ///Blu
-    //noStroke();
-    //translate(d/2.7, 0);
-    //sphere(15);
-    //popMatrix();
+    pushMatrix();
+    fill(#222EF2); ///Blu
+    noStroke();
+    translate(d/2.7, 0);
+    sphere(15);
+    popMatrix();
 
     //vertice 3
     vertici_sp[4] = -d/2.7; //sx
     vertici_sp[5] = 0;
-    //pushMatrix();
-    //fill(#F222F2); //rosa
-    //noStroke();
-    //translate(-d/2.7, 0);
-    //sphere(15);
-    //popMatrix();
+    pushMatrix();
+    fill(#F222F2); //rosa
+    noStroke();
+    translate(-d/2.7, 0);
+    sphere(15);
+    popMatrix();
 
     //vertice 4
     vertici_sp[6] = 0; //avanti, quello lontano

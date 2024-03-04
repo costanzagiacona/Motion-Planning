@@ -20,14 +20,11 @@ boolean scan(float x, float y, float len_max, color colore)
   boolean same_obstacle;
   int detected_obs;
 
-
-
   pushMatrix();
   translate(x, y);     //mi pongo nel SR del robot
   len_x = cos(alpha)*len_max;
   len_y = sin(alpha)*len_max;
-
-
+  
   stroke(colore);
   stroke(#6DCEF0);
 
@@ -43,12 +40,15 @@ boolean scan(float x, float y, float len_max, color colore)
   float[] intersection_obstacles = intersectionObstacles(x, y, len_x, len_y); //possibile intersezione con tavolo
   float[] intersection_wall = new float[3];
   
-  if (nfigurasp == 1 || nfigurasp == 2) {
+  if (nfigurasp == 1 || nfigurasp == 2) 
+  {
     intersection_wall = intersectionWall_qr(x, y, 0, 0, len_x, len_y);
   } //possibile intersezione con ostacolo
-  else if (nfigurasp == 5) {
+  else if (nfigurasp == 5) 
+  {
     intersection_wall = intersectionWall_3v(x, y, 0, 0, len_x, len_y);
-  } else {
+  } else 
+  {
     intersection_wall = intersectionWall_pol(x, y, 0, 0, len_x, len_y);
   }
 
@@ -84,9 +84,6 @@ boolean scan(float x, float y, float len_max, color colore)
    same_obstacle = false;
    }
    
-
-  //println(same_obstacle);
-  //same_obstacle = false;
 
   // laser
   if (!same_obstacle)

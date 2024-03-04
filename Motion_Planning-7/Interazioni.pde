@@ -25,11 +25,11 @@ void keyPressed()
     if (keyCode == '5') nfiguraost = 5; //triangolo
     if (keyCode == '6') nfiguraost = 6; ///trapezio
   }
-  //VISTA
-  if (keyCode == 'X') eyeX += 25;
-  if (keyCode == 'x') eyeX -= 25;
-  if (keyCode == 'Y') eyeY += 25;
-  if (keyCode == 'y') eyeY -= 25;
+  ////VISTA
+  //if (keyCode == 'X') eyeX += 25;
+  //if (keyCode == 'x') eyeX -= 25;
+  //if (keyCode == 'Y') eyeY += 25;
+  //if (keyCode == 'y') eyeY -= 25;
 
 
   if (keyCode == ENTER)
