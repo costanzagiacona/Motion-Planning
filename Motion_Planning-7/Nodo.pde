@@ -47,8 +47,5 @@ class Nodo
   int getLinksCount() {
     return links.size();
   }
-
-
-
-
+  
 }

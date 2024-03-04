@@ -23,7 +23,6 @@ int is_in_obstacle(float x_0, float y_0) //input - coordinate punto rispetto sis
     x_1 = cos(beta)*(x_0 - px) + sin(beta)*(y_0 - py); //coordinata x punto nel SR oggetto
     y_1 = cos(beta)*(y_0 - py) + sin(beta)*(px - x_0); //coordinata y punto nel SR oggetto
 
-
     //controlliamo se il punto si trova all'interno dell'ostacolo
     if (abs(x_1) <= ((ob.lato1)/2 + tol) && abs(y_1) <= ((ob.lato2)/2 + tol))
     {
@@ -31,7 +30,6 @@ int is_in_obstacle(float x_0, float y_0) //input - coordinate punto rispetto sis
       return ob.id; //punto all'interno dell'ostacolo
     }
   }
-
   return -1;
 }
 
@@ -39,7 +37,6 @@ int is_in_obstacle(float x_0, float y_0) //input - coordinate punto rispetto sis
 //funzione che verifica se due ostacoli sono sovrapposti o se un ostacolo è fuori dallo spazio operativo
 boolean sovrapposizione(float posx, float posy, float l1, float l2, float alpha) //x ostacolo, y ostacolo, lati ostacolo, orientamento ostacolo (nel SR ostacolo)
 {
-
   /* qui verifica se l'ostacolo da inserire ha vertici che compenetrano un ostacolo esistente */
   float[] vert_ghost_obs = new float[8]; //le salviamo qui poichè l'ostacolo non è ancora stato istanziato
 
@@ -172,7 +169,6 @@ boolean sovrapposizione(float posx, float posy, float l1, float l2, float alpha)
 
   //intersezione lato oggetto con lato tavolo
   float[] col_sp;
-
   for (int k = 0; k < vert_ghost_obs.length; k = k+2)
   {
     stroke(0, 0, 255);
@@ -190,7 +186,7 @@ boolean sovrapposizione(float posx, float posy, float l1, float l2, float alpha)
       col_sp = intersectionWall_pol(0, 0, x, y, vert_ghost_obs[k], vert_ghost_obs[k+1]);
       if (col_sp[0] == 1) println("collisioni tavolo pol4");
     }
-
+    
     if (col_sp[0] == 1)
     {
       v1 = true;
@@ -200,18 +196,7 @@ boolean sovrapposizione(float posx, float posy, float l1, float l2, float alpha)
 
 
   //CON ALTRI OSTACOLI
-
-  //verifica se esiste una sovrapposizione di ostacoli
-  for (int i = 0; i < 8; i=i+2)
-  { //controllo per ogni vertice
-    if (is_in_obstacle(vert_ghost_obs[i], vert_ghost_obs[i+1]) != -1 )
-    {
-      v1 = true;
-      println("sovrapposizione OSTACOLO");
-      return v1;
-    }
-  }
-
+  
   /* qui verifica se l'ostacolo da inserire è compenetrato da vertici di un ostacolo esistente */
   //ostacolo OMBRA
   float tol = 1.0;

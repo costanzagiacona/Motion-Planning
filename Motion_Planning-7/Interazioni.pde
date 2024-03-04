@@ -42,7 +42,6 @@ void keyPressed()
       y = 0;
       orientamento = 0;
       incrost = 0 ;
-      
     } else if (semsp == false) //finita la creazione degli ostacoli passiamo al grafo
     {
       semsp = false;
@@ -53,7 +52,6 @@ void keyPressed()
   /*MODIFICA SPAZIO DI LAVORO*/
   if (semsp == true)
   {
-    //println("SEMsp OSTACOLIIIIIIIIII AAAAAADENHFOIwehnfiohnweoifhoaerhgioehoifhweoiuhfgiueghfuiweghfiuweghfiuweghifugwehiufgweiuiwk");
     if (key == '+') //aumento dimensione spazio lavoro o ostacolo
     {
       incrsp += kp;
@@ -70,7 +68,6 @@ void keyPressed()
   /*MODIFICA OSTACOLI*/
   else if (semost == true)
   {
-    //println("SEMOST OSTACOLIIIIIIIIII AAAAAADENHFOIwehnfiohnweoifhoaerhgioehoifhweoiuhfgiueghfuiweghfiuweghfiuweghifugwehiufgweiuiwk");
     //SEMINS 0
     if (semins == 0)
     {
@@ -79,19 +76,13 @@ void keyPressed()
         x = 0;
         y = 0;
         orientamento = 0;
-        incrost = 0 ;
-        //println("incremento ost ->", incrost);
+        incrost = 0;
         nfiguraost = 1;
         lato1 = 50;
         lato2 = 70;
-        //Ostacolo_creazione(numero_ostacoli, x, y, 50+incrost, 50+incrost, orientamento, nfiguraost,coloreost);
-        //ostacolo_ArrayList.get(numero_ostacoli).colore = false;
-        //println("semins ->", semins, "x ->", x, "y->", y);
         semins = 1;
       }
     }
-
-
 
     //SEMINS 1
     if (semins == 1)
@@ -120,49 +111,37 @@ void keyPressed()
       {
         orientamento = orientamento - PI/24;
       }
-      //println("semins ->", semins, "x ->", x, "y->", y);
 
       if (key == 'w') semins = 2;
     }
 
-    // sovrapposizioneost = sovrapposizione(x, y, 50+incrost, 70+incrost, orientamento);
 
     //SEMINS 2
     if (semins == 2)
     {
-      //sovrapposizioneost = sovrapposizione(x, y, 50+incrost, 70+incrost, orientamento);
 
       if (keyCode == DOWN)
       {
         //posizione ostacolo
         y += 20; //posizione ostacolo
-        //Non facciamo sporgere troppo l'ostacolo dal tavolo
-        // if (y >= posxsp[nfigurasp-1] - (ostacolo_ArrayList.get(numero_ostacoli)).lato2) y = posxsp[nfigurasp-1] - (ostacolo_ArrayList.get(numero_ostacoli)).lato2;
       }
 
       if (keyCode == UP)
       {
         //posizione ostacolo
         y -= 20; //posizione ostacolo
-        //Non facciamo sporgere troppo l'ostacolo dal tavolo
-        //if (y <= -posxsp[nfigurasp-1] + (ostacolo_ArrayList.get(numero_ostacoli)).lato2) y = - posxsp[nfigurasp-1] + (ostacolo_ArrayList.get(numero_ostacoli)).lato2;
       }
 
       //orientamento ostacoli
       if (keyCode == RIGHT)
       {
         x += 20; //posizione ostacolo
-        //Non facciamo sporgere troppo l'ostacolo dal tavolo
-        //if (x >= posxsp[nfigurasp-1] - (ostacolo_ArrayList.get(numero_ostacoli)).lato1/2) x = posxsp[nfigurasp-1] - (ostacolo_ArrayList.get(numero_ostacoli)).lato1/2;
       }
 
       if (keyCode == LEFT)
       {
         x -= 20; //posizione ostacolo
-        //Non facciamo sporgere troppo l'ostacolo dal tavolo
-        //if (x <= -posxsp[nfigurasp-1] + (ostacolo_ArrayList.get(numero_ostacoli)).lato1/2) x = - posxsp[nfigurasp-1] + (ostacolo_ArrayList.get(numero_ostacoli)).lato1/2;
       }
-      //println("semins ->", semins, "x ->", x, "y->", y);
 
       sovrapposizioneost = sovrapposizione(x, y, lato1+incrost, lato2+incrost, orientamento);
 
@@ -170,44 +149,27 @@ void keyPressed()
       {
         if (!sovrapposizioneost) //ricominciamo e creiamo un nuovo ostacolo
         {
-          //ostacolo_ArrayList.get(numero_ostacoli).colore = true;
-          //println("cambio colore in true ->", ostacolo_ArrayList.get(numero_ostacoli).colore );
           numero_ostacoli++;
           if (numero_ostacoli >= MAX_OST) semost = false;
           Ostacolo_creazione(numero_ostacoli, x, y, lato1+incrost, lato2+incrost, orientamento, nfiguraost);
-          //println("incremento ost ->", incrost);
-          //println("creazione nuovo ostacolo con valori -> semins ->", semins, "x ->", x, "y->", y);
           semins = 0;
         }
       }
     }
-
-    //MODIFICA OSTACOLO
-    /*sovrapposizioneost = sovrapposizione(x, y, 120+incrost, 100+incrost, orientamento);
-     if (keyCode == TAB )//semaforo posizione ostacolo
-     {
-     //if (semost && semins == 1 && !sovrapposizioneost) semins = 2;  //da dimensione e orientamento ostacolo passiamo alla posizione
-     //else if (semost && semins == 2 && !sovrapposizioneost) //ricominciamo e creiamo un nuovo ostacolo
-     if (semost && semins == 2 && !sovrapposizioneost) //ricominciamo e creiamo un nuovo ostacolo
-     {
-     numero_ostacoli++;
-     if (numero_ostacoli >= MAX_OST) semost = false;
-     Ostacolo_creazione(numero_ostacoli, x, y, 50+incrost, 50+incrost, orientamento, nfiguraost);
-     println("creazione nuovo ostacolo con valori -> semins ->", semins, "x ->", x, "y->",  y);
-     semins = 0;
-     }
-     }*/
   }
 
-
-
-
-  //DA MODIFICARE
-  // visual home
+  // visual home lungo Y
   if (key == 'h') {
-    angoloX = 0;
-    angoloY = 0;
-    angoloXpartenza = 0;
-    angoloYpartenza = 0;
+    angoloY += 0.05;
+  }
+  if (key == 'H') {
+    angoloY -= 0.05;
+  }
+  // visual home lungo X
+  if (key == 'g') {
+    angoloX += 0.05;
+  }
+  if (key == 'G') {
+    angoloX -= 0.05;
   }
 }

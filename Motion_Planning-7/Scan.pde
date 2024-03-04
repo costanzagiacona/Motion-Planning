@@ -117,6 +117,9 @@ boolean scan(float x, float y, float len_max, color colore)
   return false; //non abbiamo trovato il target
 }
 
+/*La funzione detect_vert serve a individuare un possibile vertice lungo un percorso del laser.
+Cerca di capire se il laser sta attraversando una linea verticale o se c'è una variazione nella direzione del percorso del laser
+*/
 //coordinate laser rispetto SR0
 void detect_vert(float xi, float yi) //trova vertice
 {
@@ -127,17 +130,23 @@ void detect_vert(float xi, float yi) //trova vertice
   /* condizioni di verticalità NON FUNZIONA FIXARE*/
 
   if (x_prev[1] == x_prev[0]) {
+    // Se la x è uguale, la retta è verticale
     m_i2_i1 = 1000;
   } else {
     m_i2_i1 = (y_prev[1]-y_prev[0])/(x_prev[1]-x_prev[0]);
   }
 
   if (x_prev[1] == xi) {
+    // Se la x è uguale, la retta è verticale
     m_i1_i = 1000;
   } else {
+    // Calcola la pendenza tra (xi,yi) e il punto precedente del percorso del laser
     m_i1_i = (yi - y_prev[1])/(xi - x_prev[1]);
   }
 
+  /* Controlla se la differenza tra questa pendenza e la pendenza del segmento precedente supera una soglia
+  e se la rotazione del laser (alpha) soddisfa una certa condizione */
+  
   /* il valore 500 come upper bound è per trattare le coppie di punti a pendenza infinita */
   if (abs(m_i1_i - m_i2_i1)> threshold && (alpha >= 3*(2*PI)/num_iter)) { 
     vertex_found = true;
@@ -145,6 +154,7 @@ void detect_vert(float xi, float yi) //trova vertice
     y_vert = y_prev[1];
   }
 
+  // Aggiorna i punti considerati e continua a cercare un vertice
   x_prev[0] = x_prev[1];
   y_prev[0] = y_prev[1];
   x_prev[1] = xi;
