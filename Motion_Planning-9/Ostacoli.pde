@@ -26,7 +26,7 @@ class Ostacolo
   //coordinate vertici ostacolo OMBRA rispetto SR ost
   public float[] vert_array_SR_ost_om = new float[8];
   //coordinate vertici SR
-  public float[] vert_SR0_om = new float[8];
+  public float[] vert_SR0_om = new float[24];
 
 
   //funzione che crea l'ostacolo
@@ -49,15 +49,16 @@ class Ostacolo
     translate(posx_o, posy_o, 5); //10 posiziona l'ostacolo sul pavimento
     rotateZ(alpha);
 
-    fill(#A70202);
-    //noFill();
+    //fill(#A70202);
+    noFill();
 
     //creazione ostacolo
     formaost(forma, l1, l2);
 
     //ombra
     pushMatrix();
-    fill(#C6C4C0); //grigio
+    noFill();
+    //fill(#C6C4C0); //grigio
     translate(0, 0, -10);
     formaost(forma, l1+k, l2+k);
     popMatrix();
@@ -131,61 +132,28 @@ class Ostacolo
      */
 
     //coordinate ostacolo ombra rispetto SR0
-    //vertice 1
-    vert_SR0_om[0] = (-l1/2-k)*cos(alpha) - (-l2/2-k)*sin(alpha)+posx;
-    vert_SR0_om[1] = (-l1/2-k)*sin(alpha) + (-l2/2-k)*cos(alpha)+posy;
+/*    //vertice 1
+    vert_SR0_om[0] = (-l1/2-k/2)*cos(alpha) - (-l2/2-k/2)*sin(alpha) + posx;
+    vert_SR0_om[1] = (-l1/2-k/2)*cos(alpha) + (-l2/2-k/2)*sin(alpha) + posy;
     //vertice 2
-    vert_SR0_om[2] = (l1/2+k)*cos(alpha) + (+l2/2+k)*sin(alpha)+posx;
-    vert_SR0_om[3] = (-l1/2-k)*cos(alpha) - (-l2/2-k)*sin(alpha)+posy;
+    vert_SR0_om[2] = (l1/2+k/2)*cos(alpha) + (+l2/2+k/2)*sin(alpha) + posx;
+    vert_SR0_om[3] = (-l1/2-k/2)*cos(alpha) - (-l2/2-k/2)*sin(alpha) + posy;
     //vertice 3
-    vert_SR0_om[4] = (-l1/2-k)*cos(alpha) + (-l2/2-k)*sin(alpha)+posx;
-    vert_SR0_om[5] = -(-l1/2-k)*cos(alpha) + (-l2/2-k)*sin(alpha)+posy;
+    vert_SR0_om[4] = (-l1/2-k/2)*cos(alpha) + (-l2/2-k/2)*sin(alpha) + posx;
+    vert_SR0_om[5] = -(-l1/2-k/2)*cos(alpha) + (-l2/2-k/2)*sin(alpha) + posy;
     //vertice 4
-    vert_SR0_om[6] = -(-l1/2-k)*cos(alpha) + (-l2/2-k)*sin(alpha)+posx;
-    vert_SR0_om[7] = (l1/2+k)*cos(alpha) + (l2/2+k)*sin(alpha)+posy;
+    vert_SR0_om[6] = -(-l1/2-k/2)*cos(alpha) + (-l2/2-k/2)*sin(alpha) + posx;
+    vert_SR0_om[7] = (l1/2+k/2)*cos(alpha) + (l2/2+k/2)*sin(alpha) + posy;
 
-
+*/
+  
+    
+    
     popMatrix();
 
+    vert_SR0_om = vertici_ost_om(nfigura, l1, l2,  posx, posy, alpha);
 
-
-    pushMatrix();
-    //sphere(20);
-
-    fill(0);
-    pushMatrix();
-    translate(vert_SR0_om[0], vert_SR0_om[1]);
-    rotateZ(alpha);
-    //rotateZ(PI);
-    noStroke();
-    sphere(2);
-    popMatrix();
-
-    fill(#222EF2); ///Blu
-    pushMatrix();
-    noStroke();
-    translate(vert_SR0_om[2], vert_SR0_om[3]);
-    rotateZ(alpha);
-    sphere(2);
-    popMatrix();
-
-    fill(#F222F2); //rosa
-    pushMatrix();
-    noStroke();
-    translate(vert_SR0_om[4], vert_SR0_om[5]);
-    rotateZ(alpha);
-    sphere(2);
-    popMatrix();
-
-    fill(#F4FA56); //giallo
-    noStroke();
-    pushMatrix();
-    translate(vert_SR0_om[6], vert_SR0_om[7]);
-    rotateZ(alpha);
-    sphere(5);
-    popMatrix();
-
-    popMatrix();
+    //popMatrix();
   }
 }
 
@@ -209,10 +177,11 @@ void Ostacolo_creazione(int n, float posx_o, float posy_o, float l1, float l2, f
 
 
 
-void vertici_ost_om(int nfigura, float l1, float l2, float posx, float posy) //SR0
+float[] vertici_ost_om(int nfigura, float l1, float l2, float posx, float posy, float alpha) //SR0
 {
   float h=0;
   float d=0;
+  k = k/2; //diviso due perchè l'oggetto aumenta di k, quindi abbiamo k/2 su l1 e k/2 su l2
   switch(nfigura)
   {
   case 1: //QUADRATO
@@ -221,7 +190,7 @@ void vertici_ost_om(int nfigura, float l1, float l2, float posx, float posy) //S
     //vertice 1
     vertici_ost_om[0] = (-l1/2-k)*cos(alpha) - (-l2/2-k)*sin(alpha)+posx; //in basso a sx
     vertici_ost_om[1] = (-l1/2-k)*cos(alpha) + (-l2/2-k)*sin(alpha)+posy;
-    ;
+    
     //vertice 2
     vertici_ost_om[2] = (l1/2+k)*cos(alpha) + (+l2/2+k)*sin(alpha)+posx; //in basso a dx
     vertici_ost_om[3] = (-l1/2-k)*cos(alpha) - (-l2/2-k)*sin(alpha)+posy;
@@ -231,22 +200,90 @@ void vertici_ost_om(int nfigura, float l1, float l2, float posx, float posy) //S
     //vertice 4
     vertici_ost_om[6] = -(-l1/2-k)*cos(alpha) + (-l2/2-k)*sin(alpha)+posx; //in alto a dx
     vertici_ost_om[7] = (l1/2+k)*cos(alpha) + (l2/2+k)*sin(alpha)+posy;
+    
+    //stampa
+    fill(0,255,0); //VERDE
+    pushMatrix();
+    translate(vertici_ost_om[0], vertici_ost_om[1]);
+    rotateZ(alpha);
+    //rotateZ(PI);
+    noStroke();
+    sphere(5);
+    popMatrix();
+
+    fill(#222EF2); ///BLU
+    pushMatrix();
+    noStroke();
+    translate(vertici_ost_om[2], vertici_ost_om[3]);
+    rotateZ(alpha);
+    sphere(5);
+    popMatrix();
+
+    fill(#F222F2); //ROSA
+    pushMatrix();
+    noStroke();
+    translate(vertici_ost_om[4], vertici_ost_om[5]);
+    rotateZ(alpha);
+    sphere(5);
+    popMatrix();
+
+    fill(#F4FA56); //GIALLO
+    noStroke();
+    pushMatrix();
+    translate(vertici_ost_om[6], vertici_ost_om[7]);
+    rotateZ(alpha);
+    sphere(5);
+    popMatrix();
     break;
 
   case 3: //ROMBO
     //diagonale rombo
     d = sqrt(pow(l1, 2)+pow(l2, 2));
-    vertici_ost_om[0] = k*cos(alpha) - (d/3+k)*sin(alpha); //in basso
-    vertici_ost_om[1] = k*cos(alpha) + (d/3+k)*sin(alpha);
+    vertici_ost_om[0] = k*cos(alpha) - (d/3+k)*sin(alpha)+posx; //in basso
+    vertici_ost_om[1] = k*cos(alpha) + (d/3+k)*sin(alpha)+posy;
     //vertice 2
-    vertici_ost_om[2] = (d/2.7 + k)*cos(alpha) - k*sin(alpha); //dx
-    vertici_ost_om[3] = (d/2.7 + k)*cos(alpha) + k*sin(alpha);
+    vertici_ost_om[2] = (d/2.7 + k)*cos(alpha) - k*sin(alpha)+posx; //dx
+    vertici_ost_om[3] = (d/2.7 + k)*cos(alpha) + k*sin(alpha)+posy;
     //vertice 3
-    vertici_ost_om[4] = -(d/2.7 + k)*cos(alpha) - k*sin(alpha); //sx
-    vertici_ost_om[5] = (d/2.7 + k)*cos(alpha) + k*sin(alpha);
+    vertici_ost_om[4] = -(d/2.7 + k)*cos(alpha) - k*sin(alpha)+posx; //sx
+    vertici_ost_om[5] = (d/2.7 + k)*cos(alpha) + k*sin(alpha)+posy;
     //vertice 4
-    vertici_ost_om[6] = k*cos(alpha) - (-d/3-k)*sin(alpha); //avanti, quello lontano
-    vertici_ost_om[7] = k*cos(alpha) + (-d/3-k)*sin(alpha);
+    vertici_ost_om[6] = k*cos(alpha) - (-d/3-k)*sin(alpha)+posx; //avanti, quello lontano
+    vertici_ost_om[7] = k*cos(alpha) + (-d/3-k)*sin(alpha)+posy;
+     //stampa
+    fill(0,255,0); //VERDE
+    pushMatrix();
+    translate(vertici_ost_om[0], vertici_ost_om[1]);
+    rotateZ(alpha);
+    //rotateZ(PI);
+    noStroke();
+    sphere(5);
+    popMatrix();
+
+    fill(#222EF2); ///BLU
+    pushMatrix();
+    noStroke();
+    translate(vertici_ost_om[2], vertici_ost_om[3]);
+    rotateZ(alpha);
+    sphere(5);
+    popMatrix();
+
+    fill(#F222F2); //ROSA
+    pushMatrix();
+    noStroke();
+    translate(vertici_ost_om[4], vertici_ost_om[5]);
+    rotateZ(alpha);
+    sphere(5);
+    popMatrix();
+
+    fill(#F4FA56); //GIALLO
+    noStroke();
+    pushMatrix();
+    translate(vertici_ost_om[6], vertici_ost_om[7]);
+    rotateZ(alpha);
+    sphere(5);
+    popMatrix();
+    
     break;
 
   case 4: //CERCHIO
@@ -261,46 +298,107 @@ void vertici_ost_om(int nfigura, float l1, float l2, float posx, float posy) //S
     {
       x = cos(radians(i * angle)) * (l1/2);
       y = sin(radians(i * angle)) * (l1/2);
-      vertici_cerchio[i] = (x+k)*cos(alpha) - (y+k)*sin(alpha);
-      vertici_cerchio[i+1] = (x+k)*cos(alpha) + (y+k)*sin(alpha);
+      vertici_ost_om[i] = (x+k)*cos(alpha) - (y+k)*sin(alpha)+posx;
+      vertici_ost_om[i+1] = (x+k)*cos(alpha) + (y+k)*sin(alpha)+posy;
       //println(vertici_cerchio[i], vertici_cerchio[i+1]);
       pushMatrix();
-      translate(x, y);
+      translate(vertici_ost_om[i], vertici_ost_om[i+1]);
       stroke(255, 0, 0);
-      sphere(20);
+      sphere(5);
       popMatrix();
     }
-    //for(int i = 0; i < 120; i++) println("VERTICI", vertici_cerchio[i]);
-
     break;
 
   case 5: //TRIANGOLO
     h = (l1*sqrt(3))/2;
     //coordinate ostacolo rispetto SR0
     //vertice 1
-    vertici_ost_om[0] = k*cos(alpha)-(-h/1.5 - k)*sin(alpha); //in basso
-    vertici_ost_om[1] = k*cos(alpha)+(-h/1.5 - k)*sin(alpha);
+    vertici_ost_om[0] = k*cos(alpha)-(-h/1.5 - k)*sin(alpha)+posx; //in basso
+    vertici_ost_om[1] = k*cos(alpha)+(-h/1.5 - k)*sin(alpha)+posy;
     //vertice 2
-    vertici_ost_om[2] = (l1/2); //dx
-    vertici_ost_om[3] = (h/3);
+    vertici_ost_om[2] = (l1/2 + k)*cos(alpha) - (h/3 + k)*sin(alpha)+posx; //dx
+    vertici_ost_om[3] = (l1/2 + k)*cos(alpha) + (h/3 + k)*sin(alpha)+posy;
     //vertice 3
-    vertici_ost_om[4] = -l1/2; //sx
-    vertici_ost_om[5] = (h/3);
+    vertici_ost_om[4] = (-l1/2 - k)*cos(alpha) - (h/3 + k)*sin(alpha)+posx; //sx
+    vertici_ost_om[5] = (-l1/2 - k)*cos(alpha) + (h/3 + k)*sin(alpha)+posy;
+    
+    //stampa
+    fill(0,255,0); //VERDE
+    pushMatrix();
+    translate(vertici_ost_om[0], vertici_ost_om[1]);
+    rotateZ(alpha);
+    //rotateZ(PI);
+    noStroke();
+    sphere(5);
+    popMatrix();
+
+    fill(#222EF2); ///BLU
+    pushMatrix();
+    noStroke();
+    translate(vertici_ost_om[2], vertici_ost_om[3]);
+    rotateZ(alpha);
+    sphere(5);
+    popMatrix();
+
+    fill(#F222F2); //ROSA
+    pushMatrix();
+    noStroke();
+    translate(vertici_ost_om[4], vertici_ost_om[5]);
+    rotateZ(alpha);
+    sphere(5);
+    popMatrix();
     break;
 
   case 6: //TRAPEZIO
     h = l2; //altezza
-    vertici_ost_om[0] = -l2/2; //in basso a sx
-    vertici_ost_om[1] = h/2;
+    vertici_ost_om[0] = (-l2/2 - k)*cos(alpha) - (h/2 + k)*sin(alpha)+posx; //in basso a sx
+    vertici_ost_om[1] = (-l2/2 - k)*cos(alpha) + (h/2 + k)*sin(alpha)+posy;
     //vertice 2
-    vertici_ost_om[2] = l2/2; //dx
-    vertici_ost_om[3] = h/2;
+    vertici_ost_om[2] = (l2/2 + k)*cos(alpha) - (h/2 + k)*sin(alpha)+posx; //dx
+    vertici_ost_om[3] = (l2/2 + k)*cos(alpha) + (h/2 + k)*sin(alpha)+posy;
     //vertice 3
-    vertici_ost_om[4] = -l1/2; //sx
-    vertici_ost_om[5] = -h/2;
+    vertici_ost_om[4] = (-l1/2 - k)*cos(alpha) - (-h/2 - k)*sin(alpha)+posx;  //sx
+    vertici_ost_om[5] = (-l1/2 - k)*cos(alpha) + (-h/2 - k)*sin(alpha)+posy;
     //vertice 4
-    vertici_ost_om[6] = l1/2; //avanti, quello lontano
-    vertici_ost_om[7] = -h/2;
+    vertici_ost_om[6] = (l1/2 + k)*cos(alpha) - (-h/2 - k)*sin(alpha)+posx;   //avanti, quello lontano
+    vertici_ost_om[7] = (l1/2 + k)*cos(alpha) - (-h/2 - k)*sin(alpha)+posy; 
+    
+     //stampa
+    fill(0,255,0); //VERDE
+    pushMatrix();
+    translate(vertici_ost_om[0], vertici_ost_om[1]);
+    rotateZ(alpha);
+    //rotateZ(PI);
+    noStroke();
+    sphere(5);
+    popMatrix();
+
+    fill(#222EF2); ///BLU
+    pushMatrix();
+    noStroke();
+    translate(vertici_ost_om[2], vertici_ost_om[3]);
+    rotateZ(alpha);
+    sphere(5);
+    popMatrix();
+
+    fill(#F222F2); //ROSA
+    pushMatrix();
+    noStroke();
+    translate(vertici_ost_om[4], vertici_ost_om[5]);
+    rotateZ(alpha);
+    sphere(5);
+    popMatrix();
+
+    fill(#F4FA56); //GIALLO
+    noStroke();
+    pushMatrix();
+    translate(vertici_ost_om[6], vertici_ost_om[7]);
+    rotateZ(alpha);
+    sphere(5);
+    popMatrix();
+    
     break;
   }
+  
+  return vertici_ost_om;
 }

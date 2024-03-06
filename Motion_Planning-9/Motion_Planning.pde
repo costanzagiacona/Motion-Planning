@@ -153,7 +153,7 @@ void draw()
   pushMatrix();
   //translate(xot, yot); //SR target
   //formaost(5, 20, 20); //disegno target
-  Ostacolo_creazione(0, xot, yot, 20, 20, PI/4, 5);
+  Ostacolo_creazione(id_target, xot, yot, 20, 20, PI/4, 5);
   popMatrix();
  
 
@@ -198,14 +198,14 @@ void draw()
       //FASE DI SCANNER
       s = scan(pos_x_r, pos_y_r, laser_len, #6920E0);
      
-      if (vertex_found)
+     if (vertex_found)
       {
         //aggiungo nodo solo quando trovo un nuovo vertice
         make_tree(nodo_corrente); //funzione che aggiunge il vertice eventualmente trovato ai links del current node
         vertex_found = false;
       }
-      print_tree();
-
+       print_tree();
+       
       if (s)
       { //se trovo vertice mi sposto lì
         // cambia token quando lo scanner trova il target, e lo passa all'else responsabile della fase di movimento
@@ -241,7 +241,7 @@ void draw()
         D = -2/(pow(Dt, 3));
       }
 
-/*      if (alpha >= 0 && alpha < start_alpha)
+      if (alpha >= 0 && alpha < start_alpha)
       {
         //ciclo di scan completo => cambia token per muoversi
 
@@ -270,8 +270,8 @@ void draw()
         C = (6*ti+3*Dt)/(pow(Dt, 3));
         D = -2/(pow(Dt, 3));
       }
-*/    } 
-/*    else
+    } 
+    else
     {
       //fase di movimento
 
@@ -297,7 +297,7 @@ void draw()
             if (j < (percorso.size() -1))
             {
               /* se sono arrivato in un nodo non punto finale del path, inizializzo nuovamente le variabili di definizione traiettoria */
-/*              x1 = percorso.get(j).x;
+              x1 = percorso.get(j).x;
               y1 = percorso.get(j).y;
               x2 = percorso.get(j+1).x;
               y2 = percorso.get(j+1).y;
@@ -341,7 +341,7 @@ void draw()
         }
       }
     }
-*/  }
+  }
 
   noStroke();
   t++;

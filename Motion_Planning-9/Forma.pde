@@ -196,7 +196,7 @@ void formaost(int nfigura, float l1, float l2) //input -> numero figura
   stroke(0);
 
   pushMatrix();
-  //rotateZ(PI/4);
+  rotateZ(PI/4);
   //NON mettere qui l'aumento altrimenti gli ostacoli cambiano tutti insieme
 
   switch(nfigura)

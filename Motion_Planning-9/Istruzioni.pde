@@ -13,7 +13,9 @@
 
 //cose da fare
 /*
-se metti il target prima dell'ostacolo 0 nello scan non vede più l'ostacolo 0 -> vedi come fanno loro
+  sistemare i vertici -> Ostacolo
+
+  aggiungere commenti
 
 */
 

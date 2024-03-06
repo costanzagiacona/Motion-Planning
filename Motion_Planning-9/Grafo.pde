@@ -19,6 +19,7 @@ void make_tree(Nodo current) {
   albero.addChild(current, n);
 }
 
+
 // visualizza a schermo l'albero
 void print_tree() {
 
@@ -48,7 +49,7 @@ void print_tree() {
       }
 
       for (Nodo near : ni.links) {
-        strokeWeight(1);
+        strokeWeight(1); // <--------------
         line(ni.x, ni.y, near.x, near.y);
       }
 
@@ -57,6 +58,7 @@ void print_tree() {
       }
     }
   }
+  strokeWeight(3); //reinserisco la dimensione dei lati altrimenti il tavolo viene disegnato più spesso
 }
 
 
