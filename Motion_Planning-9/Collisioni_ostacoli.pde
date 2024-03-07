@@ -204,7 +204,7 @@ boolean sovrapposizione(float posx, float posy, float l1, float l2, float alpha)
 
   for (Ostacolo o : ostacolo_ArrayList) //per ogni ostacolo
   {
-    for (int j = 0; j < 8; j  = j+2) //controlliamo due vertici alla volta
+    for (int j = 0; j < o.num_vertici_ost; j  = j+2) //controlliamo due vertici alla volta
     {
       //vertici nel SR0
       x_0 = o.vert_SR0_om[j];

@@ -13,7 +13,10 @@
 
 //cose da fare
 /*
-  sistemare i vertici -> Ostacolo
+  sistemare i vertici -> Ostacolo ------------> SISTEMATI
+  
+  DA FARE
+   Aggiungere controlli sui vertici del cerchio in intersection_obstacle
 
   aggiungere commenti
 

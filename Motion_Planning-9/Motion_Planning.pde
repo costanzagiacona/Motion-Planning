@@ -5,7 +5,7 @@ int nfiguraost = 1;
 //orientamento ostacolo
 float orientamento = 0; //radianti
 ArrayList<Ostacolo> ostacolo_ArrayList= new ArrayList<Ostacolo>(); //vettore di ostacoli
-int MAX_OST = 5; //numero massimo di ostacoli
+int MAX_OST = 6; //numero massimo di ostacoli
 
 //sovrapposizioni
 boolean sovrapposizioneost = false;
@@ -21,15 +21,14 @@ float ysp = 0;
 float[] posxsp;
 float[] posysp;
 float[] vertici_sp = new float[8];
-float[] vertici_cerchio = new float[24]; //numero vertici cerchio (12 sopra (x e y))
-float[] vertici_ost_om = new float[24];
+float[] vertici_cerchio = new float[12]; //numero vertici cerchio (12 sopra (x e y))
 
 //dimensioni oggetti
 float lato1 = 50, lato2 = 70;
 float incrsp = 0;
 float incrost = 0;
 float kp = 5; //incremento
-float k = 10; //incremento lato per ostacolo ombra
+float k = 20; //incremento lato per ostacolo ombra
 
 //per modificare la camera
 float eyeX = 0;
@@ -59,7 +58,7 @@ float r_target = 10;
 float h_target = 5;
 boolean ist_t = true;
 //TARGET
-int id_target = 0; //max 5 ostacoli
+int id_target = 9; //max 5 ostacoli
 
 //parametri albero & movimento
 float x_home = pos_x_r;

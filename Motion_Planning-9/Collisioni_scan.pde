@@ -148,9 +148,9 @@ float[] intersectionWall_pol(float x, float y, float cx, float cy, float len_x, 
 
 /*
       v1
-    /    \
-   /      \
-  v3 ---- v2
+ /    \
+ /      \
+ v3 ---- v2
  */
 
 //intersezione tavolo TRIANGOLO (3 vertici)
@@ -202,39 +202,22 @@ float[] intersectionWall_c(float x, float y, float cx, float cy, float len_x, fl
   wall_collision[1] = 0; //collisione in x
   wall_collision[2] = 0; //collisione in y
 
-  for (int i = 0; i < 24; i=i+4) //aumentando il numero dei vertici viene più preciso lo scan (6 vertici)
+  for (int i = 0; i < 12; i=i+4) //aumentando il numero dei vertici viene più preciso lo scan (6 vertici)
   {
-    //println("vertici ->", vertici_cerchio[i]-x, vertici_cerchio[i+1]-y, vertici_cerchio[i+2]-x, vertici_cerchio[i+3]-y);
-    //stroke(0, 0, 255);
-    //pushMatrix();
-    ////println(vertici_cerchio[i], vertici_cerchio[i+1]);
-    //translate(vertici_cerchio[i]-x, vertici_cerchio[i+1]-y, 0);
-    //sphere(10);
-    //popMatrix();
 
-    //pushMatrix();
-    //translate(vertici_cerchio[i+2]-x, vertici_cerchio[i+3]-y, 0);
-    //sphere(10);
-    //popMatrix();
-
-    //stroke(0,255,0);
-    ////println(vertici_cerchio[i], vertici_cerchio[i+1], vertici_cerchio[i+2], vertici_cerchio[i+3]);
-    //line(vertici_cerchio[i]-x, vertici_cerchio[i+1]-y, vertici_cerchio[i+2]-x, vertici_cerchio[i+3]-y);
-    //line(vertici_cerchio[i+2]-x , vertici_cerchio[i+3]-y , vertici_cerchio[i+4]-x, vertici_cerchio[i+5]-y);
-  
-    intersection = intersectionLine(vertici_cerchio[i]-x , vertici_cerchio[i+1]-y , vertici_cerchio[i+2]-x, vertici_cerchio[i+3]-y, cx, cy, len_x, len_y); //v3-v2
+    intersection = intersectionLine(vertici_cerchio[i]-x, vertici_cerchio[i+1]-y, vertici_cerchio[i+2]-x, vertici_cerchio[i+3]-y, cx, cy, len_x, len_y); //v3-v2
     if (intersection[0]==1)
     {
-      
+
       wall_collision[0] = 1;
       wall_collision[1] = intersection[1];
       wall_collision[2] = intersection[2];
       return wall_collision;
     }
-    intersection = intersectionLine(vertici_cerchio[i+2]-x , vertici_cerchio[i+3]-y , vertici_cerchio[i+4]-x, vertici_cerchio[i+5]-y, cx, cy, len_x, len_y); //v3-v2
+    intersection = intersectionLine(vertici_cerchio[i+2]-x, vertici_cerchio[i+3]-y, vertici_cerchio[i+4]-x, vertici_cerchio[i+5]-y, cx, cy, len_x, len_y); //v3-v2
     if (intersection[0]==1)
     {
-      
+
       wall_collision[0] = 1;
       wall_collision[1] = intersection[1];
       wall_collision[2] = intersection[2];
@@ -253,7 +236,6 @@ float[] intersectionWall_c(float x, float y, float cx, float cy, float len_x, fl
 
 float[] intersectionObstacles(float x, float y, float len_x, float len_y) //x,y posizione robot mentre lenx,leny sono le dimensioni del robot
 {
-
   float[] dx = new float[3];
   float[] sx = new float[3];
   float[] up = new float[3];
@@ -274,51 +256,91 @@ float[] intersectionObstacles(float x, float y, float len_x, float len_y) //x,y 
     //alla posizione corrente del robot. Questo è fondamentale per il calcolo delle intersezioni e
     //per determinare la posizione dell'ostacolo rispetto al robot in un sistema di coordinate relativo al robot stesso.
 
-    sx = intersectionLine(o.vert_SR0_om[0] -x, o.vert_SR0_om[1] -y, o.vert_SR0_om[4] -x, o.vert_SR0_om[5] - y, 0, 0, len_x, len_y);
-    if (sx[0]==1) {
-      //println("intersezione ostacolo vertice sx");
-      //println(sx[1], sx[2], closest_collision[1], closest_collision[2]);
-      if (min_distance(sx[1], sx[2], closest_collision[1], closest_collision[2])) {
-        closest_collision[0] = 1;
-        closest_collision[1] = sx[1]; //se c'è ostacolo il raggio del laser diminuisce e non oltrepassa l'ostacolo
-        closest_collision[2] = sx[2];
+    if (o.forma == 5)
+    {
+    } else if (o.forma == 4)
+    {
+      closest_collision = intersectionObstacle_c(x, y, len_x, len_y, o);
+    } else {
+
+      sx = intersectionLine(o.vert_SR0_om[0] -x, o.vert_SR0_om[1] -y, o.vert_SR0_om[4] -x, o.vert_SR0_om[5] - y, 0, 0, len_x, len_y);
+      if (sx[0]==1) {
+        //println("intersezione ostacolo vertice sx");
+        //println(sx[1], sx[2], closest_collision[1], closest_collision[2]);
+        if (min_distance(sx[1], sx[2], closest_collision[1], closest_collision[2])) {
+          closest_collision[0] = 1;
+          closest_collision[1] = sx[1]; //se c'è ostacolo il raggio del laser diminuisce e non oltrepassa l'ostacolo
+          closest_collision[2] = sx[2];
+        }
       }
-    }
-    dx = intersectionLine(o.vert_SR0_om[0] - x, o.vert_SR0_om[1] - y, o.vert_SR0_om[2] - x, o.vert_SR0_om[3] - y, 0, 0, len_x, len_y);
-    if (dx[0]==1) {
-      //println("intersezione ostacolo vertice dx");
-      // println(dx[1], dx[2], closest_collision[1], closest_collision[2]);
-      if (min_distance(dx[1], dx[2], closest_collision[1], closest_collision[2])) {
-        closest_collision[0] = 1;
-        closest_collision[1] = dx[1];
-        closest_collision[2] = dx[2];
+      dx = intersectionLine(o.vert_SR0_om[0] - x, o.vert_SR0_om[1] - y, o.vert_SR0_om[2] - x, o.vert_SR0_om[3] - y, 0, 0, len_x, len_y);
+      if (dx[0]==1) {
+        //println("intersezione ostacolo vertice dx");
+        // println(dx[1], dx[2], closest_collision[1], closest_collision[2]);
+        if (min_distance(dx[1], dx[2], closest_collision[1], closest_collision[2])) {
+          closest_collision[0] = 1;
+          closest_collision[1] = dx[1];
+          closest_collision[2] = dx[2];
+        }
       }
-    }
-    up = intersectionLine(o.vert_SR0_om[6] -x, o.vert_SR0_om[7] -y, o.vert_SR0_om[4] -x, o.vert_SR0_om[5] - y, 0, 0, len_x, len_y);
-    if (up[0]==1) {
-      //println("intersezione ostacolo vertice up");
-      // println(up[1], up[2], closest_collision[1], closest_collision[2]);
-      if (min_distance(up[1], up[2], closest_collision[1], closest_collision[2])) {
-        closest_collision[0] = 1;
-        closest_collision[1] = up[1];
-        closest_collision[2] = up[2];
+      up = intersectionLine(o.vert_SR0_om[6] -x, o.vert_SR0_om[7] -y, o.vert_SR0_om[4] -x, o.vert_SR0_om[5] - y, 0, 0, len_x, len_y);
+      if (up[0]==1) {
+        //println("intersezione ostacolo vertice up");
+        // println(up[1], up[2], closest_collision[1], closest_collision[2]);
+        if (min_distance(up[1], up[2], closest_collision[1], closest_collision[2])) {
+          closest_collision[0] = 1;
+          closest_collision[1] = up[1];
+          closest_collision[2] = up[2];
+        }
       }
-    }
-    down = intersectionLine(o.vert_SR0_om[6] -x, o.vert_SR0_om[7] -y, o.vert_SR0_om[2] -x, o.vert_SR0_om[3] - y, 0, 0, len_x, len_y);
-    if (down[0]==1) {
-      //println("intersezione ostacolo vertice down");
-      // println(down[1], down[2], closest_collision[1], closest_collision[2]);
-      if (min_distance(down[1], down[2], closest_collision[1], closest_collision[2])) {
-        closest_collision[0] = 1;
-        closest_collision[1] = down[1];
-        closest_collision[2] = down[2];
+      down = intersectionLine(o.vert_SR0_om[6] -x, o.vert_SR0_om[7] -y, o.vert_SR0_om[2] -x, o.vert_SR0_om[3] - y, 0, 0, len_x, len_y);
+      if (down[0]==1) {
+        //println("intersezione ostacolo vertice down");
+        // println(down[1], down[2], closest_collision[1], closest_collision[2]);
+        if (min_distance(down[1], down[2], closest_collision[1], closest_collision[2])) {
+          closest_collision[0] = 1;
+          closest_collision[1] = down[1];
+          closest_collision[2] = down[2];
+        }
       }
     }
   }
   return closest_collision;
 }
 
+// Funzione per rilevare le collsioni con gli ostacoli a forma di cerchio
+float[] intersectionObstacle_c(float x, float y, float len_x, float len_y, Ostacolo o)
+{
+  float[] intersection = new float[3];
+  float[] closest_collision = new float[3];
+  closest_collision[0] = 0;
+  closest_collision[1] = laser_len; //raggio laser
+  closest_collision[2] = laser_len;
 
+  for (int i = 0; i < 8; i=i+4) //aumentando il numero dei vertici viene più preciso lo scan (6 vertici)
+  {
+    intersection = intersectionLine(o.vert_SR0_om[i]-x, o.vert_SR0_om[i+1]-y, o.vert_SR0_om[i+2]-x, o.vert_SR0_om[i+3]-y, 0, 0, len_x, len_y);
+    if (intersection[0] == 1)
+    {
+      if (min_distance(intersection[1], intersection[2], closest_collision[1], closest_collision[2])) {
+        closest_collision[0] = 1;
+        closest_collision[1] = intersection[1]; //se c'è ostacolo il raggio del laser diminuisce e non oltrepassa l'ostacolo
+        closest_collision[2] = intersection[2];
+      }
+    }
+
+    intersection = intersectionLine(o.vert_SR0_om[i+2]-x, o.vert_SR0_om[i+3]-y, o.vert_SR0_om[i+4]-x, o.vert_SR0_om[i+5]-y, 0, 0, len_x, len_y);
+    if (intersection[0] == 1)
+    {
+      if (min_distance(intersection[1], intersection[2], closest_collision[1], closest_collision[2])) {
+        closest_collision[0] = 1;
+        closest_collision[1] = intersection[1]; //se c'è ostacolo il raggio del laser diminuisce e non oltrepassa l'ostacolo
+        closest_collision[2] = intersection[2];
+      }
+    }
+  }
+  return closest_collision;
+}
 
 boolean min_distance(float x1, float y1, float x2, float y2)
 {
