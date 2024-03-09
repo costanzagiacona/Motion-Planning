@@ -313,7 +313,7 @@ void draw()
 
               //se sono arrivato all'ultimo nodo dell'array path 
 
-              //arrived = true (ma è superfluo)
+              arrived = true; 
 
               nodo_corrente = nodo_successivo;
 
@@ -324,6 +324,7 @@ void draw()
       } else
       {  // if (s) -> target trovato
         float toll2 = 1;
+        arrived = true; 
 
         if (abs(pos_x_r - x2) < toll2 && abs(pos_y_r - y2) < toll2 )
         {

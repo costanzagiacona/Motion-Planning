@@ -73,5 +73,19 @@ void infoi()
       text("Sovrapposizione rilevata", width/2, 0);
     }
   }
+  
+  if (semsp == false && semost == false && arrived == false)
+  {
+    textSize(30);
+    fill(0);
+    text("Scanning...",0,0);
+  }
+  if (arrived == true)
+  {
+    textSize(30);
+    textAlign(CENTER, CENTER);
+    fill(#277111);
+    text("TARGET TROVATO! ",width/2,0);
+  }
   popMatrix();
 }
