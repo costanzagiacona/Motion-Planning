@@ -87,7 +87,6 @@ class Ostacolo
       vert_SR0_om = new float[12];
       vert_SR0_om = vertici_ost_om(nfigura, l1, l2, posx, posy, alpha);
       num_vertici_ost = 12;
-      println(vert_SR0_om);
     } else if (nfigura == 5) { // Se è un cerchio, dimensione 12
       vert_SR0_om = new float[6];
       vert_SR0_om = vertici_ost_om(nfigura, l1, l2, posx, posy, alpha);
@@ -96,12 +95,7 @@ class Ostacolo
       vert_SR0_om = new float[8];
       vert_SR0_om = vertici_ost_om(nfigura, l1, l2, posx, posy, alpha);
       num_vertici_ost = 8;
-      println(vert_SR0_om);
     }
-    //vert_SR0_om = vertici_ost_om(nfigura, l1, l2, posx, posy, alpha);
-    //println(vert_SR0_om);
-
-    //popMatrix();
   }
 
   float[] vertici_ost_om(int nfigura, float l1, float l2, float posx, float posy, float alpha) //SR0

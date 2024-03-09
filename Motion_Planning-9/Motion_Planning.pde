@@ -1,4 +1,4 @@
-//variabile che indica quale figura hai scelto
+ //variabile che indica quale figura hai scelto
 int nfigurasp = 1;
 int nfiguraost = 1;
 
