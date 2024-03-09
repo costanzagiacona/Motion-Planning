@@ -25,102 +25,152 @@ void keyPressed()
     if (keyCode == '5') nfiguraost = 5; //triangolo
     if (keyCode == '6') nfiguraost = 6; ///trapezio
   }
-
+  //VISTA
   if (keyCode == 'X') eyeX += 25;
   if (keyCode == 'x') eyeX -= 25;
   if (keyCode == 'Y') eyeY += 25;
   if (keyCode == 'y') eyeY -= 25;
 
-  if (key == '+')
-  {
-    if(semsp) incrsp += kp;
-    if (incrsp > 100) incrsp=100;
-    if(semost) incrost += kp;
-    if (incrost > 100) incrost=100;
-  }
-
-  if (key == '-')
-  {
-    if(semsp) incrsp -= kp;
-    if (incrsp < kp) incrsp = kp;
-    if(semost) incrost -= kp;
-    if (incrost < kp) incrost = kp;
-  }
-  
-  if(key == ' ') sempos = true; //semaforo posizione ostacolo
-  
-  if(keyCode == UP)
-  {
-    //posizione ostacolo
-    if(sempos) 
-    {
-    y += 20; //posizione ostacolo
-    println(y);
-    if(y >= posxsp[nfigurasp-1] - (ostacolo_ArrayList.get(numero_ostacoli-1)).lato2) y = posxsp[nfigurasp-1] - (ostacolo_ArrayList.get(numero_ostacoli-1)).lato2;
-    }
-  }
-  
-  if(keyCode == DOWN)
-  {
-   //posizione ostacolo
-    if(sempos) 
-    {
-    y -= 20; //posizione ostacolo
-    println(y);
-    if(y <= posxsp[nfigurasp-1] - (ostacolo_ArrayList.get(numero_ostacoli-1)).lato2) y = posxsp[nfigurasp-1] - (ostacolo_ArrayList.get(numero_ostacoli-1)).lato2;
-    }
-  }
-  
-  //orientamento ostacoli
-  if (keyCode == RIGHT) 
-  {
-    if(!sempos) orientamento = orientamento + PI/24;
-    if(sempos) 
-    {
-    x += 20; //posizione ostacolo
-    println(x);
-    if(x >= posxsp[nfigurasp-1] - (ostacolo_ArrayList.get(numero_ostacoli-1)).lato1) x = posxsp[nfigurasp-1] - (ostacolo_ArrayList.get(numero_ostacoli-1)).lato1;
-    }
-  }
-  
-  if (keyCode == LEFT)  
-  {
-    if(!sempos) orientamento = orientamento - PI/24;
-     //posizione ostacolo
-     if(sempos) 
-    {
-    x -= 20; //posizione ostacolo
-    println(x);
-    if(x <= posxsp[nfigurasp-1] - (ostacolo_ArrayList.get(numero_ostacoli-1)).lato1) x = posxsp[nfigurasp-1] - (ostacolo_ArrayList.get(numero_ostacoli-1)).lato1;
-    }
-  }
-  
-  
-  
-  //quando preme o termina l'inserimento degli ostacoli
-  if(keyCode == 'o') semins = false;
 
   if (keyCode == ENTER)
   {
-    if (semsp == true)
+    if (semsp == true) //finito di creare lo spazio di lavoro passiamo alla creazione degli ostacoli
     {
       semsp = false;
       semost= true;
-    } 
-    else if (semsp == false)
+      x = 0;
+      y = 0;
+      orientamento = 0;
+      incrost = 0 ;
+    } else if (semsp == false) //finita la creazione degli ostacoli passiamo al grafo
     {
       semsp = false;
       semost= false;
     }
   }
-  
-  
-  //DA MODIFICARE
-  // visual home
+
+  /*MODIFICA SPAZIO DI LAVORO*/
+  if (semsp == true)
+  {
+    if (key == '+') //aumento dimensione spazio lavoro o ostacolo
+    {
+      incrsp += kp;
+      if (incrsp > 100) incrsp=100;
+    }
+
+    if (key == '-') //diminuisco dimensione spazio lavoro o ostacolo
+    {
+      incrsp -= kp;
+      if (incrsp < kp) incrsp = kp;
+    }
+  }
+
+  /*MODIFICA OSTACOLI*/
+  else if (semost == true)
+  {
+    //SEMINS 0
+    if (semins == 0)
+    {
+      if (key == 'o')
+      {
+        x = 0;
+        y = 0;
+        orientamento = 0;
+        incrost = 0;
+        nfiguraost = 1;
+        lato1 = 50;
+        lato2 = 70;
+        semins = 1;
+      }
+    }
+
+    //SEMINS 1
+    if (semins == 1)
+    {
+      sovrapposizioneost = sovrapposizione(x, y, lato1+incrost, lato2+incrost, orientamento);
+
+      if (key == '+') //aumento dimensione spazio lavoro o ostacolo
+      {
+        incrost += kp;
+        if (incrost > 100) incrost = 100;
+      }
+
+      if (key == '-') //diminuisco dimensione spazio lavoro o ostacolo
+      {
+        incrost -= kp;
+        if (incrost < kp) incrost = kp;
+      }
+
+      //orientamento ostacoli
+      if (keyCode == RIGHT)
+      {
+        orientamento = orientamento + PI/24;
+      }
+
+      if (keyCode == LEFT)
+      {
+        orientamento = orientamento - PI/24;
+      }
+
+      if (key == 'w') semins = 2;
+    }
+
+
+    //SEMINS 2
+    if (semins == 2)
+    {
+
+      if (keyCode == DOWN)
+      {
+        //posizione ostacolo
+        y += 20; //posizione ostacolo
+      }
+
+      if (keyCode == UP)
+      {
+        //posizione ostacolo
+        y -= 20; //posizione ostacolo
+      }
+
+      //orientamento ostacoli
+      if (keyCode == RIGHT)
+      {
+        x += 20; //posizione ostacolo
+      }
+
+      if (keyCode == LEFT)
+      {
+        x -= 20; //posizione ostacolo
+      }
+
+      sovrapposizioneost = sovrapposizione(x, y, lato1+incrost, lato2+incrost, orientamento);
+
+      if (keyCode == TAB)
+      {
+        if (!sovrapposizioneost) //ricominciamo e creiamo un nuovo ostacolo
+        {
+          numero_ostacoli++;
+          id_ost++;
+          if (numero_ostacoli >= MAX_OST) semost = false; //raggiunto numero max ostacoli
+          Ostacolo_creazione(id_ost, x, y, lato1+incrost, lato2+incrost, orientamento, nfiguraost);
+          semins = 0;
+        }
+      }
+    }
+  }
+
+  // visual home lungo Y
   if (key == 'h') {
-    angoloX = 0;
-    angoloY = 0;
-    angoloXpartenza = 0;
-    angoloYpartenza = 0;
+    angoloY += 0.05;
+  }
+  if (key == 'H') {
+    angoloY -= 0.05;
+  }
+  // visual home lungo X
+  if (key == 'g') {
+    angoloX += 0.05;
+  }
+  if (key == 'G') {
+    angoloX -= 0.05;
   }
 }
