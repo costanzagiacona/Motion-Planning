@@ -241,6 +241,7 @@ float[] intersectionObstacles(float x, float y, float len_x, float len_y) //x,y 
   float[] up = new float[3];
   float[] down = new float[3];
 
+  float[] intersection = new float[3];
   float[] closest_collision = new float[3];
   closest_collision[0] = 0;
   closest_collision[1] = laser_len; //raggio laser
@@ -258,7 +259,7 @@ float[] intersectionObstacles(float x, float y, float len_x, float len_y) //x,y 
 
     if (o.forma == 5) //triangolo
     {
-
+      //println("COLLISIONI SCAN -> intersezione ostacolo TRIANGOLO", closest_collision[0]);
       /*qui il confronto con il min non serve perchè il robot sta dentro al tavolo, non vedrà mai due bordi contemporaneamente */
 
       //è sufficiente ci sia una sola collisione
@@ -290,8 +291,33 @@ float[] intersectionObstacles(float x, float y, float len_x, float len_y) //x,y 
       }
     } else if (o.forma == 4) //cerchio
     {
-      closest_collision = intersectionObstacle_c(x, y, len_x, len_y, o);
+      //println("COLLISIONI SCAN -> intersezione ostacolo CERCHIO", closest_collision[0]);
+      //closest_collision = intersectionObstacle_c(x, y, len_x, len_y);
+       for (int ii = 0; ii < 8; ii=ii+4) //aumentando il numero dei vertici viene più preciso lo scan (6 vertici)
+  {
+    intersection = intersectionLine(o.vert_SR0_om[ii]-x, o.vert_SR0_om[ii+1]-y, o.vert_SR0_om[ii+2]-x, o.vert_SR0_om[ii+3]-y, 0, 0, len_x, len_y);
+    if (intersection[0] == 1)
+    {
+      if (min_distance(intersection[1], intersection[2], closest_collision[1], closest_collision[2])) {
+        closest_collision[0] = 1;
+        closest_collision[1] = intersection[1]; //se c'è ostacolo il raggio del laser diminuisce e non oltrepassa l'ostacolo
+        closest_collision[2] = intersection[2];
+      }
+    }
+
+    intersection = intersectionLine(o.vert_SR0_om[ii+2]-x, o.vert_SR0_om[ii+3]-y, o.vert_SR0_om[ii+4]-x, o.vert_SR0_om[ii+5]-y, 0, 0, len_x, len_y);
+    if (intersection[0] == 1)
+    {
+      if (min_distance(intersection[1], intersection[2], closest_collision[1], closest_collision[2])) {
+        closest_collision[0] = 1;
+        closest_collision[1] = intersection[1]; //se c'è ostacolo il raggio del laser diminuisce e non oltrepassa l'ostacolo
+        closest_collision[2] = intersection[2];
+      }
+    }
+  }
+  
     } else { //altri
+    //println("COLLISIONI SCAN -> intersezione ostacolo POLIGONI", closest_collision[0]);
 
       sx = intersectionLine(o.vert_SR0_om[0] -x, o.vert_SR0_om[1] -y, o.vert_SR0_om[4] -x, o.vert_SR0_om[5] - y, 0, 0, len_x, len_y);
       if (sx[0]==1) {
@@ -338,39 +364,6 @@ float[] intersectionObstacles(float x, float y, float len_x, float len_y) //x,y 
   return closest_collision;
 }
 
-// Funzione per rilevare le collsioni con gli ostacoli a forma di cerchio
-float[] intersectionObstacle_c(float x, float y, float len_x, float len_y, Ostacolo o)
-{
-  float[] intersection = new float[3];
-  float[] closest_collision = new float[3];
-  closest_collision[0] = 0;
-  closest_collision[1] = laser_len; //raggio laser
-  closest_collision[2] = laser_len;
-
-  for (int i = 0; i < 8; i=i+4) //aumentando il numero dei vertici viene più preciso lo scan (6 vertici)
-  {
-    intersection = intersectionLine(o.vert_SR0_om[i]-x, o.vert_SR0_om[i+1]-y, o.vert_SR0_om[i+2]-x, o.vert_SR0_om[i+3]-y, 0, 0, len_x, len_y);
-    if (intersection[0] == 1)
-    {
-      if (min_distance(intersection[1], intersection[2], closest_collision[1], closest_collision[2])) {
-        closest_collision[0] = 1;
-        closest_collision[1] = intersection[1]; //se c'è ostacolo il raggio del laser diminuisce e non oltrepassa l'ostacolo
-        closest_collision[2] = intersection[2];
-      }
-    }
-
-    intersection = intersectionLine(o.vert_SR0_om[i+2]-x, o.vert_SR0_om[i+3]-y, o.vert_SR0_om[i+4]-x, o.vert_SR0_om[i+5]-y, 0, 0, len_x, len_y);
-    if (intersection[0] == 1)
-    {
-      if (min_distance(intersection[1], intersection[2], closest_collision[1], closest_collision[2])) {
-        closest_collision[0] = 1;
-        closest_collision[1] = intersection[1]; //se c'è ostacolo il raggio del laser diminuisce e non oltrepassa l'ostacolo
-        closest_collision[2] = intersection[2];
-      }
-    }
-  }
-  return closest_collision;
-}
 
 boolean min_distance(float x1, float y1, float x2, float y2)
 {

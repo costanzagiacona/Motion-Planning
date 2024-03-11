@@ -26,7 +26,7 @@ int is_in_obstacle(float x_0, float y_0) //input - coordinate punto rispetto sis
     //controlliamo se il punto si trova all'interno dell'ostacolo
     if (abs(x_1) <= ((ob.lato1)/2 + tol) && abs(y_1) <= ((ob.lato2)/2 + tol))
     {
-      println("sovrapposizione con ostacolo numero ", ob.id);
+      //println("sovrapposizione con ostacolo numero ", ob.id);
       return ob.id; //punto all'interno dell'ostacolo
     }
   }

@@ -83,12 +83,12 @@ class Ostacolo
     popMatrix();
 
     // Inizializzazione dell'array con la dimensione desiderata
-    if (nfigura == 4) { // Se è un cerchio, dimensione 12
+    if (nfigura == 4) { // Se è un cerchio, dimensione vettore 12
       vert_SR0_om = new float[12];
       vert_SR0_om = vertici_ost_om(nfigura, l1, l2, posx, posy, alpha);
       num_vertici_ost = 12;
       //println(vert_SR0_om);
-    } else if (nfigura == 5) { // Se è un cerchio, dimensione 12
+    } else if (nfigura == 5) { // Se è un triangolo dimensione vettore 6
       vert_SR0_om = new float[6];
       vert_SR0_om = vertici_ost_om(nfigura, l1, l2, posx, posy, alpha);
       num_vertici_ost = 6;
@@ -418,12 +418,12 @@ void Ostacolo_creazione(int n, float posx_o, float posy_o, float l1, float l2, f
   Ostacolo ost = new Ostacolo(n, posx_o, posy_o, l1, l2, alpha_o, nfigura);
 
   int num_ost = ostacolo_ArrayList.size();  //numero ostacolo è l'ultimo elemento inserito
-  println("dimensione lista", num_ost);
+  //println("dimensione lista", num_ost);
 
   // se siamo arrivati al numero massimo non inseriamo altri ostacoli (verifica in interazioni)
   if (num_ost < numero_ostacoli) //evita di inserire più volte lo stesso ostacolo poichè il draw viene eseguito 60 volte al secondo
   {
     ostacolo_ArrayList.add(ost); //qui inserisce l'ostacolo nella lista
-    println("inserito ostacolo ", n);
+    //println("inserito ostacolo ", n);
   }
 }

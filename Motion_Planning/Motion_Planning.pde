@@ -184,7 +184,7 @@ void draw()
     //non mostriamo il primo ostacolo poichè lo mostriamo alla riga 153
     //if (o.id != 0) Ostacolo_creazione(o.id, o.posx, o.posy, o.lato1, o.lato2, o.alpha, o.forma);
     Ostacolo_creazione(o.id, o.posx, o.posy, o.lato1, o.lato2, o.alpha, o.forma);
-    println("Id ostacolo dentro array ", o.id);
+    //println("Id ostacolo dentro array ", o.id);
   }
   //println(ostacolo_ArrayList);
 
@@ -313,7 +313,7 @@ void draw()
 
               //se sono arrivato all'ultimo nodo dell'array path 
 
-              arrived = true; 
+              //arrived = true (ma è superfluo)
 
               nodo_corrente = nodo_successivo;
 
@@ -324,7 +324,7 @@ void draw()
       } else
       {  // if (s) -> target trovato
         float toll2 = 1;
-        arrived = true; 
+        arrived = true;
 
         if (abs(pos_x_r - x2) < toll2 && abs(pos_y_r - y2) < toll2 )
         {
