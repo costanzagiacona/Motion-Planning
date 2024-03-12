@@ -12,7 +12,6 @@ void make_tree(Nodo current) {
 
     if (abs(ni.x -x_vert)< toll && abs(ni.y-y_vert)<toll) {
       //se già esiste, o se è sufficientemente vicino ad un vertice già esistente
-      //tree.linknodo(ni, current);   //se il nodo è già "presente", crea solo arco
       return;
     }
   }

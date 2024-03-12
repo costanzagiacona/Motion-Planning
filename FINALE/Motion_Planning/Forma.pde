@@ -63,11 +63,11 @@ void formasp(int nfigura) //input -> numero figura
   case 5:
     //triangolo
     //figura(3, 1000, 1000,incrsp); //sides, lato1, lato2
-    disegnaTriangolo(0, 0, 1000+incrsp);
-    posxsp[4] = 1000+incrsp;
-    posysp[4] = 1000+incrsp;
-    l1 = 1000+incrsp;
-    l2 = 1000+incrsp;
+    disegnaTriangolo(0, 0, 1100+incrsp);
+    posxsp[4] = 1100+incrsp;
+    posysp[4] = 1100+incrsp;
+    l1 = 1100+incrsp;
+    l2 = 1100+incrsp;
     vertici_sp(nfigura, l1, l2);
     break;
 
@@ -136,23 +136,15 @@ void vertici_sp(int nfigura, float l1, float l2) //SR0
     //6 -> numero vertici
     float angle = -360 / 12; //angolo tra due vertici consecutivi in un esagono (12 perchè poi lo moltiplichiamo in x e y per multipli di 2)
     float x = 0, y = 0;
-    //24 perchè calcoliamo x e y per 12 volte, quindi 12*2
+    //12 perché usiamo due celle per ogni vertice
     for (int i = 0; i < 12; i=i+2) // i+2 perchè calcoliamo allo stesso tempo x e y
-    //aumentando il numero dei vertici viene più preciso lo scan
+      //aumentando il numero dei vertici viene più preciso lo scan
     {
       x = cos(radians(i * angle)) * (l1/2);
       y = sin(radians(i * angle)) * (l1/2);
       vertici_cerchio[i] = x;
       vertici_cerchio[i+1] = y;
-      //println(vertici_cerchio[i], vertici_cerchio[i+1]);
-      pushMatrix();
-      translate(x,y);
-      stroke(255,0,0);
-      sphere(20);
-      popMatrix();
-      
     }
-    //for(int i = 0; i < 120; i++) println("VERTICI", vertici_cerchio[i]);
 
     break;
 

@@ -13,12 +13,10 @@
 
 //cose da fare
 /*
-  sistemare i vertici -> Ostacolo ------------> SISTEMATI
-  
-  DA FARE
-   Aggiungere controlli sui vertici del cerchio in intersection_obstacle
-
+ 
   aggiungere commenti
+  
+  Quando il laser si trova su un vertice attraversa l'ostacolo da dentro
 
 */
 

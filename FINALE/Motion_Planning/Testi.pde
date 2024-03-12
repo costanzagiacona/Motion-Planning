@@ -18,6 +18,13 @@ void infoi()
   text("y, ", 1310, 0);
   fill(#FAF24C);
   text("z ", 1330, 0);
+  
+  textAlign(BOTTOM, LEFT);
+  fill(0);
+  text("Premi 'g' per ruotare il tavolo verso l'alto", 0, 700);
+  text("Premi 'G' per ruotare il tavolo verso il basso", 0, 730);
+  text("Premi 'h' per ruotare il tavolo verso sinistra", 0, 760);
+  text("Premi 'H' per ruotare il tavolo verso destra", 0, 790);
 
   if (semsp == true)
   {

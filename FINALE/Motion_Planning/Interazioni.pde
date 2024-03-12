@@ -30,7 +30,21 @@ void keyPressed()
   if (keyCode == 'x') eyeX -= 25;
   if (keyCode == 'Y') eyeY += 25;
   if (keyCode == 'y') eyeY -= 25;
-
+  
+  // visual home lungo Y
+  if (key == 'h') {
+    angoloY += 0.05;
+  }
+  if (key == 'H') {
+    angoloY -= 0.05;
+  }
+  // visual home lungo X
+  if (key == 'g') {
+    angoloX += 0.05;
+  }
+  if (key == 'G') {
+    angoloX -= 0.05;
+  }
 
   if (keyCode == ENTER)
   {
@@ -152,25 +166,10 @@ void keyPressed()
           numero_ostacoli++;
           id_ost++;
           if (numero_ostacoli >= MAX_OST) semost = false; //raggiunto numero max ostacoli
-          Ostacolo_creazione(id_ost, x, y, lato1+incrost, lato2+incrost, orientamento, nfiguraost);
+          Ostacolo_creazione(id_ost, x, y, lato1+incrost, lato2+incrost, orientamento, nfiguraost, false);
           semins = 0;
         }
       }
     }
-  }
-
-  // visual home lungo Y
-  if (key == 'h') {
-    angoloY += 0.05;
-  }
-  if (key == 'H') {
-    angoloY -= 0.05;
-  }
-  // visual home lungo X
-  if (key == 'g') {
-    angoloX += 0.05;
-  }
-  if (key == 'G') {
-    angoloX -= 0.05;
   }
 }

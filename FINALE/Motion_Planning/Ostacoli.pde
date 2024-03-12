@@ -8,17 +8,12 @@ class Ostacolo
   public float lato1;
   public float lato2;
   // numero vertici
-  public int vertici;
   public int num_vertici_ost;
   //orientamento
-  public float alpha;
-  //forma
-  public int forma; //nfigura
-
-  // presente o meno
-  //flag per dire se abbiamo finito di crearlo o meno
-  public boolean creato;
-
+  public float alpha;   
+  //nfigura
+  public int forma;     
+  public boolean is_t;  // se è il target
 
   //coordinate vertici ostacolo rispetto SR ost
   public float[] vert_array_SR_ost = new float[8];
@@ -31,7 +26,7 @@ class Ostacolo
 
 
   //funzione che crea l'ostacolo
-  Ostacolo(int n, float posx_o, float posy_o, float l1, float l2, float alpha_o, int nfigura)
+  Ostacolo(int n, float posx_o, float posy_o, float l1, float l2, float alpha_o, int nfigura, boolean target)
   {
     pushMatrix();
 
@@ -43,15 +38,15 @@ class Ostacolo
     lato2 = l2;
     alpha = alpha_o;
     forma = nfigura;
-    creato = true;
-
-
+    is_t = target;
+    
     //orientamento
     translate(posx_o, posy_o, 5); //10 posiziona l'ostacolo sul pavimento
     rotateZ(alpha);
 
-    //fill(#A70202);
-    noFill();
+    if(target == false) fill(#A70202);
+    else fill(#2AB74C);
+    //noFill();
 
     //creazione ostacolo
     formaost(forma, l1, l2);
@@ -98,13 +93,28 @@ class Ostacolo
       num_vertici_ost = 8;
       //println(vert_SR0_om);
     }
-    //vert_SR0_om = vertici_ost_om(nfigura, l1, l2, posx, posy, alpha);
-    //println(vert_SR0_om);
-
-    //popMatrix();
   }
+}
 
-  float[] vertici_ost_om(int nfigura, float l1, float l2, float posx, float posy, float alpha) //SR0
+
+//Creazione ostacolo e aggiunto alla lista
+void Ostacolo_creazione(int n, float posx_o, float posy_o, float l1, float l2, float alpha_o, int nfigura, boolean target)
+{
+  //tipo   nome
+  Ostacolo ost = new Ostacolo(n, posx_o, posy_o, l1, l2, alpha_o, nfigura, target);
+
+  int num_ost = ostacolo_ArrayList.size();  //numero ostacolo è l'ultimo elemento inserito
+  //println("dimensione lista", num_ost);
+
+  // se siamo arrivati al numero massimo non inseriamo altri ostacoli (verifica in interazioni)
+  if (num_ost < numero_ostacoli) //evita di inserire più volte lo stesso ostacolo poichè il draw viene eseguito 60 volte al secondo
+  {
+    ostacolo_ArrayList.add(ost); //qui inserisce l'ostacolo nella lista
+    //println("inserito ostacolo ", n);
+  }
+}
+
+float[] vertici_ost_om(int nfigura, float l1, float l2, float posx, float posy, float alpha) //SR0
   {
     float h=0;
     float d=0;
@@ -408,22 +418,3 @@ class Ostacolo
 
     return vertici_ost_om;
   }
-}
-
-
-//Creazione ostacolo e aggiunto alla lista
-void Ostacolo_creazione(int n, float posx_o, float posy_o, float l1, float l2, float alpha_o, int nfigura)
-{
-  //tipo   nome
-  Ostacolo ost = new Ostacolo(n, posx_o, posy_o, l1, l2, alpha_o, nfigura);
-
-  int num_ost = ostacolo_ArrayList.size();  //numero ostacolo è l'ultimo elemento inserito
-  //println("dimensione lista", num_ost);
-
-  // se siamo arrivati al numero massimo non inseriamo altri ostacoli (verifica in interazioni)
-  if (num_ost < numero_ostacoli) //evita di inserire più volte lo stesso ostacolo poichè il draw viene eseguito 60 volte al secondo
-  {
-    ostacolo_ArrayList.add(ost); //qui inserisce l'ostacolo nella lista
-    //println("inserito ostacolo ", n);
-  }
-}

@@ -53,11 +53,11 @@ float pos_y_r = -180;           //  <====
 float r_r = 27;  //stima del diametro del robot rappresentato come un cerchio
 
 //Variabili target
-float xot = -200;        //        <=====
-float yot = 350;        //        <=====
+float xot = -180;        //        <=====
+float yot = 250;        //        <=====
 float r_target = 10;
 float h_target = 5;
-boolean ist_t = true;
+boolean is_t = true;
 //TARGET
 int id_target = 0; //max 6 ostacoli
 
@@ -154,16 +154,16 @@ void draw()
   pushMatrix();
   //translate(xot, yot); //SR target
   //formaost(5, 20, 20); //disegno target
-  Ostacolo_creazione(id_target, xot, yot, 20, 20, PI/4, 5);
+  Ostacolo_creazione(id_target, xot, yot, 20, 20, PI/4, 5, true);
   popMatrix();
  
 
   /*CREAZIONE OSTACOLI*/
   //Ostacolo_creazione(0, -200, 10, lato1, lato2, PI/4, 1); //quadrato
-  Ostacolo_creazione(1, 300, 0, lato1, lato2, PI/4, 1); //quadrato
+  Ostacolo_creazione(1, 200, 10, lato1, lato2, PI/4, 1, false); //quadrato
   //Ostacolo_creazione(2, 200, 100, lato1+50, lato2, PI/4, 4); //cerchio
   //Ostacolo_creazione(2, -150, 250, lato1+30, lato2+30, -PI/3, 6); //trapezio
-  Ostacolo_creazione(2, 200, 250, lato1+30, lato2+30, -PI/3, 6); //trapezio
+  Ostacolo_creazione(2, 170, 230, lato1+30, lato2+30, -PI/3, 6, false); //trapezio
     
 
   if (semost == true && semins != 0)
@@ -184,7 +184,7 @@ void draw()
   {
     //non mostriamo il primo ostacolo poichè lo mostriamo alla riga 153
     //if (o.id != 0) Ostacolo_creazione(o.id, o.posx, o.posy, o.lato1, o.lato2, o.alpha, o.forma);
-    Ostacolo_creazione(o.id, o.posx, o.posy, o.lato1, o.lato2, o.alpha, o.forma);
+    Ostacolo_creazione(o.id, o.posx, o.posy, o.lato1, o.lato2, o.alpha, o.forma, o.is_t);
     //println("Id ostacolo dentro array ", o.id);
   }
   //println(ostacolo_ArrayList);

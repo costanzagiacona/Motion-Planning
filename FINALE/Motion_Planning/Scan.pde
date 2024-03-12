@@ -1,6 +1,6 @@
 //variabili scanner
 boolean s = false;   //variabile scanner
-int num_iter = 2500;
+int num_iter = 1500;
 float start_alpha = (2*PI)/num_iter;
 float alpha = start_alpha;
 float[] x_prev = {0, 0};   //coordinate dei punti i-1,i-2 RISPETTO A SR0
