@@ -37,7 +37,7 @@ class Nodo
     }
   }
 
-  //restituisce i nodi in links
+  //restituisce i nodi in links  --------------------------------------------------- da vedere questa e quando usiamo le altre
   ArrayList<Nodo> getIncomingLinks() {
     return links;
   }

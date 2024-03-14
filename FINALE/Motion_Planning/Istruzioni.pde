@@ -18,6 +18,8 @@
   
   Quando il laser si trova su un vertice attraversa l'ostacolo da dentro
 
+
+  dobbiamo fare un caso non trovi mai il target
 */
 
 
