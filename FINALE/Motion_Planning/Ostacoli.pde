@@ -12,16 +12,17 @@ class Ostacolo
   //orientamento
   public float alpha;   
   //nfigura
-  public int forma;     
-  public boolean is_t;  // se è il target
+  public int forma;    
+  // se è il target
+  public boolean is_t;  
 
-  //coordinate vertici ostacolo rispetto SR ost
+  //coordinate vertici ostacolo rispetto SR ostacolo
   public float[] vert_array_SR_ost = new float[8];
-  //coordinate vertici SR
+  //coordinate vertici SR0
   public float[] vert_SR0 = new float[8];
-  //coordinate vertici ostacolo OMBRA rispetto SR ost
+  //coordinate vertici ostacolo OMBRA rispetto SR ostacolo
   public float[] vert_array_SR_ost_om = new float[8];
-  //coordinate vertici SR
+  //coordinate vertici SR0
   public float[] vert_SR0_om;
 
 
@@ -41,9 +42,10 @@ class Ostacolo
     is_t = target;
     
     //orientamento
-    translate(posx_o, posy_o, 5); //10 posiziona l'ostacolo sul pavimento
+    translate(posx_o, posy_o, 5); //5 posiziona l'ostacolo sul pavimento
     rotateZ(alpha);
 
+    //il target e gli ostacoli hanno colori diversi
     if(target == false) fill(#A70202);
     else fill(#2AB74C);
     //noFill();
@@ -59,35 +61,27 @@ class Ostacolo
     formaost(forma, l1+k, l2+k);
     popMatrix();
 
-    /* FORMULE
-     Sono trasformazioni geometriche necessarie per convertire
-     le coordinate dell'oggetto dal sistema di riferimento ruotato a quello non ruotato.
-     Quando lo spazio di lavoro è ruotato, bisogna applicare una trasformazione di
-     rotazione inversa alle coordinate del quadrato per riportarle al sistema di riferimento non ruotato.
-     
-     coordinate del sr non ruotato (tavolo)
-     x' = cos(θ) * (x - x0) - sin(θ) * (y - y0) + x0
-     y' = sin(θ) * (x - x0) + cos(θ) * (y - y0) + y0
-     
-     x,y -> coordinate ostacolo ruotato rispetto al tavolo
-     x0,y0 -> coordinate del punto intorno a cui ruoti (centro sr tavolo)
-     θ -> angolo di rotazione
-     
-     */
-
     popMatrix();
+    
+    //VERTICI
+    //in base alla figura abbiamo diversi casi
 
     // Inizializzazione dell'array con la dimensione desiderata
-    if (nfigura == 4) { // Se è un cerchio, dimensione vettore 12
+    if (nfigura == 4) 
+    { //CERCHIO
       vert_SR0_om = new float[12];
-      vert_SR0_om = vertici_ost_om(nfigura, l1, l2, posx, posy, alpha);
+      vert_SR0_om = vertici_ost_om(nfigura, l1, l2, posx, posy, alpha); //funzione sotto
       num_vertici_ost = 12;
       //println(vert_SR0_om);
-    } else if (nfigura == 5) { // Se è un triangolo dimensione vettore 6
+    } 
+    else if (nfigura == 5) 
+    { //TRIANGOLO
       vert_SR0_om = new float[6];
       vert_SR0_om = vertici_ost_om(nfigura, l1, l2, posx, posy, alpha);
       num_vertici_ost = 6;
-    } else { // Altrimenti, dimensione 8
+    } 
+    else 
+    { //ALTRIMENTI
       vert_SR0_om = new float[8];
       vert_SR0_om = vertici_ost_om(nfigura, l1, l2, posx, posy, alpha);
       num_vertici_ost = 8;
@@ -114,16 +108,38 @@ void Ostacolo_creazione(int n, float posx_o, float posy_o, float l1, float l2, f
   }
 }
 
+/* FORMULE VERTICI
+     Sono trasformazioni geometriche necessarie per convertire
+     le coordinate dell'oggetto dal sistema di riferimento ruotato a quello non ruotato.
+     Quando lo spazio di lavoro è ruotato, bisogna applicare una trasformazione di
+     rotazione inversa alle coordinate del quadrato per riportarle al sistema di riferimento non ruotato.
+     
+     coordinate del sr non ruotato (tavolo)
+     x' = cos(θ) * (x - x0) - sin(θ) * (y - y0) + x0
+     y' = sin(θ) * (x - x0) + cos(θ) * (y - y0) + y0
+     
+     x,y -> coordinate ostacolo ruotato rispetto al tavolo
+     x0,y0 -> coordinate del punto intorno a cui ruoti (centro sr tavolo)
+     θ -> angolo di rotazione
+     
+     */
+
 float[] vertici_ost_om(int nfigura, float l1, float l2, float posx, float posy, float alpha) //SR0
   {
     float h=0;
     float d=0;
     float[] vertici_ost_om;
-    if (nfigura == 4) { // Se è un cerchio, dimensione 12
+    
+    if (nfigura == 4) 
+    { //CERCHIO
       vertici_ost_om = new float[12];
-    } else if (nfigura == 5) { // Se è un cerchio, dimensione 12
+    } 
+    else if (nfigura == 5) 
+    { //TRIANGOLO
       vertici_ost_om = new float[6];
-    } else { // Altrimenti, dimensione 8
+    } 
+    else 
+    { // ALTRIMENTI
       vertici_ost_om = new float[8];
     }
 

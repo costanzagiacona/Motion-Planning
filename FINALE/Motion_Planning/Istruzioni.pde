@@ -17,6 +17,14 @@
   aggiungere commenti
   
   Quando il laser si trova su un vertice attraversa l'ostacolo da dentro
+  
+  Aggiungere controllo sui lati dell'ostacolo per evitare sovrapposizioni
+  
+  Non si deve poter mettere un ostacolo sul robot
+  
+  Si può avere un solo target
+  
+  Aggiungere colori in main
 
 */
 

@@ -1,5 +1,5 @@
-
-void mouseDragged() {
+void mouseDragged() 
+{
   angoloY = angoloYpartenza - PI*mouseX/float(1000); //DA MODIFICARE <===  !!!!!!
   angoloX = angoloXpartenza - PI*mouseY/float(1000);
 }
@@ -66,13 +66,13 @@ void keyPressed()
   /*MODIFICA SPAZIO DI LAVORO*/
   if (semsp == true)
   {
-    if (key == '+') //aumento dimensione spazio lavoro o ostacolo
+    if (key == '+') //aumento dimensione spazio lavoro 
     {
       incrsp += kp;
       if (incrsp > 100) incrsp=100;
     }
 
-    if (key == '-') //diminuisco dimensione spazio lavoro o ostacolo
+    if (key == '-') //diminuisco dimensione spazio lavoro 
     {
       incrsp -= kp;
       if (incrsp < kp) incrsp = kp;
@@ -87,29 +87,31 @@ void keyPressed()
     {
       if (key == 'o')
       {
-        x = 0;
+        //inizializzo variabili
+        x = 0; //posizione ostacolo
         y = 0;
         orientamento = 0;
         incrost = 0;
         nfiguraost = 1;
-        lato1 = 50;
+        lato1 = 50; //dimensioni di default
         lato2 = 70;
-        semins = 1;
+        semins = 1; //passo alla parte successiva
       }
     }
 
     //SEMINS 1
     if (semins == 1)
     {
-      sovrapposizioneost = sovrapposizione(x, y, lato1+incrost, lato2+incrost, orientamento);
+      //rilevo sovrapposizione con altri ostacoli o tavolo
+      sovrapposizioneost = sovrapposizione(x, y, lato1+incrost, lato2+incrost, orientamento); //funzione in 'Collisioni ostacoli'
 
-      if (key == '+') //aumento dimensione spazio lavoro o ostacolo
+      if (key == '+') //aumento dimensione ostacolo
       {
         incrost += kp;
         if (incrost > 100) incrost = 100;
       }
 
-      if (key == '-') //diminuisco dimensione spazio lavoro o ostacolo
+      if (key == '-') //diminuisco dimensione ostacolo
       {
         incrost -= kp;
         if (incrost < kp) incrost = kp;
@@ -131,7 +133,7 @@ void keyPressed()
 
 
     //SEMINS 2
-    if (semins == 2)
+    if (semins == 2) //modifica posizione ostacolo
     {
 
       if (keyCode == DOWN)
@@ -161,13 +163,13 @@ void keyPressed()
 
       if (keyCode == TAB)
       {
-        if (!sovrapposizioneost) //ricominciamo e creiamo un nuovo ostacolo
+        if (!sovrapposizioneost) //se non ci sono sovrapposizioni posso istanziare l'ostacolo
         {
           numero_ostacoli++;
           id_ost++;
           if (numero_ostacoli >= MAX_OST) semost = false; //raggiunto numero max ostacoli
           Ostacolo_creazione(id_ost, x, y, lato1+incrost, lato2+incrost, orientamento, nfiguraost, false);
-          semins = 0;
+          semins = 0;  //ricominciamo e creiamo un nuovo ostacolo se vogliamo
         }
       }
     }
