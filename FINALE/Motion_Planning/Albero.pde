@@ -12,7 +12,7 @@ class Albero
  // aggiunge il nodo all'albero
   void addNodo(Nodo nodo1) 
   {
-    if (!nodo.contains(nodo1)) 
+    if (!nodo.contains(nodo1)) //se non presente
     {
       nodo.add(nodo1);
     }
@@ -21,33 +21,24 @@ class Albero
  // rimuove il nodo dall'albero
   void rimuovoNodo(int index)
   {
-    Nodo n = nodo.get(index);
-    for (Nodo linked_node_i : n.getIncomingLinks()){
-      linked_node_i.getIncomingLinks().remove(n);
+    Nodo n = nodo.get(index); //prendo il nodo con indice index 
+    for (Nodo linked_node_i : n.getIncomingLinks()) //scorro la lista
+    {
+      linked_node_i.getIncomingLinks().remove(n); //tolgo tutti i collegamenti del nodo index con altri nodi
     }
-    nodo.remove(index);
+    nodo.remove(index); //lo posso rimuovere definitivamente
   }
   
-  Nodo getRoot() {
+  Nodo getRoot()
+  {
     return radice;
   }
   
-  //int size() {
-  //  return nodo.size();
-  //}
-  
-  //// restituisce il nodo identificato dal suo indice
-  //Nodo getNode(int index) {
-  //  return nodo.get(index);
-  //}
-  
-  //ArrayList<Nodo> getNodes() {
-  //  return nodo;
-  //}
-  
   // aggiunge un arco tra due nodi
-  boolean linkNodes(Nodo n1, Nodo n2) {
-    if (nodo.contains(n1) && nodo.contains(n2)) {
+  boolean linkNodes(Nodo n1, Nodo n2) 
+  {
+    if (nodo.contains(n1) && nodo.contains(n2)) //se entrambi i nodi sono presenti
+    {
       n1.addLink(n2);
       n2.addLink(n1);
       return true;
@@ -60,7 +51,7 @@ class Albero
   {
     nodo.add(child);
     child.padre = parent;
-    linkNodes(parent, child);
+    linkNodes(parent, child); //aggiungo arco tra i due
   }
   
 }

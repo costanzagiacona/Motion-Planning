@@ -26,6 +26,8 @@
   
   Aggiungere colori in main
 
+
+  dobbiamo fare un caso non trovi mai il target
 */
 
 
