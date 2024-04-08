@@ -12,20 +12,7 @@
 */
 
 //cose da fare
-/*
- 
-  aggiungere commenti
-  
-  Quando il laser si trova su un vertice attraversa l'ostacolo da dentro
-  
-  Non si deve poter mettere un ostacolo sul robot
-  
-  Si può avere un solo target
-  
-  Aggiungere colori in main
-
-  dobbiamo fare un caso non trovi mai il target
-  
+/* 
   problemi con cerchio: scompare il laser
 */
 

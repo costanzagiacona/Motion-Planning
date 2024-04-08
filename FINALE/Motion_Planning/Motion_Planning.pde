@@ -296,12 +296,7 @@ void draw()
         t = 0;
         ti = t;
 
-        /* Il valore dei coefficienti è stato trovato attraverso la spline cubica naturale
-         che rappresenta una scelta possibile nel caso di un polinomio di terzo ordine.
-         Supponiamo che il robot si sposti tra i punti con velocità costante e pari a 1 (v=1).
-         Usiamo ti, perché il polinomio cambia in funzione del segmento percorso.
-         Un'altra possibilità sarebbe l'uso delle derivate.
-         */
+        // Calcolati con mathematica
         A = (2*pow(ti, 3)+3*Dt*pow(ti, 2))/(pow(Dt, 3));
         B = -(6*pow(ti, 2)+6*Dt*ti)/(pow(Dt, 3));
         C = (6*ti+3*Dt)/(pow(Dt, 3));
@@ -333,12 +328,7 @@ void draw()
         t = 0;
         ti = t;
         
-        /* Il valore dei coefficienti è stato trovato attraverso la spline cubica naturale
-         che rappresenta una scelta possibile nel caso di un polinomio di terzo ordine.
-         Supponiamo che il robot si sposti tra i punti con velocità costante e pari a 1 (v=1).
-         Usiamo ti, perché il polinomio cambia in funzione del segmento percorso.
-         Un'altra possibilità sarebbe l'uso delle derivate.
-         */
+       
         A = (2*pow(ti, 3)+3*Dt*pow(ti, 2))/(pow(Dt, 3));
         B = -(6*pow(ti, 2)+6*Dt*ti)/(pow(Dt, 3));
         C = (6*ti+3*Dt)/(pow(Dt, 3));

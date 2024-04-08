@@ -3,7 +3,7 @@ void make_tree(Nodo current) {
 
   int s = nodo.size();
   String s_lab = String.valueOf(s);
-  float toll = 25; //<============================================= FORSE DA CAMBIARE
+  float toll = 25; //<============================================= forse da cambiare
 
   Nodo n = new Nodo(s_lab, x_vert, y_vert);  // ogni nodo ha label e coordinate (x,y)
 
