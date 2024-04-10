@@ -36,7 +36,8 @@ float[] posysp = new float[6]; //lunghezza lato sp lungo y
 float incrsp = 0;
 ///vertici
 float[] vertici_sp = new float[8]; //numero di vertici figura sp
-float[] vertici_cerchio = new float[12]; //numero vertici cerchio (12 sopra (x e y))
+//float[] vertici_cerchio = new float[12]; //numero vertici cerchio (12 sopra (x e y))
+float[] vertici_cerchio = new float[24];
 
 
 //---------- PARAMETRO COMUNE OSTACOLO E SP ----------
@@ -118,11 +119,15 @@ float A, B, C, D;      // coefficienti polinomio a minima energia
 boolean print = true; //disegno il grafo sul tavolo
 boolean label_print = true; //mostro i numeri dei nodi
 
+//lista di nodi visitati, ordinata,  per creare curva di Bezier
+ArrayList<Nodo> nodi_visitati_bezier;
+
+
 
 //---------- SCANNER ----------
 boolean s = false;   //true se ho trovato il target, modificata in scan
-int num_iter = 1500; //per far girare lo scanner
-float start_alpha = (2*PI)/num_iter; //angolo iniziale con cui si sposta lo scanner
+int num_iter = 1100; //per far girare lo scanner
+float start_alpha = (2*PI)/1100; //angolo iniziale con cui si sposta lo scanner
 float alpha = start_alpha;//angolo con cui si sposta lo scanner
 float[] x_prev = {0, 0};   //coordinate dei punti i-1,i-2 RISPETTO A SR0
 float[] y_prev = {0, 0};
@@ -145,6 +150,7 @@ int i = 0;
 int j = 0; //posizione nel mio percorso tra nodo partenza e nodo destinazione
 int numero_ostacoli = 3; //numero corrente di ostacoli (conta da 0)
 int id_ost = 2;
+int bezier = 0;
 
 
 
@@ -165,6 +171,8 @@ void setup()
   nodo = new ArrayList<Nodo>(); //creo lista nodi
   albero = new Albero(first_root); //instanzio albero
   nodo_corrente = first_root; //mi posiziono sulla radice
+  //il percorso di Bezier deve partire dalla radice
+  //nodi_visitati_bezier.add(first_root);
 }
 
 void draw()
@@ -209,16 +217,16 @@ void draw()
   //creo il target come un ostacolo ma pongo l'ultima variabile a true per
   //far sapere al programma che è il punto di arrivo
   pushMatrix();
-  Ostacolo_creazione(id_target, xot, yot, r_target, r_target, PI/4, 5, true); //funzione in 'Ostacoli'
+  Ostacolo_creazione(id_target, xot, yot, r_target, r_target, PI/4, 5, true, 20); //funzione in 'Ostacoli'
   popMatrix();
 
 
   /*CREAZIONE OSTACOLI DI DEFAULT*/
   //Ostacolo_creazione(0, -200, 10, lato1, lato2, PI/4, 1); //quadrato
-  Ostacolo_creazione(1, 200, 10, lato1, lato2, PI/4, 1, false); //quadrato
+  Ostacolo_creazione(1, 200, 10, lato1, lato2, PI/4, 1, false,20); //quadrato ------
   //Ostacolo_creazione(2, 200, 100, lato1+50, lato2, PI/4, 4); //cerchio
   //Ostacolo_creazione(2, -150, 250, lato1+30, lato2+30, -PI/3, 6); //trapezio
-  Ostacolo_creazione(2, 170, 230, lato1+30, lato2+30, -PI/3, 6, false); //trapezio
+  Ostacolo_creazione(2, 170, 230, lato1+30, lato2+30, -PI/3, 6, false,20); //trapezio ----
 
 
   /*CREAZIONE OSTACOLI DA PARTE DELL'UTENTE*/
@@ -241,7 +249,7 @@ void draw()
   //'Ostacolo creazione' sta in 'Interazioni' e non nel 'draw'
   for (Ostacolo o : ostacolo_ArrayList)
   {
-    Ostacolo_creazione(o.id, o.posx, o.posy, o.lato1, o.lato2, o.alpha, o.forma, o.is_t); //funzione in 'Ostacoli'
+    Ostacolo_creazione(o.id, o.posx, o.posy, o.lato1, o.lato2, o.alpha, o.forma, o.is_t, o.ombra_k); //funzione in 'Ostacoli'
     //println("Id ostacolo dentro array ", o.id);
   }
   //println(ostacolo_ArrayList);
@@ -281,6 +289,7 @@ void draw()
         j = 0; //parto dal nodo 0 del mio percorso per arrivare al target
         exploring_node++;
         nodo_successivo = nodo.get(exploring_node); //prendo l'ultimo nodo appena inserito
+       // nodi_visitati_bezier.add(nodo_successivo);
 
         //trova il percorso tra il nodo corrente e il prossimo da visitare (in questo caso il target)
         percorso = find_path(nodo_corrente, nodo_successivo);//funzione in 'Grafo'
@@ -314,6 +323,7 @@ void draw()
         j = 0; //parto dal nodo 0 del mio percorso per arrivare al target
         exploring_node++;
         nodo_successivo = nodo.get(exploring_node);//prendo l'ultimo nodo appena inserito
+        //nodi_visitati_bezier.add(nodo_successivo);
 
         //trova il percorso tra il nodo corrente e il prossimo da visitare 
         percorso = find_path(nodo_corrente, nodo_successivo);
@@ -412,6 +422,16 @@ void draw()
           // spostamento robot nel punto del target
           pos_x_r = new_pos[0];
           pos_y_r = new_pos[1];
+          
+          //disegno bezier
+        /* 
+          for (int i=0; i< nodi_visitati_bezier.size(); i=i+2 )
+          {
+            
+            line(nodi_visitati_bezier.get(bezier).x, nodi_visitati_bezier.get(bezier).y,nodi_visitati_bezier.get(bezier+1).x,nodi_visitati_bezier.get(bezier+1).x);
+            bezier++;
+          }
+          */
         }
       }
     }

@@ -46,6 +46,19 @@ void keyPressed()
     angoloX -= 0.05;
   }
 
+  // modifica velocità scanner
+  if (key == 'a') 
+  {
+    num_iter -= 50;
+    if (num_iter < 800) num_iter = 800;
+  }
+  if (key == 'A') 
+  {
+    num_iter += 20;
+    if (num_iter > 1800) num_iter = 1800;
+    //println("num_iter ->", num_iter);
+  }
+  
   if (keyCode == ENTER)
   {
     if (semsp == true) //finito di creare lo spazio di lavoro passiamo alla creazione degli ostacoli
@@ -96,6 +109,7 @@ void keyPressed()
         lato1 = 50; //dimensioni di default
         lato2 = 70;
         semins = 1; //passo alla parte successiva
+        k = 20;
       }
     }
 
@@ -135,7 +149,20 @@ void keyPressed()
     //SEMINS 2
     if (semins == 2) //modifica posizione ostacolo
     {
+      //modifica OMBRA
+      if (key == '+') //aumento dimensione ombra ostacolo
+      {
+        k += kp;
+        if (k > 40) k = 40;
+      }
 
+      if (key == '-') //diminuisco dimensione ombra ostacolo
+      {
+        k -= kp;
+        if (k < r_r/2) k = r_r/2; //non può essere più piccolo di metà del robot
+      }
+
+      //modifica POSIZIONE
       if (keyCode == DOWN)
       {
         //posizione ostacolo
@@ -168,7 +195,7 @@ void keyPressed()
           numero_ostacoli++;
           id_ost++;
           if (numero_ostacoli >= MAX_OST) semost = false; //raggiunto numero max ostacoli
-          Ostacolo_creazione(id_ost, x, y, lato1+incrost, lato2+incrost, orientamento, nfiguraost, false);
+          Ostacolo_creazione(id_ost, x, y, lato1+incrost, lato2+incrost, orientamento, nfiguraost, false, k);
           semins = 0;  //ricominciamo e creiamo un nuovo ostacolo se vogliamo
         }
       }

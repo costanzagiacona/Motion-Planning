@@ -74,7 +74,7 @@ boolean sovrapposizione(float posx, float posy, float l1, float l2, float alpha)
    Il controllo 2 è necessario poichè se l'oggetto si trova fuori dallo spazio di lavoro non deve essere istanziato, in questo caso i vertici non rilevano una sovrapposizione
    */
 
-  switch(nfigurasp)
+  switch(nfigurasp) //verifica sul centro dell'oggetto
   {
   case 1: //quadrato
   case 2: //rettangolo
@@ -166,17 +166,27 @@ boolean sovrapposizione(float posx, float posy, float l1, float l2, float alpha)
   }
 
 
-  //---------------------------- SOVRAPPOSIZIONE CON TAVOLO --------------------------------------
+  //vertici
   for (int k = 0; k < vert_ghost_obs.length; k = k+2)
   {
     // uso la funzione di intersezione con sp per evitare che gli ostacoli vengano posizionati fuori dallo spazio di lavoro
-    if (nfigurasp == 1 || nfigurasp == 2) { // quadrato o rettangolo
+    if (nfigurasp == 1 || nfigurasp == 2) 
+    { // quadrato o rettangolo
       col_sp = intersectionWall_qr(0, 0, x, y, vert_ghost_obs[k], vert_ghost_obs[k+1]);  // input - centro dell'ostacolo, vertici ostacolo
       if (col_sp[0] == 1) println("collisioni tavolo 1,2");
-    } else if (nfigurasp == 5) { // triangolo
+    } 
+    else if (nfigurasp == 5) 
+    { // triangolo
       col_sp = intersectionWall_3v(0, 0, x, y, vert_ghost_obs[k], vert_ghost_obs[k+1]);
       if (col_sp[0] == 1) println("collisioni tavolo 5");
-    } else { // altri poligoni
+    } 
+    else if (nfigurasp == 4) 
+    { // cerchio
+      col_sp = intersectionWall_c(0, 0, x, y, vert_ghost_obs[k], vert_ghost_obs[k+1]);
+      if (col_sp[0] == 1) println("collisioni tavolo c");
+    } 
+    else 
+    { // altri poligoni
       col_sp = intersectionWall_pol(0, 0, x, y, vert_ghost_obs[k], vert_ghost_obs[k+1]);
       if (col_sp[0] == 1) println("collisioni tavolo pol4");
     }

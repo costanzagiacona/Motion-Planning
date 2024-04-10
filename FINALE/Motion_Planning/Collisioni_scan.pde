@@ -142,9 +142,9 @@ float[] intersectionWall_pol(float x, float y, float cx, float cy, float len_x, 
 
 /*
       v1
- /    \
- /      \
- v3 ---- v2
+    /    \
+   /      \
+ v3 ----  v2
  */
 
 //intersezione tavolo TRIANGOLO (3 vertici)
@@ -195,26 +195,33 @@ float[] intersectionWall_c(float x, float y, float cx, float cy, float len_x, fl
   wall_collision[1] = 0; //collisione in x
   wall_collision[2] = 0; //collisione in y
 
-  for (int i = 0; i < 8; i=i+4) //aumentando il numero dei vertici viene più preciso lo scan (6 vertici)
+
+  for (int i = 0; i < 12; i=i+4) //aumentando il numero dei vertici viene più preciso lo scan (6 vertici)
   {
+    //line(vertici_cerchio[i]-x, vertici_cerchio[i+1]-y, vertici_cerchio[i+2]-x, vertici_cerchio[i+3]-y);
     intersection = intersectionLine(vertici_cerchio[i]-x, vertici_cerchio[i+1]-y, vertici_cerchio[i+2]-x, vertici_cerchio[i+3]-y, cx, cy, len_x, len_y); 
     if (intersection[0] == 1)
     {
       wall_collision[0] = 1;
       wall_collision[1] = intersection[1];
       wall_collision[2] = intersection[2];
+      //println("intersezione cerchio 1 - ", intersection[1],intersection[2]);
       return wall_collision;
     }
     
+    //line(vertici_cerchio[i+2]-x, vertici_cerchio[i+3]-y, vertici_cerchio[i+4]-x, vertici_cerchio[i+5]-y);
     intersection = intersectionLine(vertici_cerchio[i+2]-x, vertici_cerchio[i+3]-y, vertici_cerchio[i+4]-x, vertici_cerchio[i+5]-y, cx, cy, len_x, len_y); 
     if (intersection[0] == 1)
     {
       wall_collision[0] = 1;
       wall_collision[1] = intersection[1];
       wall_collision[2] = intersection[2];
+      //println("intersezione cerchio 2 - ", intersection[1],intersection[2]);
       return wall_collision;
     }
   }
+
+    
   return wall_collision;
 }
 
@@ -364,7 +371,8 @@ boolean min_distance(float x1, float y1, float x2, float y2)
   if (sqrt(pow(x1, 2) + pow(y1, 2)) < sqrt(pow(x2, 2) + pow(y2, 2)))  //quale tra i due punti P1=(x1,y1) e P2=(x2,y2) è più vicino
   {
     return true;
-  } else
+  } 
+  else
   {
     return false;
   }

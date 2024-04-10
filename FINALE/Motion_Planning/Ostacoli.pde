@@ -15,6 +15,9 @@ class Ostacolo
   public int forma;    
   // se è il target
   public boolean is_t;  
+  
+  //modifica ombra
+  public float ombra_k;
 
   //coordinate vertici ostacolo rispetto SR ostacolo
   public float[] vert_array_SR_ost = new float[8];
@@ -27,7 +30,7 @@ class Ostacolo
 
 
   //funzione che crea l'ostacolo
-  Ostacolo(int n, float posx_o, float posy_o, float l1, float l2, float alpha_o, int nfigura, boolean target)
+  Ostacolo(int n, float posx_o, float posy_o, float l1, float l2, float alpha_o, int nfigura, boolean target, float k)
   {
     pushMatrix();
 
@@ -40,6 +43,7 @@ class Ostacolo
     alpha = alpha_o;
     forma = nfigura;
     is_t = target;
+    ombra_k = k;
     
     //orientamento
     translate(posx_o, posy_o, 5); //5 posiziona l'ostacolo sul pavimento
@@ -92,10 +96,10 @@ class Ostacolo
 
 
 //Creazione ostacolo e aggiunto alla lista
-void Ostacolo_creazione(int n, float posx_o, float posy_o, float l1, float l2, float alpha_o, int nfigura, boolean target)
+void Ostacolo_creazione(int n, float posx_o, float posy_o, float l1, float l2, float alpha_o, int nfigura, boolean target, float k)
 {
   //tipo   nome
-  Ostacolo ost = new Ostacolo(n, posx_o, posy_o, l1, l2, alpha_o, nfigura, target);
+  Ostacolo ost = new Ostacolo(n, posx_o, posy_o, l1, l2, alpha_o, nfigura, target, k);
 
   int num_ost = ostacolo_ArrayList.size();  //numero ostacolo è l'ultimo elemento inserito
   //println("dimensione lista", num_ost);

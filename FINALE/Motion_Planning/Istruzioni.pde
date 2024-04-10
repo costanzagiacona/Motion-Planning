@@ -13,7 +13,9 @@
 
 //cose da fare
 /* 
-  problemi con cerchio: scompare il laser
+  grafo
+  
+  beziert
 */
 
 

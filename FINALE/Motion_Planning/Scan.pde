@@ -43,6 +43,7 @@ boolean scan(float x, float y, float len_max, color colore)
     pushMatrix();
     //translate(-x,-y,0);
     intersection_wall = intersectionWall_c(x, y, 0, 0, len_x, len_y);
+    //intersection_wall = intersectionWall_pol(x, y, 0, 0, len_x, len_y); //non funziona
     popMatrix();
   }
   else 
@@ -116,6 +117,7 @@ boolean scan(float x, float y, float len_max, color colore)
 
   fill(0);
   alpha = (alpha + (2*PI)/num_iter) %(2*PI);
+  //println("alpha -> ", alpha, "numero iter -> ", num_iter);
 
   return false; //non abbiamo trovato il target
 }
