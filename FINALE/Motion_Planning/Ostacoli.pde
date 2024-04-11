@@ -259,7 +259,7 @@ float[] vertici_ost_om(int nfigura, float l1, float l2, float posx, float posy, 
       rotateZ(alpha);
       sphere(5);
       popMatrix();
-
+*/
       break;
 
     case 3: //ROMBO
@@ -281,7 +281,7 @@ float[] vertici_ost_om(int nfigura, float l1, float l2, float posx, float posy, 
       // vertice 4
       vertici_ost_om[6] = posx - (d / 2) * cos(alpha) - k_om * sin(alpha); // avanti, quello lontano
       vertici_ost_om[7] = posy - (d / 2) * sin(alpha) + k_om * cos(alpha);
-
+/*
       //stampa
       fill(0, 255, 0); //VERDE
       pushMatrix();

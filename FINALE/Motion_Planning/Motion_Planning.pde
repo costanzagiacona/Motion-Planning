@@ -68,7 +68,7 @@ boolean semost = false;
 //regola i passaggi per inserire correttamente l'ostacolo
 // 0 -> creazione oggetto di default al centro
 // 1 -> possibilità di modificare la dimensione e l'orientamento
-// 2 -> posizionamento sul tavolo
+// 2 -> posizionamento sul tavolo e modifica dimensione ombra
 int semins = 0;
 
 
@@ -105,6 +105,7 @@ Albero albero;
 //---------- GRAFO ----------
 Nodo nodo_corrente, nodo_successivo;
 Nodo target;
+Nodo root;
 ArrayList<Nodo> nodo; //lista nodi istanziati
 ArrayList<Nodo> nodi_visitati; //lista nodi visitati
 ArrayList<Nodo> percorso; //lista dei nodi sul percorso
@@ -119,15 +120,18 @@ float A, B, C, D;      // coefficienti polinomio a minima energia
 boolean print = true; //disegno il grafo sul tavolo
 boolean label_print = true; //mostro i numeri dei nodi
 
-//lista di nodi visitati, ordinata,  per creare curva di Bezier
+//lista di nodi visitati, ordinata,  per creare curva di BEZIER
 ArrayList<Nodo> nodi_visitati_bezier;
+
+
+
 
 
 
 //---------- SCANNER ----------
 boolean s = false;   //true se ho trovato il target, modificata in scan
-int num_iter = 1100; //per far girare lo scanner
-float start_alpha = (2*PI)/1100; //angolo iniziale con cui si sposta lo scanner
+int num_iter = 800; //per far girare lo scanner
+float start_alpha = (2*PI)/420; //angolo iniziale con cui si sposta lo scanner
 float alpha = start_alpha;//angolo con cui si sposta lo scanner
 float[] x_prev = {0, 0};   //coordinate dei punti i-1,i-2 RISPETTO A SR0
 float[] y_prev = {0, 0};
@@ -171,6 +175,8 @@ void setup()
   nodo = new ArrayList<Nodo>(); //creo lista nodi
   albero = new Albero(first_root); //instanzio albero
   nodo_corrente = first_root; //mi posiziono sulla radice
+  
+  root = first_root;
   //il percorso di Bezier deve partire dalla radice
   //nodi_visitati_bezier.add(first_root);
 }
@@ -424,14 +430,43 @@ void draw()
           pos_y_r = new_pos[1];
           
           //disegno bezier
-        /* 
-          for (int i=0; i< nodi_visitati_bezier.size(); i=i+2 )
+          target = new Nodo("target", xot, yot); //creo nodo target
+          //make_tree(nodo_successivo); //aggiungo target all'albero
+          if (nodo.get(exploring_node+1).label != "target") albero.addChild(nodo_successivo, target); //aggiungiamo links
+          
+          //exploring_node++;
+          nodo_successivo = nodo.get(exploring_node-1);
+          //println("root x y ->", root.x,root.y, "target ->", target.x,target.y, xot, yot);
+          nodi_visitati_bezier = find_path(root, nodo_successivo); //trovo percorso da source a target
+          
+          nodi_visitati_bezier.add(target);
+          //println("Id NODO SUCCESSIVO -> ", nodo_successivo.label);
+          
+          //println("Id-> ", nodo_successivo.label);
+          
+          //println("nodi", nodi_visitati_bezier);
+          
+       /*   for (Nodo n : nodi_visitati_bezier)
           {
-            
-            line(nodi_visitati_bezier.get(bezier).x, nodi_visitati_bezier.get(bezier).y,nodi_visitati_bezier.get(bezier+1).x,nodi_visitati_bezier.get(bezier+1).x);
-            bezier++;
+            //println("Id-> ", n.label);
+            //line(n.x,n.y, xot,yot);
           }
           */
+          
+          nodo_corrente = root;
+          nodo_successivo = nodi_visitati_bezier.get(1);
+          for(int i=2; i<nodi_visitati_bezier.size(); i++ )
+          {
+            stroke(255);
+            println("id ",nodo_corrente.label, "id", nodo_successivo.label);
+            line(nodo_corrente.x,nodo_corrente.y, nodo_successivo.x,nodo_successivo.y);
+            
+            nodo_corrente = nodo_successivo;
+            nodo_successivo = nodi_visitati_bezier.get(i);
+          }
+          
+          line(nodo_corrente.x,nodo_corrente.y, target.x,target.y);
+          
         }
       }
     }

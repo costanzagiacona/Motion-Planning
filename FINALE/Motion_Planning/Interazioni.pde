@@ -49,8 +49,8 @@ void keyPressed()
   // modifica velocità scanner
   if (key == 'a') 
   {
-    num_iter -= 50;
-    if (num_iter < 800) num_iter = 800;
+    num_iter -= 20;
+    if (num_iter < 420) num_iter = 420;
   }
   if (key == 'A') 
   {
