@@ -5,10 +5,11 @@
 int is_in_obstacle(float x_0, float y_0) //input - coordinate punto rispetto sistema di riferimento fisso SR0
 {
   //x_1,y_1 sono le coordinate del punto rispetto al SR dell'ostacolo
-  float x_1, y_1, beta, px, py;
+  float x_1, y_1, beta, px, py,temp1,temp2;
 
   //valore di tolleranza numerica (perché sin e cos sono approssimati)
-  float tol = 1.5;
+  float tol = 1.5+5;
+  //float tol = 1.5;
 
   for (Ostacolo o : ostacolo_ArrayList) //per ogni ostacolo nella lista
   {
@@ -20,9 +21,24 @@ int is_in_obstacle(float x_0, float y_0) //input - coordinate punto rispetto sis
     //trasformazione che fa ruotare un punto di beta, x_0 e y_0 coordinate punto da ruotare, px e py coordinate rispetto a sistema di rif. non inerziale
     x_1 = cos(beta)*(x_0 - px) + sin(beta)*(y_0 - py); //coordinata x punto nel SR oggetto
     y_1 = cos(beta)*(y_0 - py) + sin(beta)*(px - x_0); //coordinata y punto nel SR oggetto
+    
+    
+    if (!o.is_t) 
+    {
+      //se l'ostacolo non è il target
+      temp1 = o.lato1 + r_r;
+      temp2 = o.lato2 + r_r;
+    } 
+    else
+    {
+      temp1 = o.lato1;
+      temp2 = o.lato2;
+    }
+
 
     //controlliamo se il punto si trova all'interno dell'ostacolo
-    if (abs(x_1) <= ((o.lato1)/2 + tol) && abs(y_1) <= ((o.lato2)/2 + tol))
+    //if (abs(x_1) <= ((o.lato1)/2 + tol) && abs(y_1) <= ((o.lato2)/2 + tol))
+    if (abs(x_1) <= ((temp1)/2 + tol) && abs(y_1) <= ((temp2)/2 + tol))
     {
       //println("sovrapposizione con ostacolo numero ", ob.id);
       return o.id;
@@ -55,13 +71,13 @@ boolean sovrapposizione(float posx, float posy, float l1, float l2, float alpha)
   //coordinate ostacolo rispetto SR0
   if (nfiguraost == 4) { // Se è un cerchio, dimensione vettore 12
     vert_ghost_obs = new float[12];
-    vert_ghost_obs = vertici_ost_om(nfiguraost, l1+k_om, l2+k_om, x, y, alpha);
+    vert_ghost_obs = vertici_ost_om(nfiguraost, l1+k_om, l2+k_om, x, y, alpha,k);
   } else if (nfiguraost == 5) { // Se è un triangolo dimensione vettore 6
     vert_ghost_obs = new float[6];
-    vert_ghost_obs = vertici_ost_om(nfiguraost, l1+k_om, l2+k_om, x, y, alpha);
+    vert_ghost_obs = vertici_ost_om(nfiguraost, l1+k_om, l2+k_om, x, y, alpha,k);
   } else { // Altrimenti, dimensione 8
     vert_ghost_obs = new float[8];
-    vert_ghost_obs = vertici_ost_om(nfiguraost, l1+k_om, l2+k_om, x, y, alpha);
+    vert_ghost_obs = vertici_ost_om(nfiguraost, l1+k_om, l2+k_om, x, y, alpha,k);
   }
 
 
@@ -204,6 +220,8 @@ boolean sovrapposizione(float posx, float posy, float l1, float l2, float alpha)
   for (int i = 0; i < vert_ghost_obs.length; i=i+2) {
     if (is_in_obstacle(vert_ghost_obs[i], vert_ghost_obs[i+1]) != -1 ) {
       v1 = true;
+      println("collisione con",is_in_obstacle(vert_ghost_obs[i], vert_ghost_obs[i+1]));
+      circle(vert_ghost_obs[i], vert_ghost_obs[i+1], 40);
       return v1;
     }
   }
@@ -221,10 +239,10 @@ boolean sovrapposizione(float posx, float posy, float l1, float l2, float alpha)
       x_1 = cos(alpha)*(x_0 - posx) + sin(alpha)*(y_0 - posy);
       y_1 = cos(alpha)*(y_0 - posy) + sin(alpha)*(posx - x_0);
       //se i vertici di un ostacolo esistente si trovano all'interno dell'ostacolo che si sta provando ad istanziare
-      if (abs(x_1) <= ((l1 + k)/2 + tol) && abs(y_1) <= ((l2 + k)/2 + tol)) // +k fa riferimento alla misura dell'ostacolo ombra
+      if (abs(x_1) <= ((l1 + k/2)/2 + tol) && abs(y_1) <= ((l2 + k/2)/2 + tol)) // +k fa riferimento alla misura dell'ostacolo ombra
       {
         v1 = true;
-        println("Sovrapposizione ostacolo ombra");
+        //println("Sovrapposizione ostacolo ombra con ostacolo", o.id);
         return v1;
       }
     }

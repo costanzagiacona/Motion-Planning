@@ -121,7 +121,9 @@ boolean print = true; //disegno il grafo sul tavolo
 boolean label_print = true; //mostro i numeri dei nodi
 
 //lista di nodi visitati, ordinata,  per creare curva di BEZIER
-ArrayList<Nodo> nodi_visitati_bezier;
+//ArrayList<Nodo> nodi_visitati_bezier;
+ArrayList<Nodo> nodi_visitati_bezier = new ArrayList<Nodo>();
+
 
 
 
@@ -155,6 +157,8 @@ int j = 0; //posizione nel mio percorso tra nodo partenza e nodo destinazione
 int numero_ostacoli = 3; //numero corrente di ostacoli (conta da 0)
 int id_ost = 2;
 int bezier = 0;
+int exploring = 0;
+int num_nodi = 0;
 
 
 
@@ -171,14 +175,16 @@ void setup()
   //posysp = new float[6];
 
   //grafo
-  Nodo first_root = new Nodo("source", x_home, y_home); //creo il nodo radice nella posizione iniziale del robot
+  Nodo first_root = new Nodo("source", x_home, y_home, 0); //creo il nodo radice nella posizione iniziale del robot
+  target = new Nodo("target", xot, yot, 560); //creo nodo target
   nodo = new ArrayList<Nodo>(); //creo lista nodi
   albero = new Albero(first_root); //instanzio albero
   nodo_corrente = first_root; //mi posiziono sulla radice
-  
+
   root = first_root;
+  root.visitato= true;
   //il percorso di Bezier deve partire dalla radice
-  //nodi_visitati_bezier.add(first_root);
+  nodi_visitati_bezier.add(first_root);
 }
 
 void draw()
@@ -229,10 +235,10 @@ void draw()
 
   /*CREAZIONE OSTACOLI DI DEFAULT*/
   //Ostacolo_creazione(0, -200, 10, lato1, lato2, PI/4, 1); //quadrato
-  Ostacolo_creazione(1, 200, 10, lato1, lato2, PI/4, 1, false,20); //quadrato ------
+  Ostacolo_creazione(1, 200, 10, lato1, lato2, PI/4, 1, false, 20); //quadrato ------
   //Ostacolo_creazione(2, 200, 100, lato1+50, lato2, PI/4, 4); //cerchio
   //Ostacolo_creazione(2, -150, 250, lato1+30, lato2+30, -PI/3, 6); //trapezio
-  Ostacolo_creazione(2, 170, 230, lato1+30, lato2+30, -PI/3, 6, false,20); //trapezio ----
+  Ostacolo_creazione(2, 170, 230, lato1+30, lato2+30, -PI/3, 6, false, 20); //trapezio ----
 
 
   /*CREAZIONE OSTACOLI DA PARTE DELL'UTENTE*/
@@ -242,11 +248,23 @@ void draw()
     fill(#FCA63B); //arancione
     translate(x, y, 5); //SR ostacolo (all'inizio è sempre al centro)
     rotateZ(orientamento); //modifica orientamento (vedere in "Interazioni")
-    formaost(nfiguraost, lato1+incrost, lato2+incrost); //funzione in 'Forma'
+    if(nfiguraost == 4)
+    {
+    formaost(nfiguraost, ((lato1)/4)+(incrost/4), lato2+incrost); //funzione in 'Forma'
     fill(#C6C4C0); //grigio
     translate(0, 0, -10);
-    formaost(nfiguraost, lato1+incrost+k, lato2+incrost+k); //ombra
+    formaost(nfiguraost, ((lato1)/4)+(incrost/4)+k, lato2+incrost+k); //ombra
     popMatrix();
+    }
+    else
+    {
+      formaost(nfiguraost, lato1+incrost, lato2+incrost);
+      fill(#C6C4C0); //grigio
+      translate(0, 0, -10);
+      formaost(nfiguraost, lato1+incrost+k, lato2+incrost+k); //ombra
+      popMatrix();
+    }
+    
   }
 
 
@@ -259,7 +277,7 @@ void draw()
     //println("Id ostacolo dentro array ", o.id);
   }
   //println(ostacolo_ArrayList);
-  
+
 
   /*SCAN*/
   if (!semost && !semsp ) //se abbiamo scelto il tavolo e gli ostacoli procediamo con la scansione
@@ -270,40 +288,51 @@ void draw()
       //input - pos x robot, pos y robot, lunghezza laser, colore laser
       s = scan(pos_x_r, pos_y_r, laser_len, #6920E0); //eseguo lo scan, false se non trova target
 
-      //aggiungo vertice se lo trovo
+      //NUOVO VERTICE
       if (vertex_found) //viene posto a true in scan
       {
         //aggiungo nodo solo quando trovo un nuovo vertice
         //funzione che aggiunge il vertice eventualmente trovato ai links del current node
         make_tree(nodo_corrente); //funzione in 'Grafo'
         //il vertice viene aggiunto solo se non è gia presente
-        vertex_found = false; //riporto il flag a false 
+        vertex_found = false; //riporto il flag a false
+        num_nodi++;
       }
       print_tree(); //mostro a schermo l'albero
-      
-      //PREPARO PER LA FASE DI MOVIMENTO 
+
+      //PREPARO PER LA FASE DI MOVIMENTO
+      //scelgo il vertice successivo
       //ho due opzioni:
       //primo if -> ho trovato il target, imposto le cordinate del target come quelle di arrivo e calcolo le matrici
-      //secondo if -> non ho trovato il target ed ho concluso un giro di scansione, calcolo le matrici per spostarmi sul vertice succesivo ed eseguire un altro giro di scanner 
-     
+      //secondo if -> non ho trovato il target ed ho concluso un giro di scansione, calcolo le matrici per spostarmi sul vertice succesivo ed eseguire un altro giro di scanner
+
       //se il vertice appenna aggiunto è il target
       if (s) //target trovato (sia durante il ciclo di scan che al termine dello stesso)
-      { 
+      {
         //cambia token quando lo scanner trova il target, e lo passa all'else responsabile della fase di movimento
         token = false; //non devo più usare lo scan, ho trovato il target
 
         j = 0; //parto dal nodo 0 del mio percorso per arrivare al target
-        exploring_node++;
+        //exploring_node++;
+        exploring = exploring_node;
+        exploring_node = trova_nodo(exploring);
         nodo_successivo = nodo.get(exploring_node); //prendo l'ultimo nodo appena inserito
-       // nodi_visitati_bezier.add(nodo_successivo);
+        // nodi_visitati_bezier.add(nodo_successivo);
+        nodo_successivo.visitato = true; //stiamo visitando il nodo
+        //nodi_visitati_bezier.add(nodo_successivo);
 
         //trova il percorso tra il nodo corrente e il prossimo da visitare (in questo caso il target)
-        percorso = find_path(nodo_corrente, nodo_successivo);//funzione in 'Grafo'
+        //percorso = find_path(nodo_corrente, nodo_successivo);//funzione in 'Grafo'
 
         // coordinate del nodo di partenza
-        x1 = percorso.get(j).x;
-        y1 = percorso.get(j).y;
-
+        //x1 = percorso.get(j).x;
+       // y1 = percorso.get(j).y;
+       
+       // coordinate nodo di partenza
+        x1 = nodo_corrente.x;
+        y1 = nodo_corrente.y;
+        
+        
         // coordinate del target (punto da raggiungere)
         x2 = xot;
         y2 = yot;
@@ -327,31 +356,43 @@ void draw()
 
         //inizializza il path una volta che lo scan è finito per preparare il percorso
         j = 0; //parto dal nodo 0 del mio percorso per arrivare al target
-        exploring_node++;
+        //exploring_node++;
+        exploring = exploring_node;
+        exploring_node = trova_nodo(exploring);
         nodo_successivo = nodo.get(exploring_node);//prendo l'ultimo nodo appena inserito
         //nodi_visitati_bezier.add(nodo_successivo);
+        nodo_successivo.visitato = true; //stiamo visitando il nodo
+        nodi_visitati_bezier.add(nodo_successivo);
 
-        //trova il percorso tra il nodo corrente e il prossimo da visitare 
-        percorso = find_path(nodo_corrente, nodo_successivo);
-
+        /*
+        //trova il percorso tra il nodo corrente e il prossimo da visitare
+         percorso = find_path(nodo_corrente, nodo_successivo);
+         
+         // coordinate nodo di partenza
+         x1 = percorso.get(j).x;
+         y1 = percorso.get(j).y;
+         //coordinate nodo di destinazione
+         x2 = percorso.get(j+1).x;
+         y2 = percorso.get(j+1).y;
+         */
         // coordinate nodo di partenza
-        x1 = percorso.get(j).x;
-        y1 = percorso.get(j).y;
+        x1 = nodo_corrente.x;
+        y1 = nodo_corrente.y;
         //coordinate nodo di destinazione
-        x2 = percorso.get(j+1).x;
-        y2 = percorso.get(j+1).y;
+        x2 = nodo_successivo.x;
+        y2 = nodo_successivo.y;
+
 
         t = 0;
         ti = t;
-        
-       
+
+
         A = (2*pow(ti, 3)+3*Dt*pow(ti, 2))/(pow(Dt, 3));
         B = -(6*pow(ti, 2)+6*Dt*ti)/(pow(Dt, 3));
         C = (6*ti+3*Dt)/(pow(Dt, 3));
         D = -2/(pow(Dt, 3));
       }
-    } 
-    else
+    } else
     {
       //FASE DI MOVIMENTO
       //ho due opzioni:
@@ -360,34 +401,42 @@ void draw()
 
       if (!s)//scan terminato, target non trovato
       {
-        
+
         if (!arrived)
         {
           print_tree(); //mostro il grafo
 
-          // si muove tra due nodi del grafo tramite legge a minima energia 
+          // si muove tra due nodi del grafo tramite legge a minima energia
           float[] new_pos = move(x1, y1, x2, y2); // funzione in 'Grafo'
 
           // le coordinate di destinazione diventano quelle del robot, che così si sposta lì
           pos_x_r = new_pos[0];
           pos_y_r = new_pos[1];
 
-          float toll2 = 1; //variabile di tolleranza 
+          float toll2 = 1; //variabile di tolleranza
           //x2 e y2 coordinate nodo destinazione, quello in cui il robot si sta spostando
           //potrebbe essere che per arrivare al mio nodo destinazione ci sia un percorso composto da più nodi
-          //se il robot è arrivato a destinazione (nel nodo destinazione), anche se 
+          //se il robot è arrivato a destinazione (nel nodo destinazione), anche se
           //non si sono sovrapposti precisamente, proseguo con il prossimo nodo o se sono arrivata mi fermo e riprendo lo scan
-          if (abs(pos_x_r - x2) < toll2 && abs(pos_y_r - y2) < toll2 ) 
+          if (abs(pos_x_r - x2) < toll2 && abs(pos_y_r - y2) < toll2 )
           {
             j++;
             //visito tutti i nodi del mio percorso per arrivare a destinazione
-            if (j < (percorso.size() -1)) 
-            {
+            //if (j < (percorso.size() -1))
+            //{
+
               /* se sono arrivato in un nodo non punto finale del path, inizializzo nuovamente le variabili di definizione traiettoria */
-              x1 = percorso.get(j).x;
-              y1 = percorso.get(j).y;
-              x2 = percorso.get(j+1).x;
-              y2 = percorso.get(j+1).y;
+              /*            x1 = percorso.get(j).x;
+               y1 = percorso.get(j).y;
+               x2 = percorso.get(j+1).x;
+               y2 = percorso.get(j+1).y;
+               */
+              // coordinate nodo di partenza
+              x1 = nodo_corrente.x;
+              y1 = nodo_corrente.y;
+              //coordinate nodo di destinazione
+              x2 = nodo_successivo.x;
+              y2 = nodo_successivo.y;
 
               t = 0;
               ti = t;
@@ -396,10 +445,10 @@ void draw()
               B = -(6*pow(ti, 2)+6*Dt*ti)/(pow(Dt, 3));
               C = (6*ti+3*Dt)/(pow(Dt, 3));
               D = -2/(pow(Dt, 3));
-            } 
-            else if (j == (percorso.size() - 1)) //ultimo nodo del mio percorso
-            {
-              print_tree();
+            //}
+            //else if (j == (percorso.size() - 1)) //ultimo nodo del mio percorso
+           // {
+             // print_tree();
 
               //se sono arrivato all'ultimo nodo del mio percorso
               //arrived = true (ma è superfluo)
@@ -407,11 +456,10 @@ void draw()
               nodo_corrente = nodo_successivo; //sostituisco la radice del mio albero per iniziare nuovamente un giro di scan
 
               token = true; //riprendo la fase di scansione
-            }
+           // }
           }
         }
-      } 
-      else
+      } else
       {  // if (s) -> target trovato
         float toll2 = 1;
         arrived = true;
@@ -428,45 +476,48 @@ void draw()
           // spostamento robot nel punto del target
           pos_x_r = new_pos[0];
           pos_y_r = new_pos[1];
-          
+
+
           //disegno bezier
-          target = new Nodo("target", xot, yot); //creo nodo target
-          //make_tree(nodo_successivo); //aggiungo target all'albero
-          if (nodo.get(exploring_node+1).label != "target") albero.addChild(nodo_successivo, target); //aggiungiamo links
           
-          //exploring_node++;
-          nodo_successivo = nodo.get(exploring_node-1);
-          //println("root x y ->", root.x,root.y, "target ->", target.x,target.y, xot, yot);
-          nodi_visitati_bezier = find_path(root, nodo_successivo); //trovo percorso da source a target
-          
-          nodi_visitati_bezier.add(target);
-          //println("Id NODO SUCCESSIVO -> ", nodo_successivo.label);
-          
-          //println("Id-> ", nodo_successivo.label);
-          
-          //println("nodi", nodi_visitati_bezier);
-          
-       /*   for (Nodo n : nodi_visitati_bezier)
-          {
-            //println("Id-> ", n.label);
-            //line(n.x,n.y, xot,yot);
-          }
-          */
-          
-          nodo_corrente = root;
-          nodo_successivo = nodi_visitati_bezier.get(1);
-          for(int i=2; i<nodi_visitati_bezier.size(); i++ )
+          println("numero nodi :",nodi_visitati_bezier.size(), "----------------------------------------------------");
+          for (Nodo n :nodi_visitati_bezier ) //per ogni nodo in cui è passato il robot
           {
             stroke(255);
-            println("id ",nodo_corrente.label, "id", nodo_successivo.label);
-            line(nodo_corrente.x,nodo_corrente.y, nodo_successivo.x,nodo_successivo.y);
             
-            nodo_corrente = nodo_successivo;
-            nodo_successivo = nodi_visitati_bezier.get(i);
+            println(n.label);
+           
           }
+          //println("numero nodi contati",num_nodi);
+          int contatore = 0;
           
-          line(nodo_corrente.x,nodo_corrente.y, target.x,target.y);
-          
+         
+          println("-----------");
+          for (Nodo n :nodi_visitati_bezier )
+          {
+            stroke(255);
+            strokeWeight(5);
+            if(contatore < nodi_visitati_bezier.size()-1) //se non è l'ultimo nodo
+            {
+            nodo_successivo = nodi_visitati_bezier.get(contatore+1); //prendo il nodo successivo
+            //println(contatore, "<", nodi_visitati_bezier.size());
+            println(n.label, "->", nodo_successivo.label); 
+            line(n.x, n.y, nodo_successivo.x, nodo_successivo.y);
+            
+            }
+            else
+            {
+              println(n.label, "-> target");
+              line(n.x, n.y, xot,yot);
+              
+            }
+            
+            contatore++;
+
+          }
+          strokeWeight(2);
+         
+
         }
       }
     }

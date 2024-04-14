@@ -2,22 +2,28 @@ class Nodo
 {
   public ArrayList<Nodo> links = new ArrayList<Nodo>(); //rami collegati al nodo
   public String label; //numero nodo
+  public int id; //indice nodo
 
   public float x; //posizione nodo
   public float y;
   public float r; //raggio nodo
   public Nodo padre; //nodo padre
+  
+  public boolean visitato = false;
+  
+  
 
 
   //METODI
 
   //Funzione che crea il nodo
   /* Le coordinate _x e _y sono prese rispetto a SR0 */
-  Nodo(String _label, float _x, float _y)
+  Nodo(String _label, float _x, float _y, int _id)
   {
     label=_label;
     x=_x;
     y=_y;
+    id = _id;
   }
 
   //verifica se nodo esiste in una certa posizione

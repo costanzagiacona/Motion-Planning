@@ -2,10 +2,11 @@
 void make_tree(Nodo current) {
 
   int s = nodo.size();
+  int id_vert = s;
   String s_lab = String.valueOf(s);
   float toll = 25; //<============================================= forse da cambiare
 
-  Nodo n = new Nodo(s_lab, x_vert, y_vert);  // ogni nodo ha label e coordinate (x,y)
+  Nodo n = new Nodo(s_lab, x_vert, y_vert, id_vert);  // ogni nodo ha label e coordinate (x,y)
 
   for (Nodo ni : nodo) {
     if (abs(ni.x-x_vert) < toll && abs(ni.y-y_vert) < toll) {
@@ -133,6 +134,41 @@ ArrayList<Nodo> find_path(Nodo source, Nodo dest)
 
   return path;
 }
+
+
+//VISITA IN PROFONDITA'
+/* Calcola la distanza tra il robot e tutti i nodi (tranne quelli già visitati) 
+in modo da trovare il nodo più vicino
+*/
+int trova_nodo(int exploring_node) //ci passiamo a che nodo siamo
+{
+   float min = 0;
+   float distanza = 0;
+   int id_min = 0;
+   Nodo n1 = nodo.get(exploring_node); //prendiamo il nodo corrente
+   
+   distanza = 6000000; //numeeo grande
+   min = distanza;
+   
+     for (Nodo n : n1.links) //controlliamo tra i figli
+     {
+     if (!n.visitato)
+     {
+       distanza = sqrt(pow(pos_x_r - n.x, 2) + pow(pos_y_r - n.y, 2)); //distanza tra il robot e il nodo
+       if (distanza < min && distanza > 0) //se mi trovo su quel nodo ho distanza 0
+       {
+         min = distanza;
+         id_min = n.id; //salviamo id del nodo più vicino
+       }
+     }
+     
+   }
+   
+   println("Nodo più vicino ->", id_min);
+   return id_min;
+}
+
+
 
 
 // Legge a minima energia per lo spostamento tra un punto e il successivo

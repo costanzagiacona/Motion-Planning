@@ -77,11 +77,13 @@ boolean scan(float x, float y, float len_max, color colore)
 
 
 //se il robot si trova sullo stesso ostacolo individuato dal laser
+// se id_ostacolo in cui si trova il robot == id_ostacolo visto da laser
   if (is_in_obstacle(x, y) == detected_obs && (detected_obs != -1)) 
   {
   /* se il laser e l'oggetto si trovano lungo
    i lati dello stesso oggetto, same_obstacle è true quindi non viene utilizzato il laser poichè quell'oggetto è gia stato studiato*/
     same_obstacle = true; //robot e laser sono sullo stesso oggetto
+    //println("Il robot e laser sono sullo stesso oggetto");
    } 
    else 
    {
