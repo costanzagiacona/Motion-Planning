@@ -248,15 +248,14 @@ void draw()
     fill(#FCA63B); //arancione
     translate(x, y, 5); //SR ostacolo (all'inizio è sempre al centro)
     rotateZ(orientamento); //modifica orientamento (vedere in "Interazioni")
-    if(nfiguraost == 4)
+    if (nfiguraost == 4)
     {
-    formaost(nfiguraost, ((lato1)/4)+(incrost/4), lato2+incrost); //funzione in 'Forma'
-    fill(#C6C4C0); //grigio
-    translate(0, 0, -10);
-    formaost(nfiguraost, ((lato1)/4)+(incrost/4)+k, lato2+incrost+k); //ombra
-    popMatrix();
-    }
-    else
+      formaost(nfiguraost, ((lato1)/4)+(incrost/4), lato2+incrost); //funzione in 'Forma'
+      fill(#C6C4C0); //grigio
+      translate(0, 0, -10);
+      formaost(nfiguraost, ((lato1)/4)+(incrost/4)+k, lato2+incrost+k); //ombra
+      popMatrix();
+    } else
     {
       formaost(nfiguraost, lato1+incrost, lato2+incrost);
       fill(#C6C4C0); //grigio
@@ -264,7 +263,6 @@ void draw()
       formaost(nfiguraost, lato1+incrost+k, lato2+incrost+k); //ombra
       popMatrix();
     }
-    
   }
 
 
@@ -326,13 +324,13 @@ void draw()
 
         // coordinate del nodo di partenza
         //x1 = percorso.get(j).x;
-       // y1 = percorso.get(j).y;
-       
-       // coordinate nodo di partenza
+        // y1 = percorso.get(j).y;
+
+        // coordinate nodo di partenza
         x1 = nodo_corrente.x;
         y1 = nodo_corrente.y;
-        
-        
+
+
         // coordinate del target (punto da raggiungere)
         x2 = xot;
         y2 = yot;
@@ -425,38 +423,38 @@ void draw()
             //if (j < (percorso.size() -1))
             //{
 
-              /* se sono arrivato in un nodo non punto finale del path, inizializzo nuovamente le variabili di definizione traiettoria */
-              /*            x1 = percorso.get(j).x;
-               y1 = percorso.get(j).y;
-               x2 = percorso.get(j+1).x;
-               y2 = percorso.get(j+1).y;
-               */
-              // coordinate nodo di partenza
-              x1 = nodo_corrente.x;
-              y1 = nodo_corrente.y;
-              //coordinate nodo di destinazione
-              x2 = nodo_successivo.x;
-              y2 = nodo_successivo.y;
+            /* se sono arrivato in un nodo non punto finale del path, inizializzo nuovamente le variabili di definizione traiettoria */
+            /*            x1 = percorso.get(j).x;
+             y1 = percorso.get(j).y;
+             x2 = percorso.get(j+1).x;
+             y2 = percorso.get(j+1).y;
+             */
+            // coordinate nodo di partenza
+            x1 = nodo_corrente.x;
+            y1 = nodo_corrente.y;
+            //coordinate nodo di destinazione
+            x2 = nodo_successivo.x;
+            y2 = nodo_successivo.y;
 
-              t = 0;
-              ti = t;
+            t = 0;
+            ti = t;
 
-              A = (2*pow(ti, 3)+3*Dt*pow(ti, 2))/(pow(Dt, 3));
-              B = -(6*pow(ti, 2)+6*Dt*ti)/(pow(Dt, 3));
-              C = (6*ti+3*Dt)/(pow(Dt, 3));
-              D = -2/(pow(Dt, 3));
+            A = (2*pow(ti, 3)+3*Dt*pow(ti, 2))/(pow(Dt, 3));
+            B = -(6*pow(ti, 2)+6*Dt*ti)/(pow(Dt, 3));
+            C = (6*ti+3*Dt)/(pow(Dt, 3));
+            D = -2/(pow(Dt, 3));
             //}
             //else if (j == (percorso.size() - 1)) //ultimo nodo del mio percorso
-           // {
-             // print_tree();
+            // {
+            // print_tree();
 
-              //se sono arrivato all'ultimo nodo del mio percorso
-              //arrived = true (ma è superfluo)
+            //se sono arrivato all'ultimo nodo del mio percorso
+            //arrived = true (ma è superfluo)
 
-              nodo_corrente = nodo_successivo; //sostituisco la radice del mio albero per iniziare nuovamente un giro di scan
+            nodo_corrente = nodo_successivo; //sostituisco la radice del mio albero per iniziare nuovamente un giro di scan
 
-              token = true; //riprendo la fase di scansione
-           // }
+            token = true; //riprendo la fase di scansione
+            // }
           }
         }
       } else
@@ -464,9 +462,20 @@ void draw()
         float toll2 = 1;
         arrived = true;
 
-        if (abs(pos_x_r - x2) < toll2 && abs(pos_y_r - y2) < toll2 ) //se non sono ancora arrivata al nodo destinazione
+        if (abs(pos_x_r - x2) < toll2 && abs(pos_y_r - y2) < toll2 ) //se sono arrivata al nodo destinazione
         {
-          print_tree();
+          //print_tree();
+          sembezier = true;
+
+          t = 0;
+          ti = t;
+
+          A = (2*pow(ti, 3)+3*Dt*pow(ti, 2))/(pow(Dt, 3));
+          B = -(6*pow(ti, 2)+6*Dt*ti)/(pow(Dt, 3));
+          C = (6*ti+3*Dt)/(pow(Dt, 3));
+          D = -2/(pow(Dt, 3));
+
+          bezier();
         } 
         else
         {
@@ -479,50 +488,45 @@ void draw()
 
 
           //disegno bezier
-          
-          println("numero nodi :",nodi_visitati_bezier.size(), "----------------------------------------------------");
-          for (Nodo n :nodi_visitati_bezier ) //per ogni nodo in cui è passato il robot
+
+          //println("numero nodi :", nodi_visitati_bezier.size(), "----------------------------------------------------");
+          for (Nodo n : nodi_visitati_bezier ) //per ogni nodo in cui è passato il robot
           {
             stroke(255);
-            
-            println(n.label);
-           
+
+            //println(n.label);
           }
           //println("numero nodi contati",num_nodi);
           int contatore = 0;
-          
-         
-          println("-----------");
-          for (Nodo n :nodi_visitati_bezier )
+
+
+          //println("-----------");
+          for (Nodo n : nodi_visitati_bezier )
           {
             stroke(255);
             strokeWeight(5);
-            if(contatore < nodi_visitati_bezier.size()-1) //se non è l'ultimo nodo
+            if (contatore < nodi_visitati_bezier.size()-1) //se non è l'ultimo nodo
             {
-            nodo_successivo = nodi_visitati_bezier.get(contatore+1); //prendo il nodo successivo
-            //println(contatore, "<", nodi_visitati_bezier.size());
-            println(n.label, "->", nodo_successivo.label); 
-            line(n.x, n.y, nodo_successivo.x, nodo_successivo.y);
-            
-            }
-            else
+              nodo_successivo = nodi_visitati_bezier.get(contatore+1); //prendo il nodo successivo
+              //println(contatore, "<", nodi_visitati_bezier.size());
+              println(n.label, "->", nodo_successivo.label);
+              line(n.x, n.y, nodo_successivo.x, nodo_successivo.y);
+            } else
             {
-              println(n.label, "-> target");
-              line(n.x, n.y, xot,yot);
-              
+              //println(n.label, "-> target");
+              line(n.x, n.y, xot, yot);
             }
-            
-            contatore++;
 
+            contatore++;
           }
           strokeWeight(2);
-         
-
+          //sembezier = true;
         }
       }
     }
   }
 
+  //if (sembezier) bezier();
   noStroke();
   t++;
 }
