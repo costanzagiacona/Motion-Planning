@@ -164,7 +164,7 @@ int trova_nodo(int exploring_node) //ci passiamo a che nodo siamo
      
    }
    
-   println("Nodo più vicino ->", id_min);
+   //println("Nodo più vicino ->", id_min);
    return id_min;
 }
 

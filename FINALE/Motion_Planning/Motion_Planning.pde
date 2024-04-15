@@ -466,7 +466,7 @@ void draw()
         {
           //print_tree();
           sembezier = true;
-
+/*
           t = 0;
           ti = t;
 
@@ -474,8 +474,8 @@ void draw()
           B = -(6*pow(ti, 2)+6*Dt*ti)/(pow(Dt, 3));
           C = (6*ti+3*Dt)/(pow(Dt, 3));
           D = -2/(pow(Dt, 3));
-
-          bezier();
+*/
+          bezier_function();
         } 
         else
         {
