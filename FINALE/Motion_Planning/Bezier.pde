@@ -3,18 +3,21 @@ float tempo = 0, tempoi = 0, ppx=pos_x_r, ppy=pos_y_r;
 int bez = 0, num_nodi_b = 0;
 ArrayList<Float> punti_bezier = new ArrayList<Float>();
 boolean sembezier = false;
+Nodo terzo_nodo;
 
 void bezier_function ()
 {
   float q_t = 0;
   num_nodi_b = nodi_visitati_bezier.size(); // conta da 1 e non da 0
   bez = 0;
-
+  
+  noFill();
+  bezierDetail(50);
   stroke(0, 0, 255); // blu
   if (num_nodi_b == 1) //c'è solo source e trova subito target
   {
     println("Prima line", root.x, root.y, ppx, ppy);
-    bezier(root.x, root.y, xot/4, yot/4, xot/2, yot/2, xot, yot);
+    bezier(root.x, root.y, xot, yot, xot, yot, xot, yot);
 
     // Disegna i punti di controllo
     stroke(255, 0, 0); // Rosso
@@ -27,35 +30,35 @@ void bezier_function ()
     ellipse(xot/2, yot/2, 8, 10);
     ellipse(xot, yot, 8, 10);
     stroke(0, 0, 255); // blu
-  } 
-  else //c'è almeno un nodo in più oltre source
+  } else //c'è almeno un nodo in più oltre source
   {
     //println(bez, "line");
     //for (Nodo n : nodi_visitati_bezier)
-    for(int i= 0; i<num_nodi_b-1;i++)
+    for (int i= 0; i<num_nodi_b-2; i++)
     {
       nodo_corrente = nodi_visitati_bezier.get(i);
       nodo_successivo = nodi_visitati_bezier.get(i+1);
+      terzo_nodo = nodi_visitati_bezier.get(i+2);
       println("NODO ", i, "-------------------------");
-      bezier(nodo_corrente.x, nodo_corrente.y, nodo_successivo.x/4, nodo_successivo.y/4, nodo_successivo.x/2, nodo_successivo.y/2, nodo_successivo.x, nodo_successivo.y);
-        
-       // Disegna i punti di controllo
-    stroke(255, 0, 0); // Rosso
-    pushMatrix();
-    translate(nodo_corrente.x, nodo_corrente.y);
-    sphere(7);
-    popMatrix();
-    ellipse(nodo_corrente.x, nodo_corrente.y, 8, 10);
-    ellipse(nodo_successivo.x/4, nodo_successivo.y/4, 8, 10);
-    ellipse(nodo_successivo.x/2, nodo_successivo.y/2, 8, 10);
-    ellipse(nodo_successivo.x, nodo_successivo.y, 8, 10);
-    stroke(0, 0, 255); // blu
+      bezier(nodo_corrente.x, nodo_corrente.y, nodo_successivo.x-30, nodo_successivo.y-30, nodo_successivo.x+30, nodo_successivo.y+30, terzo_nodo.x, terzo_nodo.y);
+
+      // Disegna i punti di controllo
+      stroke(255, 0, 0); // Rosso
+      pushMatrix();
+      translate(nodo_corrente.x, nodo_corrente.y);
+      sphere(7);
+      popMatrix();
+      ellipse(nodo_corrente.x, nodo_corrente.y, 8, 10);
+      ellipse(nodo_successivo.x/4, nodo_successivo.y/4, 8, 10);
+      ellipse(nodo_successivo.x/2, nodo_successivo.y/2, 8, 10);
+      ellipse(nodo_successivo.x, nodo_successivo.y, 8, 10);
+      stroke(0, 0, 255); // blu
 
 
       //bez ++;
     }
     //ultimo collegamento con target
-    bezier(nodo_successivo.x, nodo_successivo.y, xot/4, yot/4, xot/2, yot/2, xot, yot);
+    bezier(terzo_nodo.x, terzo_nodo.y, terzo_nodo.x+30, terzo_nodo.y+30, terzo_nodo.x-30, terzo_nodo.y-30, xot, yot);
 
     // Disegna i punti di controllo
     stroke(255, 0, 0); // Rosso
@@ -68,7 +71,6 @@ void bezier_function ()
     ellipse(xot/2, yot/2, 8, 10);
     ellipse(xot, yot, 8, 10);
     stroke(0, 0, 255); // blu
-    
   }
 }
 
