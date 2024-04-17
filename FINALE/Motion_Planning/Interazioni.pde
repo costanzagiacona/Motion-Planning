@@ -108,8 +108,8 @@ void keyPressed()
         nfiguraost = 1;
         lato1 = 50; //dimensioni di default
         lato2 = 70;
-        semins = 1; //passo alla parte successiva
         k = 20;
+        semins = 1; //passo alla parte successiva
       }
     }
 
@@ -117,7 +117,7 @@ void keyPressed()
     if (semins == 1)
     {
       //rilevo sovrapposizione con altri ostacoli o tavolo
-      if (nfiguraost == 4) {sovrapposizioneost = sovrapposizione(x, y, (lato1/2)+(incrost/4), (lato1/2)+(incrost/4), orientamento); }//funzione in 'Collisioni ostacoli'
+      if (nfiguraost == 4) {sovrapposizioneost = sovrapposizione(x, y, (lato1/4)+(incrost/4), (lato1/4)+(incrost/4), orientamento); }//funzione in 'Collisioni ostacoli'
       else { sovrapposizioneost = sovrapposizione(x, y, lato1+incrost, lato2+incrost, orientamento);} //funzione in 'Collisioni ostacoli'
 
       if (key == '+') //aumento dimensione ostacolo
@@ -188,7 +188,7 @@ void keyPressed()
       }
 
       //sovrapposizioneost = sovrapposizione(x, y, lato1+incrost, lato2+incrost, orientamento);
-      if (nfiguraost == 4) {sovrapposizioneost = sovrapposizione(x, y, (lato1/2)+(incrost/4), (lato1/2)+(incrost/4), orientamento); }//funzione in 'Collisioni ostacoli'
+      if (nfiguraost == 4) {sovrapposizioneost = sovrapposizione(x, y, (lato1/4)+(incrost/4), (lato1/4)+(incrost/4), orientamento); }//funzione in 'Collisioni ostacoli'
       else { sovrapposizioneost = sovrapposizione(x, y, lato1+incrost, lato2+incrost, orientamento);} //funzione in 'Collisioni ostacoli'
 
       if (keyCode == TAB)
@@ -198,7 +198,7 @@ void keyPressed()
           numero_ostacoli++;
           id_ost++;
           if (numero_ostacoli >= MAX_OST) semost = false; //raggiunto numero max ostacoli
-          if (nfiguraost == 4) Ostacolo_creazione(id_ost, x, y, ((lato1)/2)+(incrost/4), ((lato1)/2)+(incrost/4), orientamento, nfiguraost, false, k);
+          if (nfiguraost == 4) Ostacolo_creazione(id_ost, x, y, ((lato1)/4)+(incrost/4), ((lato1)/4)+(incrost/4), orientamento, nfiguraost, false, k); //cerchio
           else {Ostacolo_creazione(id_ost, x, y, lato1+incrost, lato2+incrost, orientamento, nfiguraost, false, k);}
           semins = 0;  //ricominciamo e creiamo un nuovo ostacolo se vogliamo
         }

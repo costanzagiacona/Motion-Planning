@@ -144,7 +144,7 @@ float[] intersectionWall_pol(float x, float y, float cx, float cy, float len_x, 
       v1
     /    \
    /      \
- v3 ----  v2
+ v3  ----  v2
  */
 
 //intersezione tavolo TRIANGOLO (3 vertici)
@@ -316,6 +316,52 @@ float[] intersectionObstacles(float x, float y, float len_x, float len_y) //x,y 
         }
       }
     } 
+    /*------ ROMBO -------*/
+    else if (o.forma == 3) 
+    {
+      //println("COLLISIONI SCAN -> intersezione ostacolo POLIGONI", closest_collision[0]);
+
+      sx = intersectionLine(o.vert_SR0_om[0] -x, o.vert_SR0_om[1] -y, o.vert_SR0_om[6] -x, o.vert_SR0_om[7] - y, 0, 0, len_x, len_y);
+      if (sx[0]==1) {
+        //println("intersezione ostacolo vertice sx");
+        //println(sx[1], sx[2], closest_collision[1], closest_collision[2]);
+        if (min_distance(sx[1], sx[2], closest_collision[1], closest_collision[2])) {
+          closest_collision[0] = 1;
+          closest_collision[1] = sx[1]; //se c'è ostacolo il raggio del laser diminuisce e non oltrepassa l'ostacolo
+          closest_collision[2] = sx[2];
+        }
+      }
+      dx = intersectionLine(o.vert_SR0_om[2] - x, o.vert_SR0_om[3] - y, o.vert_SR0_om[4] - x, o.vert_SR0_om[5] - y, 0, 0, len_x, len_y);
+      if (dx[0]==1) {
+        //println("intersezione ostacolo vertice dx");
+        // println(dx[1], dx[2], closest_collision[1], closest_collision[2]);
+        if (min_distance(dx[1], dx[2], closest_collision[1], closest_collision[2])) {
+          closest_collision[0] = 1;
+          closest_collision[1] = dx[1];
+          closest_collision[2] = dx[2];
+        }
+      }
+      up = intersectionLine(o.vert_SR0_om[4] -x, o.vert_SR0_om[5] -y, o.vert_SR0_om[6] -x, o.vert_SR0_om[7] - y, 0, 0, len_x, len_y);
+      if (up[0]==1) {
+        //println("intersezione ostacolo vertice up");
+        // println(up[1], up[2], closest_collision[1], closest_collision[2]);
+        if (min_distance(up[1], up[2], closest_collision[1], closest_collision[2])) {
+          closest_collision[0] = 1;
+          closest_collision[1] = up[1];
+          closest_collision[2] = up[2];
+        }
+      }
+      down = intersectionLine(o.vert_SR0_om[0] -x, o.vert_SR0_om[1] -y, o.vert_SR0_om[2] -x, o.vert_SR0_om[3] - y, 0, 0, len_x, len_y);
+      if (down[0]==1) {
+        //println("intersezione ostacolo vertice down");
+        // println(down[1], down[2], closest_collision[1], closest_collision[2]);
+        if (min_distance(down[1], down[2], closest_collision[1], closest_collision[2])) {
+          closest_collision[0] = 1;
+          closest_collision[1] = down[1];
+          closest_collision[2] = down[2];
+        }
+      }
+    }
     /*------ ALTRI OSTACOLI -------*/
     else { 
       //println("COLLISIONI SCAN -> intersezione ostacolo POLIGONI", closest_collision[0]);

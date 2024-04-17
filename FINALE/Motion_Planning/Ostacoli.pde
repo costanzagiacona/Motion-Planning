@@ -266,23 +266,24 @@ float[] vertici_ost_om(int nfigura, float l1, float l2, float posx, float posy, 
 
     case 3: //ROMBO
       //diagonale rombo
-      d = sqrt(pow(l1, 2)+pow(l2, 2));
+      d = sqrt(pow(l1+k_om, 2)+pow(l2+k_om, 2));
+      //k_om = k_om/1.5;
 
       // vertice 1
-      vertici_ost_om[0] = posx + k_om * cos(alpha) - (d / 2) * sin(alpha); // in basso
-      vertici_ost_om[1] = posy + k_om * sin(alpha) + (d / 2) * cos(alpha);
+      vertici_ost_om[0] = posx + 0 * cos(alpha) - (d / 2.5) * sin(alpha); // in basso
+      vertici_ost_om[1] = posy + 0 * sin(alpha) + (d / 2.5) * cos(alpha);
 
       // vertice 2
-      vertici_ost_om[2] = posx + (d / 2) * cos(alpha) - k_om * sin(alpha); // dx
-      vertici_ost_om[3] = posy + (d / 2) * sin(alpha) + k_om * cos(alpha);
+      vertici_ost_om[2] = posx + (d / 2.7) * cos(alpha) - 0 * sin(alpha); // dx
+      vertici_ost_om[3] = posy + (d / 2.7) * sin(alpha) + 0 * cos(alpha);
 
       // vertice 3
-      vertici_ost_om[4] = posx + k_om * cos(alpha) - (-d / 2) * sin(alpha); // sx
-      vertici_ost_om[5] = posy + k_om * sin(alpha) + (-d / 2) * cos(alpha);
+      vertici_ost_om[4] = posx + 0 * cos(alpha) - (-d / 2.5) * sin(alpha); // sx
+      vertici_ost_om[5] = posy + 0 * sin(alpha) + (-d / 2.5) * cos(alpha);
 
       // vertice 4
-      vertici_ost_om[6] = posx - (d / 2) * cos(alpha) - k_om * sin(alpha); // avanti, quello lontano
-      vertici_ost_om[7] = posy - (d / 2) * sin(alpha) + k_om * cos(alpha);
+      vertici_ost_om[6] = posx - (d / 2.7) * cos(alpha) - 0 * sin(alpha); // avanti, quello lontano
+      vertici_ost_om[7] = posy - (d / 2.7) * sin(alpha) + 0 * cos(alpha);
 
       //stampa
       fill(0, 255, 0); //VERDE

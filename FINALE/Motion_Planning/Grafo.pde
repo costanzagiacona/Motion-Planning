@@ -144,10 +144,10 @@ int trova_nodo(int exploring_node) //ci passiamo a che nodo siamo
 {
    float min = 0;
    float distanza = 0;
-   int id_min = 0;
+   int id_min = -1;
    Nodo n1 = nodo.get(exploring_node); //prendiamo il nodo corrente
    
-   distanza = 6000000; //numeeo grande
+   distanza = 6000000; //numero grande
    min = distanza;
    
      for (Nodo n : n1.links) //controlliamo tra i figli
@@ -163,6 +163,10 @@ int trova_nodo(int exploring_node) //ci passiamo a che nodo siamo
      }
      
    }
+   
+   
+   //se non trova figli torna al padre
+   if (id_min == -1) { println("Non ho figli vicini, torno dal padre"); id_min = nodo.get(exploring_node).padre.id;}
    
    //println("Nodo più vicino ->", id_min);
    return id_min;

@@ -18,7 +18,7 @@ int is_in_obstacle(float x_0, float y_0) //input - coordinate punto rispetto sis
     py = o.posy; //coordinata y ostacolo
 
     //portiamo il punto nel SR oggetto
-    //trasformazione che fa ruotare un punto di beta, x_0 e y_0 coordinate punto da ruotare, px e py coordinate rispetto a sistema di rif. non inerziale
+    //trasformazione che fa ruotare un punto di beta, x_0 e y_0 coordinate punto da ruotare, px e py coordinate rispetto a sistema di rif non inerziale
     x_1 = cos(beta)*(x_0 - px) + sin(beta)*(y_0 - py); //coordinata x punto nel SR oggetto
     y_1 = cos(beta)*(y_0 - py) + sin(beta)*(px - x_0); //coordinata y punto nel SR oggetto
     
@@ -26,8 +26,8 @@ int is_in_obstacle(float x_0, float y_0) //input - coordinate punto rispetto sis
     if (!o.is_t) 
     {
       //se l'ostacolo non è il target
-      temp1 = o.lato1 + r_r;
-      temp2 = o.lato2 + r_r;
+      temp1 = o.lato1 + o.ombra_k + r_r;
+      temp2 = o.lato2 + o.ombra_k + r_r;
     } 
     else
     {
@@ -242,7 +242,7 @@ boolean sovrapposizione(float posx, float posy, float l1, float l2, float alpha)
       if (abs(x_1) <= ((l1 + k/2)/2 + tol) && abs(y_1) <= ((l2 + k/2)/2 + tol)) // +k fa riferimento alla misura dell'ostacolo ombra
       {
         v1 = true;
-        //println("Sovrapposizione ostacolo ombra con ostacolo", o.id);
+        println("Sovrapposizione ostacolo ombra con ostacolo", o.id);
         return v1;
       }
     }

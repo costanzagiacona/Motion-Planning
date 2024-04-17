@@ -125,11 +125,6 @@ boolean label_print = true; //mostro i numeri dei nodi
 ArrayList<Nodo> nodi_visitati_bezier = new ArrayList<Nodo>();
 
 
-
-
-
-
-
 //---------- SCANNER ----------
 boolean s = false;   //true se ho trovato il target, modificata in scan
 int num_iter = 800; //per far girare lo scanner
@@ -248,14 +243,15 @@ void draw()
     fill(#FCA63B); //arancione
     translate(x, y, 5); //SR ostacolo (all'inizio è sempre al centro)
     rotateZ(orientamento); //modifica orientamento (vedere in "Interazioni")
-    if (nfiguraost == 4)
+    if (nfiguraost == 4) //cerchio
     {
       formaost(nfiguraost, ((lato1)/4)+(incrost/4), lato2+incrost); //funzione in 'Forma'
       fill(#C6C4C0); //grigio
       translate(0, 0, -10);
       formaost(nfiguraost, ((lato1)/4)+(incrost/4)+k, lato2+incrost+k); //ombra
       popMatrix();
-    } else
+    } 
+    else
     {
       formaost(nfiguraost, lato1+incrost, lato2+incrost);
       fill(#C6C4C0); //grigio
@@ -509,7 +505,7 @@ void draw()
             {
               nodo_successivo = nodi_visitati_bezier.get(contatore+1); //prendo il nodo successivo
               //println(contatore, "<", nodi_visitati_bezier.size());
-              println(n.label, "->", nodo_successivo.label);
+              //println(n.label, "->", nodo_successivo.label);
               line(n.x, n.y, nodo_successivo.x, nodo_successivo.y);
             } else
             {
