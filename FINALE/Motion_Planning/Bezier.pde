@@ -34,13 +34,14 @@ void bezier_function ()
   {
     //println(bez, "line");
     //for (Nodo n : nodi_visitati_bezier)
-    for (int i= 0; i<num_nodi_b-2; i++)
+    for (int i= 0; i<num_nodi_b-1; i=i+1)
     {
       nodo_corrente = nodi_visitati_bezier.get(i);
       nodo_successivo = nodi_visitati_bezier.get(i+1);
-      terzo_nodo = nodi_visitati_bezier.get(i+2);
+   //   terzo_nodo = nodi_visitati_bezier.get(i+2);
       println("NODO ", i, "-------------------------");
-      bezier(nodo_corrente.x, nodo_corrente.y, nodo_successivo.x-30, nodo_successivo.y-30, nodo_successivo.x+30, nodo_successivo.y+30, terzo_nodo.x, terzo_nodo.y);
+      //bezier(nodo_corrente.x, nodo_corrente.y, nodo_successivo.x-30, nodo_successivo.y-30, nodo_successivo.x+30, nodo_successivo.y+30, terzo_nodo.x, terzo_nodo.y);
+      bezier(nodo_corrente.x, nodo_corrente.y, nodo_successivo.x-50, nodo_successivo.y-50, nodo_successivo.x-50, nodo_successivo.y-50, nodo_successivo.x, nodo_successivo.y);
 
       // Disegna i punti di controllo
       stroke(255, 0, 0); // Rosso
@@ -58,7 +59,9 @@ void bezier_function ()
       //bez ++;
     }
     //ultimo collegamento con target
-    bezier(terzo_nodo.x, terzo_nodo.y, terzo_nodo.x+30, terzo_nodo.y+30, terzo_nodo.x-30, terzo_nodo.y-30, xot, yot);
+    terzo_nodo = nodi_visitati_bezier.get(num_nodi_b-1);
+    //bezier(terzo_nodo.x, terzo_nodo.y, terzo_nodo.x+30, terzo_nodo.y+30, terzo_nodo.x-30, terzo_nodo.y-30, xot, yot);
+    bezier(terzo_nodo.x, terzo_nodo.y, terzo_nodo.x+30, terzo_nodo.y+30, xot-30, yot-30, xot, yot);
 
     // Disegna i punti di controllo
     stroke(255, 0, 0); // Rosso
