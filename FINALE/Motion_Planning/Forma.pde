@@ -80,7 +80,7 @@ void vertici_sp(int nfigura, float l1, float l2) //SR0
 {
   float h=0;
   float d=0;
-  
+
   switch(nfigura)
   {
   case 1: //QUADRATO
@@ -117,19 +117,28 @@ void vertici_sp(int nfigura, float l1, float l2) //SR0
 
   case 4: //CERCHIO
     /* Calcola l'angolo in radianti per ogni lato della figura.
-       Divide 360 gradi per il numero di vertici per ottenere l'angolo.*/
+     Divide 360 gradi per il numero di vertici per ottenere l'angolo.*/
     float angle = -360 / 12; //angolo tra due vertici consecutivi in un esagono (12 perchè poi lo moltiplichiamo in x e y per multipli di 2)
     float x = 0, y = 0;
     //12 perché usiamo due celle per ogni vertice
-    for (int i = 0; i < 16; i=i+2) // i+2 perchè calcoliamo allo stesso tempo x e y
+    for (int i = 0; i < 12; i=i+2) // i+2 perchè calcoliamo allo stesso tempo x e y
       //aumentando il numero dei vertici viene più preciso lo scan
     {
       x = cos(radians(i * angle)) * (l1/2);
       y = sin(radians(i * angle)) * (l1/2);
       vertici_cerchio[i] = x;
       vertici_cerchio[i+1] = y;
-      
     }
+    // ultimo vertice aggiunto manualmente
+    vertici_cerchio[12] = vertici_cerchio[0]; // x primo vertice
+    vertici_cerchio[13] = vertici_cerchio[1]; // y primo vertice
+/*
+    for (int j = 0; j < 12; j=j+2) {
+      line(vertici_cerchio[j], vertici_cerchio[j+1], vertici_cerchio[j+2], vertici_cerchio[j+3]);
+      //println("vertice n.", j, vertici_ost_om[j], vertici_ost_om[j+1], vertici_ost_om[j+2], vertici_ost_om[j+3]);
+    }
+    line(vertici_cerchio[10], vertici_cerchio[11], vertici_cerchio[12], vertici_cerchio[13]);
+*/
     break;
 
   case 5: //TRIANGOLO

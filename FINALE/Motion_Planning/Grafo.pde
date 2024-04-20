@@ -137,43 +137,42 @@ ArrayList<Nodo> find_path(Nodo source, Nodo dest)
 
 
 //VISITA IN PROFONDITA'
-/* Calcola la distanza tra il robot e tutti i nodi (tranne quelli già visitati) 
-in modo da trovare il nodo più vicino
-*/
+/* Calcola la distanza tra il robot e tutti i nodi (tranne quelli già visitati)
+ in modo da trovare il nodo più vicino
+ */
 int trova_nodo(int exploring_node) //ci passiamo a che nodo siamo
 {
-   float min = 0;
-   float distanza = 0;
-   int id_min = -1;
-   Nodo n1 = nodo.get(exploring_node); //prendiamo il nodo corrente
-   
-   distanza = 6000000; //numero grande
-   min = distanza;
-   
-     for (Nodo n : n1.links) //controlliamo tra i figli
-     {
-     if (!n.visitato)
-     {
-       distanza = sqrt(pow(pos_x_r - n.x, 2) + pow(pos_y_r - n.y, 2)); //distanza tra il robot e il nodo
-       if (distanza < min && distanza > 0) //se mi trovo su quel nodo ho distanza 0
-       {
-         min = distanza;
-         id_min = n.id; //salviamo id del nodo più vicino
-       }
-     }
-     
-   }
-   
-   
-   //se non trova figli torna al padre
-   if (id_min == -1) { println("Non ho figli vicini, torno dal padre"); id_min = nodo.get(exploring_node).padre.id;}
-   
-   //println("Nodo più vicino ->", id_min);
-   return id_min;
+  float min = 0;
+  float distanza = 0;
+  int id_min = -1;
+  Nodo n1 = nodo.get(exploring_node); //prendiamo il nodo corrente
+
+  distanza = 6000000; //numero grande
+  min = distanza;
+
+  for (Nodo n : n1.links) //controlliamo tra i figli
+  {
+    if (!n.visitato)
+    {
+      distanza = sqrt(pow(pos_x_r - n.x, 2) + pow(pos_y_r - n.y, 2)); //distanza tra il robot e il nodo
+      if (distanza < min && distanza > 0) //se mi trovo su quel nodo ho distanza 0
+      {
+        min = distanza;
+        id_min = n.id; //salviamo id del nodo più vicino
+      }
+    }
+  }
+
+  //se non trova figli torna al padre
+  if (id_min == -1) 
+  {
+    println("Non ho figli vicini, torno dal padre");
+    id_min = nodo.get(exploring_node).padre.id;
+  }
+
+  //println("Nodo più vicino ->", id_min);
+  return id_min;
 }
-
-
-
 
 // Legge a minima energia per lo spostamento tra un punto e il successivo
 float[] move(float x1, float y1, float x2, float y2)

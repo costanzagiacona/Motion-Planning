@@ -1,4 +1,4 @@
-void mouseDragged() 
+void mouseDragged()
 {
   angoloY = angoloYpartenza - PI*mouseX/float(1000); //DA MODIFICARE <===  !!!!!!
   angoloX = angoloXpartenza - PI*mouseY/float(1000);
@@ -30,7 +30,7 @@ void keyPressed()
   if (keyCode == 'x') eyeX -= 25;
   if (keyCode == 'Y') eyeY += 25;
   if (keyCode == 'y') eyeY -= 25;
-  
+
   // visual home lungo Y
   if (key == 'h') {
     angoloY += 0.05;
@@ -47,18 +47,18 @@ void keyPressed()
   }
 
   // modifica velocità scanner
-  if (key == 'a') 
+  if (key == 'a')
   {
-    num_iter -= 20;
-    if (num_iter < 420) num_iter = 420;
+    num_iter -= 40;
+    if (num_iter < 360) num_iter = 360;
   }
-  if (key == 'A') 
+  if (key == 'A')
   {
-    num_iter += 20;
+    num_iter += 40;
     if (num_iter > 1800) num_iter = 1800;
     //println("num_iter ->", num_iter);
   }
-  
+
   if (keyCode == ENTER)
   {
     if (semsp == true) //finito di creare lo spazio di lavoro passiamo alla creazione degli ostacoli
@@ -79,13 +79,13 @@ void keyPressed()
   /*MODIFICA SPAZIO DI LAVORO*/
   if (semsp == true)
   {
-    if (key == '+') //aumento dimensione spazio lavoro 
+    if (key == '+') //aumento dimensione spazio lavoro
     {
       incrsp += kp;
       if (incrsp > 100) incrsp=100;
     }
 
-    if (key == '-') //diminuisco dimensione spazio lavoro 
+    if (key == '-') //diminuisco dimensione spazio lavoro
     {
       incrsp -= kp;
       if (incrsp < kp) incrsp = kp;
@@ -117,8 +117,12 @@ void keyPressed()
     if (semins == 1)
     {
       //rilevo sovrapposizione con altri ostacoli o tavolo
-      if (nfiguraost == 4) {sovrapposizioneost = sovrapposizione(x, y, (lato1/4)+(incrost/4), (lato1/4)+(incrost/4), orientamento); }//funzione in 'Collisioni ostacoli'
-      else { sovrapposizioneost = sovrapposizione(x, y, lato1+incrost, lato2+incrost, orientamento);} //funzione in 'Collisioni ostacoli'
+      if (nfiguraost == 4) {
+        sovrapposizioneost = sovrapposizione(x, y, (lato1/3)+(incrost/2), (lato1/3)+(incrost/2), orientamento, 1.5*k);
+      }//funzione in 'Collisioni ostacoli'
+      else {
+        sovrapposizioneost = sovrapposizione(x, y, lato1+incrost, lato2+incrost, orientamento, k);
+      } //funzione in 'Collisioni ostacoli'
 
       if (key == '+') //aumento dimensione ostacolo
       {
@@ -188,8 +192,11 @@ void keyPressed()
       }
 
       //sovrapposizioneost = sovrapposizione(x, y, lato1+incrost, lato2+incrost, orientamento);
-      if (nfiguraost == 4) {sovrapposizioneost = sovrapposizione(x, y, (lato1/4)+(incrost/4), (lato1/4)+(incrost/4), orientamento); }//funzione in 'Collisioni ostacoli'
-      else { sovrapposizioneost = sovrapposizione(x, y, lato1+incrost, lato2+incrost, orientamento);} //funzione in 'Collisioni ostacoli'
+      if (nfiguraost == 4) {
+        sovrapposizioneost = sovrapposizione(x, y, (lato1/3)+(incrost/2), (lato1/3)+(incrost/2), orientamento, 1.5*k);
+      } else {
+        sovrapposizioneost = sovrapposizione(x, y, lato1+incrost, lato2+incrost, orientamento, k);
+      } //funzione in 'Collisioni ostacoli'
 
       if (keyCode == TAB)
       {
@@ -197,9 +204,11 @@ void keyPressed()
         {
           numero_ostacoli++;
           id_ost++;
-          if (numero_ostacoli >= MAX_OST) semost = false; //raggiunto numero max ostacoli
-          if (nfiguraost == 4) Ostacolo_creazione(id_ost, x, y, ((lato1)/4)+(incrost/4), ((lato1)/4)+(incrost/4), orientamento, nfiguraost, false, k); //cerchio
-          else {Ostacolo_creazione(id_ost, x, y, lato1+incrost, lato2+incrost, orientamento, nfiguraost, false, k);}
+          //if (numero_ostacoli >= MAX_OST) semost = false; //raggiunto numero max ostacoli
+          if (nfiguraost == 4) Ostacolo_creazione(id_ost, x, y, (lato1/3)+(incrost/2), (lato1/3)+(incrost/2), orientamento, nfiguraost, false, 1.5*k); //cerchio
+          else {
+            Ostacolo_creazione(id_ost, x, y, lato1+incrost, lato2+incrost, orientamento, nfiguraost, false, k);
+          }
           semins = 0;  //ricominciamo e creiamo un nuovo ostacolo se vogliamo
         }
       }

@@ -1,11 +1,11 @@
-/*----------------------------- POSIZIONAMENTO OSTACOLI ----------------------------------------*/ 
+/*----------------------------- POSIZIONAMENTO OSTACOLI ----------------------------------------*/
 
 /* Funzione che, prese in ingresso le coordinate inerziali di un punto, resistuisce l'id
  dell'oggetto all'interno di cui si trova, oppure -1 se non appartiene a nessun oggetto */
 int is_in_obstacle(float x_0, float y_0) //input - coordinate punto rispetto sistema di riferimento fisso SR0
 {
   //x_1,y_1 sono le coordinate del punto rispetto al SR dell'ostacolo
-  float x_1, y_1, beta, px, py,temp1,temp2;
+  float x_1, y_1, beta, px, py, temp1, temp2;
 
   //valore di tolleranza numerica (perché sin e cos sono approssimati)
   float tol = 1.5+5;
@@ -21,15 +21,14 @@ int is_in_obstacle(float x_0, float y_0) //input - coordinate punto rispetto sis
     //trasformazione che fa ruotare un punto di beta, x_0 e y_0 coordinate punto da ruotare, px e py coordinate rispetto a sistema di rif non inerziale
     x_1 = cos(beta)*(x_0 - px) + sin(beta)*(y_0 - py); //coordinata x punto nel SR oggetto
     y_1 = cos(beta)*(y_0 - py) + sin(beta)*(px - x_0); //coordinata y punto nel SR oggetto
-    
-    
-    if (!o.is_t) 
+
+
+    if (!o.is_t)
     {
       //se l'ostacolo non è il target
       temp1 = o.lato1 + o.ombra_k + r_r;
       temp2 = o.lato2 + o.ombra_k + r_r;
-    } 
-    else
+    } else
     {
       temp1 = o.lato1;
       temp2 = o.lato2;
@@ -49,11 +48,11 @@ int is_in_obstacle(float x_0, float y_0) //input - coordinate punto rispetto sis
 
 
 //funzione che verifica se due ostacoli sono sovrapposti o se un ostacolo è fuori dallo spazio operativo
-boolean sovrapposizione(float posx, float posy, float l1, float l2, float alpha) //x ostacolo, y ostacolo, lati ostacolo, orientamento ostacolo (nel SR ostacolo)
+boolean sovrapposizione(float posx, float posy, float l1, float l2, float alpha, float k_o) //x ostacolo, y ostacolo, lati ostacolo, orientamento ostacolo (nel SR ostacolo)
 {
 
   float[] vert_ghost_obs;  // coordinate vertici ostacolo da istanziare
-  float k_om = k/2;   // valore dell'ombra
+  float k_om = k_o/2;   // valore dell'ombra
   boolean v1 = false; //non ci sono sovrapposizioni
 
   //verifica se CENTRO ostacolo è all'interno dello spazio di lavoro
@@ -63,21 +62,23 @@ boolean sovrapposizione(float posx, float posy, float l1, float l2, float alpha)
   float[] up = new float[3];
   float[] down = new float[3];
   float[] col_sp;  // sovrapposizione con tavolo
-  
-  float tol = 1.0;  
+
+  float tol = 1.0;
   float x_0, y_0, x_1, y_1;  // coordinate rispetto a SR0 e SR1
 
   //le calcoliamo e non le prendiamo dalla classe oggetto perché ancora non è stato istanziato
   //coordinate ostacolo rispetto SR0
   if (nfiguraost == 4) { // Se è un cerchio, dimensione vettore 12
     vert_ghost_obs = new float[12];
-    vert_ghost_obs = vertici_ost_om(nfiguraost, l1+k_om, l2+k_om, x, y, alpha,k);
+    //float k_c = 1.5*k;
+    //vert_ghost_obs = vertici_ost_om(nfiguraost, l1+k_c/2, l2+k_c/2, x, y, alpha, k_c);
+    vert_ghost_obs = vertici_ost_om(nfiguraost, l1+k_om, l2+k_om, x, y, alpha, k);
   } else if (nfiguraost == 5) { // Se è un triangolo dimensione vettore 6
     vert_ghost_obs = new float[6];
-    vert_ghost_obs = vertici_ost_om(nfiguraost, l1+k_om, l2+k_om, x, y, alpha,k);
+    vert_ghost_obs = vertici_ost_om(nfiguraost, l1+k_om, l2+k_om, x, y, alpha, k);
   } else { // Altrimenti, dimensione 8
     vert_ghost_obs = new float[8];
-    vert_ghost_obs = vertici_ost_om(nfiguraost, l1+k_om, l2+k_om, x, y, alpha,k);
+    vert_ghost_obs = vertici_ost_om(nfiguraost, l1+k_om, l2+k_om, x, y, alpha, k);
   }
 
 
@@ -85,8 +86,8 @@ boolean sovrapposizione(float posx, float posy, float l1, float l2, float alpha)
   //----------------- SOVRAPPOSIZIONE CON TAVOLO----------------------
   /*
    Per vedere se l'oggetto esce dal tavolo si fa uno studio diviso in due parti:
-     1 - controllo sui vertici per verificare se escono dal tavolo
-     2 - controllo sul centro dell'oggetto per verificare se l'oggetto sia all'interno dello spazio di lavoro o meno
+   1 - controllo sui vertici per verificare se escono dal tavolo
+   2 - controllo sul centro dell'oggetto per verificare se l'oggetto sia all'interno dello spazio di lavoro o meno
    Il controllo 2 è necessario poichè se l'oggetto si trova fuori dallo spazio di lavoro non deve essere istanziato, in questo caso i vertici non rilevano una sovrapposizione
    */
 
@@ -111,7 +112,7 @@ boolean sovrapposizione(float posx, float posy, float l1, float l2, float alpha)
   case 3: //rombo
   case 6: //trapezio
     dx = intersectionLine(vertici_sp[0], vertici_sp[1], vertici_sp[2], vertici_sp[3], 0, 0, x, y); // v1-v2 -> in basso a sx ---- in basso a dx
-    if (dx[0] == 1) { 
+    if (dx[0] == 1) {
       println(" TAVOLO oggetto uscito dx");
       v1 = true;
       return v1;
@@ -186,22 +187,19 @@ boolean sovrapposizione(float posx, float posy, float l1, float l2, float alpha)
   for (int k = 0; k < vert_ghost_obs.length; k = k+2)
   {
     // uso la funzione di intersezione con sp per evitare che gli ostacoli vengano posizionati fuori dallo spazio di lavoro
-    if (nfigurasp == 1 || nfigurasp == 2) 
+    if (nfigurasp == 1 || nfigurasp == 2)
     { // quadrato o rettangolo
       col_sp = intersectionWall_qr(0, 0, x, y, vert_ghost_obs[k], vert_ghost_obs[k+1]);  // input - centro dell'ostacolo, vertici ostacolo
       if (col_sp[0] == 1) println("collisioni tavolo 1,2");
-    } 
-    else if (nfigurasp == 5) 
+    } else if (nfigurasp == 5)
     { // triangolo
       col_sp = intersectionWall_3v(0, 0, x, y, vert_ghost_obs[k], vert_ghost_obs[k+1]);
       if (col_sp[0] == 1) println("collisioni tavolo 5");
-    } 
-    else if (nfigurasp == 4) 
+    } else if (nfigurasp == 4)
     { // cerchio
       col_sp = intersectionWall_c(0, 0, x, y, vert_ghost_obs[k], vert_ghost_obs[k+1]);
       if (col_sp[0] == 1) println("collisioni tavolo c");
-    } 
-    else 
+    } else
     { // altri poligoni
       col_sp = intersectionWall_pol(0, 0, x, y, vert_ghost_obs[k], vert_ghost_obs[k+1]);
       if (col_sp[0] == 1) println("collisioni tavolo pol4");
@@ -215,17 +213,17 @@ boolean sovrapposizione(float posx, float posy, float l1, float l2, float alpha)
   }
 
   //------------------------- SOVRAPPOSIZIONE OSTACOLI TRA LORO ---------------------------------
-  
+
   /* verifica se un vertice dell'ostacolo da istanziare compenetra un ostacolo esistente */
   for (int i = 0; i < vert_ghost_obs.length; i=i+2) {
     if (is_in_obstacle(vert_ghost_obs[i], vert_ghost_obs[i+1]) != -1 ) {
       v1 = true;
-      println("collisione con",is_in_obstacle(vert_ghost_obs[i], vert_ghost_obs[i+1]));
+      println("collisione con", is_in_obstacle(vert_ghost_obs[i], vert_ghost_obs[i+1]));
       circle(vert_ghost_obs[i], vert_ghost_obs[i+1], 40);
       return v1;
     }
   }
-  
+
   /* verifica se l'ostacolo da inserire è compenetrato da vertici di un ostacolo esistente */
   //ostacolo OMBRA
   for (Ostacolo o : ostacolo_ArrayList) //per ogni ostacolo

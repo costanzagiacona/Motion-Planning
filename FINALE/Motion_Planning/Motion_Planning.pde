@@ -16,7 +16,7 @@ boolean sovrapposizioneost = false;
 //incremento dimensione lati
 float incrost = 0;
 //ostacolo ombra
-float k = 20; //incremento lato per ostacolo ombra
+float k = 60; //incremento lato per ostacolo ombra
 
 
 //---------- SPAZIO DI LAVORO ----------
@@ -77,7 +77,7 @@ int semins = 0;
 float pos_x_r = 180;             //    <====
 float pos_y_r = -180;           //    <====
 //raggio robot
-float r_r = 27;  //stima del diametro del robot rappresentato come un cerchio
+float r_r = 25;  //stima del diametro del robot rappresentato come un cerchio
 
 
 //---------- TARGET ----------
@@ -127,8 +127,8 @@ ArrayList<Nodo> nodi_visitati_bezier = new ArrayList<Nodo>();
 
 //---------- SCANNER ----------
 boolean s = false;   //true se ho trovato il target, modificata in scan
-int num_iter = 800; //per far girare lo scanner
-float start_alpha = (2*PI)/420; //angolo iniziale con cui si sposta lo scanner
+int num_iter = 700; //per far girare lo scanner
+float start_alpha = (2*PI)/360; //angolo iniziale con cui si sposta lo scanner
 float alpha = start_alpha;//angolo con cui si sposta lo scanner
 float[] x_prev = {0, 0};   //coordinate dei punti i-1,i-2 RISPETTO A SR0
 float[] y_prev = {0, 0};
@@ -245,10 +245,10 @@ void draw()
     rotateZ(orientamento); //modifica orientamento (vedere in "Interazioni")
     if (nfiguraost == 4) //cerchio
     {
-      formaost(nfiguraost, ((lato1)/4)+(incrost/4), lato2+incrost); //funzione in 'Forma'
+      formaost(nfiguraost, (lato1/3)+(incrost/2),  (lato1/3)+(incrost/2)); //funzione in 'Forma'
       fill(#C6C4C0); //grigio
       translate(0, 0, -10);
-      formaost(nfiguraost, ((lato1)/4)+(incrost/4)+k, lato2+incrost+k); //ombra
+      formaost(nfiguraost, (lato1/3)+(incrost/2)+1.5*k, (lato1/3)+(incrost/2)+1.5*k); //ombra
       popMatrix();
     } 
     else
