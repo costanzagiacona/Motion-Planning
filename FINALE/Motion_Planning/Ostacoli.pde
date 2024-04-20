@@ -50,9 +50,9 @@ class Ostacolo
     rotateZ(alpha);
 
     //il target e gli ostacoli hanno colori diversi
-    //if(target == false) fill(#A70202);
-    //else fill(#2AB74C);
-    noFill();
+    if (target == false) fill(#A70202);
+    else fill(#2AB74C);
+    //noFill();
 
     //if ( nfigura == 4) l1 = l1/2;
 
@@ -61,8 +61,8 @@ class Ostacolo
 
     //ombra
     pushMatrix();
-    noFill();
-    //fill(#C6C4C0); //grigio
+    //noFill();
+    fill(#C6C4C0); //grigio
     translate(0, 0, -10);
     formaost(forma, l1+k, l2+k);
     popMatrix();
@@ -347,15 +347,15 @@ float[] vertici_ost_om(int nfigura, float l1, float l2, float posx, float posy, 
     // aggiungo manualmente gli ultimi due vertici
     vertici_ost_om[12] = vertici_ost_om[0]; // x primo vertice
     vertici_ost_om[13] = vertici_ost_om[1]; // y primo vertice
-    
-    for (int j = 0; j < 12; j = j+2) {
+    /*
+     for (int j = 0; j < 12; j = j+2) {
      line(vertici_ost_om[j], vertici_ost_om[j+1], vertici_ost_om[j+2], vertici_ost_om[j+3]);
      // println(vertici_ost_om[20], vertici_ost_om[21], vertici_ost_om[22], vertici_ost_om[23]);
      //println("vertice n.", j, vertici_ost_om[j], vertici_ost_om[j+1], vertici_ost_om[j+2], vertici_ost_om[j+3]);
      }
      //line(vertici_ost_om[10], vertici_ost_om[11], vertici_ost_om[0], vertici_ost_om[1]);
      line(vertici_ost_om[10], vertici_ost_om[11], vertici_ost_om[12], vertici_ost_om[13]);
-     
+     */
     break;
 
   case 5: //TRIANGOLO
