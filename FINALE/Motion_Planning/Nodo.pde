@@ -8,11 +8,8 @@ class Nodo
   public float y;
   public float r; //raggio nodo
   public Nodo padre; //nodo padre
-  
-  public boolean visitato = false;
-  
-  
 
+  public boolean visitato = false;
 
   //METODI
 
@@ -37,10 +34,11 @@ class Nodo
   //aggiunto nodo alla lista dei collegamenti
   void addLink(Nodo n)
   {
-    if (!links.contains(n))
+   if (!links.contains(n))
     {
       links.add(n);
     }
+ // links.add(n);
   }
 
   //restituisce i nodi in links  --------------------------------------------------- da vedere questa e quando usiamo le altre

@@ -52,7 +52,8 @@ boolean sovrapposizione(float posx, float posy, float l1, float l2, float alpha,
 {
 
   float[] vert_ghost_obs;  // coordinate vertici ostacolo da istanziare
-  float k_om = k_o/2;   // valore dell'ombra
+  //float k_om = k_o/2;   // valore dell'ombra
+  float k_om = k/2;
   boolean v1 = false; //non ci sono sovrapposizioni
 
   //verifica se CENTRO ostacolo è all'interno dello spazio di lavoro
@@ -72,7 +73,7 @@ boolean sovrapposizione(float posx, float posy, float l1, float l2, float alpha,
     vert_ghost_obs = new float[12];
     //float k_c = 1.5*k;
     //vert_ghost_obs = vertici_ost_om(nfiguraost, l1+k_c/2, l2+k_c/2, x, y, alpha, k_c);
-    vert_ghost_obs = vertici_ost_om(nfiguraost, l1+k_om, l2+k_om, x, y, alpha, k);
+    vert_ghost_obs = vertici_ost_om(nfiguraost, l1+k_om, l2+k_om, x, y, alpha, 1.5*k);
   } else if (nfiguraost == 5) { // Se è un triangolo dimensione vettore 6
     vert_ghost_obs = new float[6];
     vert_ghost_obs = vertici_ost_om(nfiguraost, l1+k_om, l2+k_om, x, y, alpha, k);
@@ -219,7 +220,10 @@ boolean sovrapposizione(float posx, float posy, float l1, float l2, float alpha,
     if (is_in_obstacle(vert_ghost_obs[i], vert_ghost_obs[i+1]) != -1 ) {
       v1 = true;
       println("collisione con", is_in_obstacle(vert_ghost_obs[i], vert_ghost_obs[i+1]));
-      circle(vert_ghost_obs[i], vert_ghost_obs[i+1], 40);
+      //circle(vert_ghost_obs[i], vert_ghost_obs[i+1], 40);
+      //Ostacolo om = ostacolo_ArrayList.get(is_in_obstacle(vert_ghost_obs[i], vert_ghost_obs[i+1]));
+      //fill(0);
+      //circle(om.vert_SR0_om[i], om.vert_SR0_om[i+1], 40);
       return v1;
     }
   }
@@ -237,7 +241,7 @@ boolean sovrapposizione(float posx, float posy, float l1, float l2, float alpha,
       x_1 = cos(alpha)*(x_0 - posx) + sin(alpha)*(y_0 - posy);
       y_1 = cos(alpha)*(y_0 - posy) + sin(alpha)*(posx - x_0);
       //se i vertici di un ostacolo esistente si trovano all'interno dell'ostacolo che si sta provando ad istanziare
-      if (abs(x_1) <= ((l1 + k/2)/2 + tol) && abs(y_1) <= ((l2 + k/2)/2 + tol)) // +k fa riferimento alla misura dell'ostacolo ombra
+      if (abs(x_1) <= ((l1 + k_om)/2 + tol) && abs(y_1) <= ((l2 + k_om)/2 + tol)) // +k fa riferimento alla misura dell'ostacolo ombra
       {
         v1 = true;
         println("Sovrapposizione ostacolo ombra con ostacolo", o.id);

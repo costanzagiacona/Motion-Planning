@@ -5,6 +5,7 @@ void make_tree(Nodo current) {
   int id_vert = s;
   String s_lab = String.valueOf(s);
   float toll = 25; //<============================================= forse da cambiare
+  //float toll = 12;
 
   Nodo n = new Nodo(s_lab, x_vert, y_vert, id_vert);  // ogni nodo ha label e coordinate (x,y)
 
@@ -12,7 +13,12 @@ void make_tree(Nodo current) {
     if (abs(ni.x-x_vert) < toll && abs(ni.y-y_vert) < toll) {
       //se già esiste, o se è sufficientemente vicino ad un vertice già esistente
       return;
+      //albero.linkNodes(ni, n);
     }
+    //else if (abs(ni.x-x_vert) >= toll && abs(ni.y-y_vert) >= toll) {
+    //  albero.linkNodes(ni, n);
+    //  albero.addChild(current, n);
+    //}
   }
   albero.addChild(current, n);
 }
@@ -164,7 +170,7 @@ int trova_nodo(int exploring_node) //ci passiamo a che nodo siamo
   }
 
   //se non trova figli torna al padre
-  if (id_min == -1) 
+  if (id_min == -1)
   {
     println("Non ho figli vicini, torno dal padre");
     id_min = nodo.get(exploring_node).padre.id;

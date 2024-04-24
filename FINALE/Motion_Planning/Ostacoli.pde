@@ -64,7 +64,7 @@ class Ostacolo
     //noFill();
     fill(#C6C4C0); //grigio
     translate(0, 0, -10);
-    formaost(forma, l1+k, l2+k);
+    formaost(forma, l1+ombra_k, l2+ombra_k);
     popMatrix();
 
     popMatrix();

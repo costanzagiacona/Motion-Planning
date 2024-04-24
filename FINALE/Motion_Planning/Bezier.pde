@@ -5,19 +5,30 @@ ArrayList<Float> punti_bezier = new ArrayList<Float>();
 boolean sembezier = false;
 Nodo terzo_nodo;
 
-void bezier_function ()
+void bezier_function(float A, float B, float C, float D)
 {
-  //float q_t = 0;
   num_nodi_b = nodi_visitati_bezier.size(); // conta da 1 e non da 0
-  bez = 0;
+  float c1, c2, c3, c4;  // coordinate punti di controllo
+  float ai = 0.8;        // parametro u di controllo
+  Nodo nodo_inter = new Nodo("inter", x_home, y_home, 0);  // nodo intermedio tra P0 e P2 per calcolare coordinate di controllo
 
   noFill();
-  bezierDetail(100);
+  //bezierDetail(50);
   stroke(0, 0, 255); // blu
   if (num_nodi_b == 1) //c'è solo source e trova subito target
   {
-    println("Prima line", root.x, root.y, ppx, ppy);
-    bezier(root.x, root.y, xot, yot, xot, yot, xot, yot);
+    //println("Prima line", root.x, root.y, ppx, ppy);
+
+    // Calcolo coordinate punto di controllo P01
+    c1 = root.x*(1 - ai) + xot*ai;  // x
+    c2 = root.y*(1 - ai) + yot*ai;  // y
+    // Calcolo coordinate punto di controllo P01
+    c3 = xot*(1-ai) + root.x*ai;    // x
+    c4 = yot*(1-ai) + root.y*ai;    // y
+
+
+    //bezier(root.x, root.y, xot, yot, xot, yot, xot, yot);
+    bezier(root.x, root.y, c1, c2, c3, c4, xot, yot);  // punti: ancoraggio, controllo, controllo, ancoraggio
 
     /*    // Disegna i punti di controllo
      stroke(255, 0, 0); // Rosso
@@ -33,47 +44,71 @@ void bezier_function ()
   } else //c'è almeno un nodo in più oltre source
   {
     //println(bez, "line");
-    //for (Nodo n : nodi_visitati_bezier)
-    //println("INIZIAMO -------------------------");
-    for (int i= 0; i<num_nodi_b-1; i=i+1)
+    for (int i= 0; i<num_nodi_b-1; i++)
     {
       nodo_corrente = nodi_visitati_bezier.get(i);
       nodo_successivo = nodi_visitati_bezier.get(i+1);
-      //terzo_nodo = nodi_visitati_bezier.get(i+2);
+
+      // calcolo coordinate punto intermedio P1
+      nodo_inter.x = (nodo_corrente.x + nodo_successivo.x)/2;
+      nodo_inter.y = 2*(nodo_corrente.y + nodo_successivo.y)/3;
+
+      // Calcolo coordinate punto di controllo P01
+      c1 = nodo_corrente.x*(1-ai) + nodo_inter.x*ai;    // x
+      c2 = nodo_corrente.y*(1-ai) + nodo_inter.y*ai;    // y
+      // Calcolo coordinate punto di controllo P11
+      c3 = nodo_inter.x*(1-ai) + nodo_successivo.x*ai;  // x
+      c4 = nodo_inter.y*(1-ai) + nodo_successivo.y*ai;  // y
+
+      //println(ai, c1, c2, c3, c4);
+
       //println("NODO ", i);
-      //bezier(nodo_corrente.x, nodo_corrente.y, nodo_successivo.x-30, nodo_successivo.y-30, nodo_successivo.x+30, nodo_successivo.y+30, terzo_nodo.x, terzo_nodo.y);
-      bezier(nodo_corrente.x, nodo_corrente.y, nodo_corrente.x/1.2, nodo_corrente.y/1.2, nodo_successivo.x/1.2, nodo_successivo.y/1.2, nodo_successivo.x, nodo_successivo.y);
+      bezier(nodo_corrente.x, nodo_corrente.y, c1, c2, c3, c4, nodo_successivo.x, nodo_successivo.y);
 
-/*      // Disegna i punti di controllo
-      stroke(255, 0, 0); // Rosso
-      pushMatrix();
-      translate(nodo_corrente.x, nodo_corrente.y);
-      sphere(7);
-      popMatrix();
-      ellipse(nodo_corrente.x, nodo_corrente.y, 8, 10);
-      ellipse(nodo_corrente.x/1.2, nodo_corrente.y/1.2, 8, 10);
-      ellipse(nodo_successivo.x/1.2, nodo_successivo.y/1.2, 8, 10);
-      ellipse(nodo_successivo.x, nodo_successivo.y, 8, 10);*/
+      // Disegna i punti di controllo
+      //stroke(255, 0, 0); // Rosso
+      //pushMatrix();
+      //translate(nodo_corrente.x, nodo_corrente.y);
+      //sphere(7);
+      //popMatrix();
+      ellipse(nodo_inter.x, nodo_inter.y, 8, 10);
+      //ellipse(nodo_corrente.x, nodo_corrente.y, 8, 10);
+      //ellipse(nodo_corrente.x/1.2, nodo_corrente.y/1.2, 8, 10);
+      //ellipse(nodo_successivo.x/1.2, nodo_successivo.y/1.2, 8, 10);
+      //ellipse(nodo_successivo.x, nodo_successivo.y, 8, 10);
       stroke(0, 0, 255); // blu
-      
-      //bez ++;
     }
-    //ultimo collegamento con target
-    terzo_nodo = nodi_visitati_bezier.get(num_nodi_b-1);
-    //println("NODO ", i);
-    //bezier(terzo_nodo.x, terzo_nodo.y, terzo_nodo.x+30, terzo_nodo.y+30, terzo_nodo.x-30, terzo_nodo.y-30, xot, yot);
-    bezier(terzo_nodo.x, terzo_nodo.y, terzo_nodo.x/1.2, terzo_nodo.y/1.2, xot, yot, xot, yot);
 
-/*    // Disegna i punti di controllo
-    stroke(255, 0, 0); // Rosso
-    pushMatrix();
-    translate(root.x, root.y);
-    sphere(7);
-    popMatrix();
-    ellipse(root.x, root.y, 8, 10);
-    ellipse(xot/4, yot/4, 8, 10);
-    ellipse(xot/2, yot/2, 8, 10);
-    ellipse(xot, yot, 8, 10);*/
+    // ultimo collegamento con target
+    nodo_corrente = nodi_visitati_bezier.get(num_nodi_b-1);
+    // punto intermedio di controllo
+    nodo_inter.x = (nodo_corrente.x + xot)/2;
+    nodo_inter.y = 2*(nodo_corrente.y + yot)/3;
+
+    //println("NODO ", i);
+
+    // Calcolo coordinate punto di controllo P01
+    c1 = nodo_corrente.x*(1-ai) + nodo_inter.x*ai;
+    c2 = nodo_corrente.y*(1-ai) + nodo_inter.y*ai;
+    // Calcolo coordinate punto di controllo P11
+    c3 = nodo_inter.x*(1-ai) + xot*ai;
+    c4 = nodo_inter.y*(1-ai) + yot*ai;
+
+    //println(ai, c1, c2, c3, c4);
+
+    // Disegno curva di Bezier tra ultimo nodo e target
+    bezier(nodo_corrente.x, nodo_corrente.y, c1, c2, c3, c4, xot, yot);
+
+    /*    // Disegna i punti di controllo
+     stroke(255, 0, 0); // Rosso
+     pushMatrix();
+     translate(root.x, root.y);
+     sphere(7);
+     popMatrix();
+     ellipse(root.x, root.y, 8, 10);
+     ellipse(xot/4, yot/4, 8, 10);
+     ellipse(xot/2, yot/2, 8, 10);
+     ellipse(xot, yot, 8, 10);*/
     stroke(0, 0, 255); // blu
   }
 }

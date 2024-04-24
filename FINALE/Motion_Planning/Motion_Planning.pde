@@ -16,7 +16,7 @@ boolean sovrapposizioneost = false;
 //incremento dimensione lati
 float incrost = 0;
 //ostacolo ombra
-float k = 60; //incremento lato per ostacolo ombra
+float k = 25; //incremento lato per ostacolo ombra
 
 
 //---------- SPAZIO DI LAVORO ----------
@@ -462,7 +462,7 @@ void draw()
         {
           //print_tree();
           sembezier = true;
-/*
+
           t = 0;
           ti = t;
 
@@ -470,8 +470,8 @@ void draw()
           B = -(6*pow(ti, 2)+6*Dt*ti)/(pow(Dt, 3));
           C = (6*ti+3*Dt)/(pow(Dt, 3));
           D = -2/(pow(Dt, 3));
-*/
-          bezier_function();
+
+          bezier_function(A,B,C,D);
         } 
         else
         {
