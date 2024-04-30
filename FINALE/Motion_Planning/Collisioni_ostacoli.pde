@@ -8,8 +8,8 @@ int is_in_obstacle(float x_0, float y_0) //input - coordinate punto rispetto sis
   float x_1, y_1, beta, px, py, temp1, temp2;
 
   //valore di tolleranza numerica (perché sin e cos sono approssimati)
-  float tol = 1.5+5;
-  //float tol = 1.5;
+  float tol = 1.5+3;
+  //float tol = 1.0;
 
   for (Ostacolo o : ostacolo_ArrayList) //per ogni ostacolo nella lista
   {
@@ -22,12 +22,12 @@ int is_in_obstacle(float x_0, float y_0) //input - coordinate punto rispetto sis
     x_1 = cos(beta)*(x_0 - px) + sin(beta)*(y_0 - py); //coordinata x punto nel SR oggetto
     y_1 = cos(beta)*(y_0 - py) + sin(beta)*(px - x_0); //coordinata y punto nel SR oggetto
 
-
     if (!o.is_t)
     {
       //se l'ostacolo non è il target
-      temp1 = o.lato1 + o.ombra_k + r_r;
-      temp2 = o.lato2 + o.ombra_k + r_r;
+      temp1 = o.lato1 + o.ombra_k + r_r/2;
+      temp2 = o.lato2 + o.ombra_k + r_r/2;
+      println("lati", o.id, o.lato1, o.lato2, "ombra", o.ombra_k);
     } else
     {
       temp1 = o.lato1;
@@ -216,8 +216,8 @@ boolean sovrapposizione(float posx, float posy, float l1, float l2, float alpha,
   //------------------------- SOVRAPPOSIZIONE OSTACOLI TRA LORO ---------------------------------
 
   /* verifica se un vertice dell'ostacolo da istanziare compenetra un ostacolo esistente */
-  for (int i = 0; i < vert_ghost_obs.length; i=i+2) {
-    if (is_in_obstacle(vert_ghost_obs[i], vert_ghost_obs[i+1]) != -1 ) {
+  for (int i = 0; i < vert_ghost_obs.length; i=i+2) { //<>//
+    if (is_in_obstacle(vert_ghost_obs[i], vert_ghost_obs[i+1]) != -1 ) { //<>//
       v1 = true;
       println("collisione con", is_in_obstacle(vert_ghost_obs[i], vert_ghost_obs[i+1]));
       //circle(vert_ghost_obs[i], vert_ghost_obs[i+1], 40);

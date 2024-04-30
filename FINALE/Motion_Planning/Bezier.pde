@@ -10,7 +10,7 @@ void bezier_function(float A, float B, float C, float D)
   num_nodi_b = nodi_visitati_bezier.size(); // conta da 1 e non da 0
   float c1, c2, c3, c4;  // coordinate punti di controllo
   float ai = 0.8;        // parametro u di controllo
-  Nodo nodo_inter = new Nodo("inter", x_home, y_home, 0);  // nodo intermedio tra P0 e P2 per calcolare coordinate di controllo
+  Nodo nodo_inter = new Nodo("inter", 0, 0, 0);  // nodo intermedio tra P0 e P2 per calcolare coordinate di controllo
 
   noFill();
   //bezierDetail(50);
@@ -71,7 +71,7 @@ void bezier_function(float A, float B, float C, float D)
       //translate(nodo_corrente.x, nodo_corrente.y);
       //sphere(7);
       //popMatrix();
-      ellipse(nodo_inter.x, nodo_inter.y, 8, 10);
+      //ellipse(nodo_inter.x, nodo_inter.y, 8, 10);
       //ellipse(nodo_corrente.x, nodo_corrente.y, 8, 10);
       //ellipse(nodo_corrente.x/1.2, nodo_corrente.y/1.2, 8, 10);
       //ellipse(nodo_successivo.x/1.2, nodo_successivo.y/1.2, 8, 10);

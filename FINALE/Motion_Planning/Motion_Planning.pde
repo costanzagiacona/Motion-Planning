@@ -77,7 +77,7 @@ int semins = 0;
 float pos_x_r = 180;             //    <====
 float pos_y_r = -180;           //    <====
 //raggio robot
-float r_r = 25;  //stima del diametro del robot rappresentato come un cerchio
+float r_r = 20;  //stima del diametro del robot rappresentato come un cerchio
 
 
 //---------- TARGET ----------
@@ -217,23 +217,23 @@ void draw()
   pushMatrix();
   translate(pos_x_r, pos_y_r); //SR robot
   //disegno robot
-  formaost(4, 20, 20); //funzione in 'Forma'
+  formaost(4, r_r, r_r); //funzione in 'Forma'
   popMatrix();
 
   //*TARGET*/
   //creo il target come un ostacolo ma pongo l'ultima variabile a true per
   //far sapere al programma che è il punto di arrivo
   pushMatrix();
-  Ostacolo_creazione(id_target, xot, yot, r_target, r_target, PI/4, 5, true, 20); //funzione in 'Ostacoli'
+  Ostacolo_creazione(id_target, xot, yot, r_target, r_target, PI/4, 5, true, 25); //funzione in 'Ostacoli'
   popMatrix();
 
 
   /*CREAZIONE OSTACOLI DI DEFAULT*/
   //Ostacolo_creazione(0, -200, 10, lato1, lato2, PI/4, 1); //quadrato
-  Ostacolo_creazione(1, 200, 10, lato1, lato2, PI/4, 1, false, 20); //quadrato ------
+  Ostacolo_creazione(1, 200, 10, lato1, lato2, PI/4, 1, false, 25); //quadrato ------
   //Ostacolo_creazione(2, 200, 100, lato1+50, lato2, PI/4, 4); //cerchio
   //Ostacolo_creazione(2, -150, 250, lato1+30, lato2+30, -PI/3, 6); //trapezio
-  Ostacolo_creazione(2, 170, 230, lato1+30, lato2+30, -PI/3, 6, false, 20); //trapezio ----
+  Ostacolo_creazione(2, 170, 230, lato1+30, lato2+30, -PI/3, 6, false, 25); //trapezio ----
 
 
   /*CREAZIONE OSTACOLI DA PARTE DELL'UTENTE*/

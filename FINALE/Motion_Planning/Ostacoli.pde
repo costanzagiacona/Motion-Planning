@@ -57,14 +57,14 @@ class Ostacolo
     //if ( nfigura == 4) l1 = l1/2;
 
     //creazione ostacolo
-    formaost(forma, l1, l2);
+    formaost(forma, lato1, lato2);
 
     //ombra
     pushMatrix();
     //noFill();
     fill(#C6C4C0); //grigio
     translate(0, 0, -10);
-    formaost(forma, l1+ombra_k, l2+ombra_k);
+    formaost(forma, lato1+ombra_k, lato2+ombra_k);
     popMatrix();
 
     popMatrix();
