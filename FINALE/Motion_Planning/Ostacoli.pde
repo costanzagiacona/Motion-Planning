@@ -51,8 +51,8 @@ class Ostacolo
 
     //il target e gli ostacoli hanno colori diversi
     if (target == false) fill(#A70202);
-    else fill(#2AB74C);
-    //noFill();
+    //else fill(#2AB74C);
+    noFill();
 
     //if ( nfigura == 4) l1 = l1/2;
 
@@ -61,8 +61,8 @@ class Ostacolo
 
     //ombra
     pushMatrix();
-    //noFill();
-    fill(#C6C4C0); //grigio
+    noFill();
+    //fill(#C6C4C0); //grigio
     translate(0, 0, -10);
     formaost(forma, lato1+ombra_k, lato2+ombra_k);
     popMatrix();

@@ -8,7 +8,7 @@ int is_in_obstacle(float x_0, float y_0) //input - coordinate punto rispetto sis
   float x_1, y_1, beta, px, py, temp1, temp2;
 
   //valore di tolleranza numerica (perché sin e cos sono approssimati)
-  float tol = 1.5+3;
+  float tol = 1.5+5;
   //float tol = 1.0;
 
   for (Ostacolo o : ostacolo_ArrayList) //per ogni ostacolo nella lista
