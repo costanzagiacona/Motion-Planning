@@ -466,12 +466,12 @@ void draw()
           t = 0;
           ti = t;
 
-          A = (2*pow(ti, 3)+3*Dt*pow(ti, 2))/(pow(Dt, 3));
-          B = -(6*pow(ti, 2)+6*Dt*ti)/(pow(Dt, 3));
-          C = (6*ti+3*Dt)/(pow(Dt, 3));
-          D = -2/(pow(Dt, 3));
+          //A = (2*pow(ti, 3)+3*Dt*pow(ti, 2))/(pow(Dt, 3));
+          //B = -(6*pow(ti, 2)+6*Dt*ti)/(pow(Dt, 3));
+          //C = (6*ti+3*Dt)/(pow(Dt, 3));
+          //D = -2/(pow(Dt, 3));
 
-          bezier_function(A,B,C,D);
+          bezier_function();
         } 
         else
         {
