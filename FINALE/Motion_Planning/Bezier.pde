@@ -53,37 +53,39 @@ void bezier_function()
         punti_intermedi[k+1] = punti_intermedi[k-1] + dy_int;
 
         println("punti intermedi ->", k, punti_intermedi[k], punti_intermedi[k+1]);
-        stroke(0,0,255);
-        ellipse(punti_intermedi[0],punti_intermedi[1],20, 10);
-        stroke(255,0,0);
-        ellipse(punti_intermedi[2],punti_intermedi[3],20, 10);
+        //stroke(0,0,255);
+        //ellipse(nodo_successivo.x, nodo_successivo.y,20, 10);
+        //stroke(255,0,0);
+        //ellipse(punti_intermedi[8],punti_intermedi[9],20, 10);
       }
 
-      if(i == 0){
+      if (i == 0) {
         a1 = (nodo_corrente.x + punti_intermedi[2])/2;
         b1 = (nodo_corrente.y + punti_intermedi[3])/2;
       }
 
       for (int k = 0; k < 8; k = k+2)
       {
+        c1 = -a1 + (2*punti_intermedi[k+2]);
+        d1 = -b1 + (2*punti_intermedi[k+3]);
         for (float l = 0; l < 1; l = l+0.01) {
-          c1 = -a1 + (2*punti_intermedi[k+2]);
-          d1 = -b1 + (2*punti_intermedi[k+3]);
+
 
           // curva di bezier
           float x = pow((1-l), 2)*punti_intermedi[k]+2*(1-l)*l*a1+pow(l, 2)*punti_intermedi[k+2];
           float y = pow((1-l), 2)*punti_intermedi[k+1]+2*(1-l)*l*b1+pow(l, 2)*punti_intermedi[k+3];
 
-          stroke(100+10*k, 100-50*k, 100+20*k);
+          //stroke(100+10*k, 100-50*k, 100+20*k);
+          stroke(0);
           point(x, y);
-          a1 = c1;
-          b1 = d1;
         }
+        a1 = c1;
+        b1 = d1;
         stroke(0, 255, 0);
         ellipse(c1, d1, 10, 15);
       }
-    //  c1 = -a1 + (2*nodo_successivo.x);
-  //    d1 = -b1 + (2*nodo_successivo.y);
+      c1 = -a1 + (2*nodo_successivo.x);
+      d1 = -b1 + (2*nodo_successivo.y);
       for (float l = 0; l < 1; l = l+0.01) {
         float x = pow((1-l), 2)*punti_intermedi[8]+2*(1-l)*l*a1+pow(l, 2)*nodo_successivo.x;
         float y = pow((1-l), 2)*punti_intermedi[9]+2*(1-l)*l*b1+pow(l, 2)*nodo_successivo.y;
@@ -96,7 +98,7 @@ void bezier_function()
 
       stroke(1*i, 50*i, 55); // blu
     }
-    
+
     // ultimo collegamento con target
     nodo_corrente = nodi_visitati_bezier.get(num_nodi_b-1);
 
