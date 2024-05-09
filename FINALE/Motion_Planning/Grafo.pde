@@ -172,7 +172,7 @@ int trova_nodo(int exploring_node) //ci passiamo a che nodo siamo
   //se non trova figli torna al padre
   if (id_min == -1)
   {
-    println("Non ho figli vicini, torno dal padre");
+    //println("Non ho figli vicini, torno dal padre");
     id_min = nodo.get(exploring_node).padre.id;
   }
 

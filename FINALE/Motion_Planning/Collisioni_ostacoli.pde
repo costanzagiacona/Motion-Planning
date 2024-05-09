@@ -27,7 +27,7 @@ int is_in_obstacle(float x_0, float y_0) //input - coordinate punto rispetto sis
       //se l'ostacolo non è il target
       temp1 = o.lato1 + o.ombra_k + r_r/2;
       temp2 = o.lato2 + o.ombra_k + r_r/2;
-      println("lati", o.id, o.lato1, o.lato2, "ombra", o.ombra_k);
+      //println("lati", o.id, o.lato1, o.lato2, "ombra", o.ombra_k);
     } else
     {
       temp1 = o.lato1;
@@ -98,7 +98,7 @@ boolean sovrapposizione(float posx, float posy, float l1, float l2, float alpha,
   case 2: //rettangolo
     if (x >= posxsp[nfigurasp-1]/2 || x <= - posxsp[nfigurasp-1]/2 )
     {
-      println(" TAVOLO oggetto uscito x");
+      //println(" TAVOLO oggetto uscito x");
       v1 = true;
       return v1;
     }
