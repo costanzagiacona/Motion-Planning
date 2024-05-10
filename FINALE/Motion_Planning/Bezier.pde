@@ -17,8 +17,8 @@ void bezier_function()
   c1 = a1;
   d1 = b1;
   float dx, dy;
-  float[] punti_intermedi = new float[10];
-  int n = 5;
+  int n = 50;
+  float[] punti_intermedi = new float[2*n];
 
   noFill();
   stroke(0, 0, 255); // blu
@@ -34,6 +34,7 @@ void bezier_function()
     //println(bez, "line");
     for (int i = 0; i < num_nodi_b-1; i++)
     {
+
       nodo_corrente = nodi_visitati_bezier.get(i);
       nodo_successivo = nodi_visitati_bezier.get(i+1);
 
@@ -45,14 +46,12 @@ void bezier_function()
       punti_intermedi[0] = nodo_corrente.x;
       punti_intermedi[1] = nodo_corrente.y;
 
-      for (int k = 2; k < 10; k = k+2)
+      for (int k = 2; k < 2*n; k = k+2)
       {
-        //punti_intermedi[k] = nodo_corrente.x + (k/(n+1))*(nodo_successivo.x - nodo_corrente.x);
-        //punti_intermedi[k+1] = nodo_corrente.y + (k/(n+1))*(nodo_successivo.y - nodo_corrente.y);
         punti_intermedi[k] = punti_intermedi[k-2] + dx_int;
         punti_intermedi[k+1] = punti_intermedi[k-1] + dy_int;
 
-        println("punti intermedi ->", k, punti_intermedi[k], punti_intermedi[k+1]);
+        //println("punti intermedi ->", k, punti_intermedi[k], punti_intermedi[k+1]);
         //stroke(0,0,255);
         //ellipse(nodo_successivo.x, nodo_successivo.y,20, 10);
         //stroke(255,0,0);
@@ -64,31 +63,30 @@ void bezier_function()
         b1 = (nodo_corrente.y + punti_intermedi[3])/2;
       }
 
-      for (int k = 0; k < 8; k = k+2)
+      for (int k = 0; k < 2*n-2; k = k+2)
       {
         c1 = -a1 + (2*punti_intermedi[k+2]);
         d1 = -b1 + (2*punti_intermedi[k+3]);
         for (float l = 0; l < 1; l = l+0.01) {
-
 
           // curva di bezier
           float x = pow((1-l), 2)*punti_intermedi[k]+2*(1-l)*l*a1+pow(l, 2)*punti_intermedi[k+2];
           float y = pow((1-l), 2)*punti_intermedi[k+1]+2*(1-l)*l*b1+pow(l, 2)*punti_intermedi[k+3];
 
           //stroke(100+10*k, 100-50*k, 100+20*k);
-          stroke(0);
+          stroke(255);
           point(x, y);
         }
         a1 = c1;
         b1 = d1;
-        stroke(0, 255, 0);
-        ellipse(c1, d1, 10, 15);
+        //stroke(0, 255, 0);
+        //ellipse(c1, d1, 10, 15);
       }
       c1 = -a1 + (2*nodo_successivo.x);
       d1 = -b1 + (2*nodo_successivo.y);
       for (float l = 0; l < 1; l = l+0.01) {
-        float x = pow((1-l), 2)*punti_intermedi[8]+2*(1-l)*l*a1+pow(l, 2)*nodo_successivo.x;
-        float y = pow((1-l), 2)*punti_intermedi[9]+2*(1-l)*l*b1+pow(l, 2)*nodo_successivo.y;
+        float x = pow((1-l), 2)*punti_intermedi[2*n-2]+2*(1-l)*l*a1+pow(l, 2)*nodo_successivo.x;
+        float y = pow((1-l), 2)*punti_intermedi[2*n-1]+2*(1-l)*l*b1+pow(l, 2)*nodo_successivo.y;
         stroke(255);
         point(x, y);
       }
@@ -96,25 +94,58 @@ void bezier_function()
       a1 = c1;
       b1 = d1;
 
-      stroke(1*i, 50*i, 55); // blu
+      //stroke(1*i, 50*i, 55); // blu
     }
 
     // ultimo collegamento con target
     nodo_corrente = nodi_visitati_bezier.get(num_nodi_b-1);
+    dx = xot - nodo_corrente.x;
+    dy = yot - nodo_corrente.y;
+    float dx_int = dx / (n + 1);
+    float dy_int = dy / (n + 1);
 
-    //println("NODO ", i);
+    punti_intermedi[0] = nodo_corrente.x;
+    punti_intermedi[1] = nodo_corrente.y;
+    for (int k = 2; k < 2*n; k = k+2)
+    {
+      punti_intermedi[k] = punti_intermedi[k-2] + dx_int;
+      punti_intermedi[k+1] = punti_intermedi[k-1] + dy_int;
 
+      //println("punti intermedi ->", k, punti_intermedi[k], punti_intermedi[k+1]);
+    }
+
+    for (int k = 0; k < 2*n-2; k = k+2)
+    {
+      c1 = -a1 + (2*punti_intermedi[k+2]);
+      d1 = -b1 + (2*punti_intermedi[k+3]);
+      for (float l = 0; l < 1; l = l+0.01) {
+
+        // curva di bezier
+        float x = pow((1-l), 2)*punti_intermedi[k]+2*(1-l)*l*a1+pow(l, 2)*punti_intermedi[k+2];
+        float y = pow((1-l), 2)*punti_intermedi[k+1]+2*(1-l)*l*b1+pow(l, 2)*punti_intermedi[k+3];
+
+        //stroke(100+10*k, 100-50*k, 100+20*k);
+        stroke(255);
+        point(x, y);
+      }
+      a1 = c1;
+      b1 = d1;
+      //stroke(0, 255, 0);
+      //ellipse(c1, d1, 10, 15);
+    }
     c1 = -a1 + (2*xot);
     d1 = -b1 + (2*yot);
-    // Disegno curva di Bezier tra ultimo nodo e target
     for (float l = 0; l < 1; l = l+0.01) {
-      float x = pow((1-l), 2)*nodo_corrente.x+2*(1-l)*l*a1+pow(l, 2)*xot;
-      float y = pow((1-l), 2)*nodo_corrente.y+2*(1-l)*l*b1+pow(l, 2)*yot;
-
+      float x = pow((1-l), 2)*punti_intermedi[2*n-2]+2*(1-l)*l*a1+pow(l, 2)*xot;
+      float y = pow((1-l), 2)*punti_intermedi[2*n-1]+2*(1-l)*l*b1+pow(l, 2)*yot;
       stroke(255);
       point(x, y);
     }
-    stroke(0, 0, 255);
+
+    a1 = c1;
+    b1 = d1;
+
+    //stroke(1*i, 50*i, 55); // blu
   }
 }
 
