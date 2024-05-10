@@ -16,7 +16,7 @@ boolean sovrapposizioneost = false;
 //incremento dimensione lati
 float incrost = 0;
 //ostacolo ombra
-float k = 25; //incremento lato per ostacolo ombra
+float k = 30; //incremento lato per ostacolo ombra
 
 
 //---------- SPAZIO DI LAVORO ----------

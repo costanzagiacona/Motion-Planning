@@ -108,8 +108,9 @@ void keyPressed()
         nfiguraost = 1;
         lato1 = 50; //dimensioni di default
         lato2 = 70;
+        // dimensioni ombra
         if (nfiguraost == 4) k = 1.5*25;
-        else k = 25;
+        else k = 30;
         semins = 1; //passo alla parte successiva
       }
     }
@@ -159,7 +160,7 @@ void keyPressed()
       if (key == '+') //aumento dimensione ombra ostacolo
       {
         k += kp;
-        if (k > 45) k = 45;
+        if(k > 45) k = 45;
       }
 
       if (key == '-') //diminuisco dimensione ombra ostacolo

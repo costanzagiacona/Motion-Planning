@@ -183,7 +183,6 @@ boolean sovrapposizione(float posx, float posy, float l1, float l2, float alpha,
     break;
   }
 
-
   //vertici
   for (int k = 0; k < vert_ghost_obs.length; k = k+2)
   {

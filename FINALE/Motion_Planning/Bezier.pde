@@ -17,7 +17,7 @@ void bezier_function()
   c1 = a1;
   d1 = b1;
   float dx, dy;
-  int n = 50;
+  int n = 80;
   float[] punti_intermedi = new float[2*n];
 
   noFill();

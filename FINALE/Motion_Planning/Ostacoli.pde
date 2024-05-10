@@ -369,7 +369,7 @@ float[] vertici_ost_om(int nfigura, float l1, float l2, float posx, float posy, 
     vertici_ost_om[3] = posy + (l1/2+k_om) * sin(alpha) + (h/3+k_om) * cos(alpha); // Coordinata y del vertice 2
     vertici_ost_om[4] = posx - (l1/2+k_om) * cos(alpha) - (h/3+k_om) * sin(alpha); // Coordinata x del vertice 3
     vertici_ost_om[5] = posy - (l1/2+k_om) * sin(alpha) + (h/3+k_om) * cos(alpha); // Coordinata y del vertice 3
-    /*
+    
     //stampa
      fill(0, 255, 0); //VERDE
      pushMatrix();
@@ -395,7 +395,7 @@ float[] vertici_ost_om(int nfigura, float l1, float l2, float posx, float posy, 
      rotateZ(alpha);
      sphere(5);
      popMatrix();
-     */
+     
     break;
 
   case 6: //TRAPEZIO
