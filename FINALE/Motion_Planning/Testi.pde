@@ -58,7 +58,11 @@ void infoi()
     text("4) cerchio ", 0, 150);
     text("5) triangolo ", 0, 180);
     text("6) trapezio ", 0, 210);
-    if (semins == 0) text("Premi 'o' per aggiungere un nuovo ostacolo", 0, 250);
+    if (semins == 0)
+    {
+      text("Premi 'o' per aggiungere un nuovo ostacolo", 0, 250);
+      text("Premi ENTER per iniziare la scannerizzazione", 0, 280);
+    }
     if (semins == 1)
     {
       text("Premi + e - per modificare la dimensione", 0, 250);
@@ -69,7 +73,8 @@ void infoi()
     if (semins == 2)
     {
       text("Premi UP, DOWN, RIGHT e LEFT per lo spostamento ", 0, 250);
-      text("Premi TAB per confermare", 0, 280);
+      text("Premi + e - per modificare la dimensione dell'ombra", 0, 280);
+      text("Premi TAB per confermare", 0, 310);
     }
 
 
@@ -86,6 +91,9 @@ void infoi()
     textSize(30);
     fill(0);
     text("Scanning...",0,0);
+    textSize(20);
+    text("Premi 'a' per aumentare la velcoità di scan",0,50);
+    text("Premi 'A' per diminuire la velcoità di scan",0,80);
   }
   if (arrived == true)
   {

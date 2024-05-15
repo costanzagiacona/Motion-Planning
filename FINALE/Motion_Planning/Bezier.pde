@@ -1,16 +1,16 @@
 // Legge a minima energia per lo spostamento tra un punto e il successivo
-float tempo = 0, tempoi = 0, ppx=pos_x_r, ppy=pos_y_r;
-int bez = 0, num_nodi_b = 0;
+int num_nodi_b = 0;
 ArrayList<Float> punti_bezier = new ArrayList<Float>();
 boolean sembezier = false;
-Nodo terzo_nodo;
+ArrayList<Float> curva_bezier = new ArrayList<Float>();
+
 
 void bezier_function()
 {
   num_nodi_b = nodi_visitati_bezier.size(); // conta da 1 e non da 0
   float a1, b1, c1, d1;  // coordinate punti di controllo
-  nodo_successivo = nodi_visitati_bezier.get(1);
-  //a1 = (root.x + nodo_successivo.x)/2 + 15;
+  //nodo_successivo = nodi_visitati_bezier.get(1);
+  //a1 = (d.x + nodo_successivo.x)/2 + 15;
   //b1 = (root.y + nodo_successivo.y)/2 + 15;
   a1 = root.x;
   b1 = root.y;
@@ -28,7 +28,17 @@ void bezier_function()
     c1 = -a1 + (2*xot);
     d1 = -b1 + (2*yot);
 
-    stroke(0, 0, 255); // blu
+    for (float l = 0; l < 1; l = l+0.001) {
+      // curva di bezier
+      float x = pow((1-l), 2)*nodi_visitati_bezier.get(0).x+2*(1-l)*l*a1+pow(l, 2)*xot;
+      float y = pow((1-l), 2)*nodi_visitati_bezier.get(0).y+2*(1-l)*l*b1+pow(l, 2)*yot;
+
+      //stroke(100+10*k, 100-50*k, 100+20*k);
+      stroke(255);
+      point(x, y);
+      curva_bezier.add(x);
+      curva_bezier.add(y);
+    }
   } else //c'è almeno un nodo in più oltre source
   {
     //println(bez, "line");
@@ -67,8 +77,7 @@ void bezier_function()
       {
         c1 = -a1 + (2*punti_intermedi[k+2]);
         d1 = -b1 + (2*punti_intermedi[k+3]);
-        for (float l = 0; l < 1; l = l+0.01) {
-
+        for (float l = 0; l < 1; l = l+0.1) {
           // curva di bezier
           float x = pow((1-l), 2)*punti_intermedi[k]+2*(1-l)*l*a1+pow(l, 2)*punti_intermedi[k+2];
           float y = pow((1-l), 2)*punti_intermedi[k+1]+2*(1-l)*l*b1+pow(l, 2)*punti_intermedi[k+3];
@@ -76,6 +85,8 @@ void bezier_function()
           //stroke(100+10*k, 100-50*k, 100+20*k);
           stroke(255);
           point(x, y);
+          curva_bezier.add(x);
+          curva_bezier.add(y);
         }
         a1 = c1;
         b1 = d1;
@@ -84,11 +95,13 @@ void bezier_function()
       }
       c1 = -a1 + (2*nodo_successivo.x);
       d1 = -b1 + (2*nodo_successivo.y);
-      for (float l = 0; l < 1; l = l+0.01) {
+      for (float l = 0; l < 1; l = l+0.1) {
         float x = pow((1-l), 2)*punti_intermedi[2*n-2]+2*(1-l)*l*a1+pow(l, 2)*nodo_successivo.x;
         float y = pow((1-l), 2)*punti_intermedi[2*n-1]+2*(1-l)*l*b1+pow(l, 2)*nodo_successivo.y;
         stroke(255);
         point(x, y);
+        curva_bezier.add(x);
+        curva_bezier.add(y);
       }
 
       a1 = c1;
@@ -118,7 +131,7 @@ void bezier_function()
     {
       c1 = -a1 + (2*punti_intermedi[k+2]);
       d1 = -b1 + (2*punti_intermedi[k+3]);
-      for (float l = 0; l < 1; l = l+0.01) {
+      for (float l = 0; l < 1; l = l+0.1) {
 
         // curva di bezier
         float x = pow((1-l), 2)*punti_intermedi[k]+2*(1-l)*l*a1+pow(l, 2)*punti_intermedi[k+2];
@@ -135,7 +148,7 @@ void bezier_function()
     }
     c1 = -a1 + (2*xot);
     d1 = -b1 + (2*yot);
-    for (float l = 0; l < 1; l = l+0.01) {
+    for (float l = 0; l < 1; l = l+0.1) {
       float x = pow((1-l), 2)*punti_intermedi[2*n-2]+2*(1-l)*l*a1+pow(l, 2)*xot;
       float y = pow((1-l), 2)*punti_intermedi[2*n-1]+2*(1-l)*l*b1+pow(l, 2)*yot;
       stroke(255);

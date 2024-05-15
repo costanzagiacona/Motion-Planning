@@ -51,8 +51,18 @@ class Ostacolo
 
     //il target e gli ostacoli hanno colori diversi
     if (target == false) fill(#A70202);
-    //else fill(#2AB74C);
-    noFill();
+    else 
+    {
+      fill(#2AB74C);
+      pushMatrix();
+      rotate(-PI/4);
+      textSize(30);
+      fill(0);
+      text("target", -30, 50);
+      popMatrix();
+      fill(#2AB74C);
+    }
+    //noFill();
 
     //if ( nfigura == 4) l1 = l1/2;
 
@@ -61,8 +71,8 @@ class Ostacolo
 
     //ombra
     pushMatrix();
-    noFill();
-    //fill(#C6C4C0); //grigio
+    //noFill();
+    fill(#C6C4C0); //grigio
     translate(0, 0, -10);
     formaost(forma, lato1+ombra_k, lato2+ombra_k);
     popMatrix();
@@ -371,6 +381,7 @@ float[] vertici_ost_om(int nfigura, float l1, float l2, float posx, float posy, 
     vertici_ost_om[5] = posy - (l1/2+k_om) * sin(alpha) + (h/3+k_om) * cos(alpha); // Coordinata y del vertice 3
     
     //stampa
+    /*
      fill(0, 255, 0); //VERDE
      pushMatrix();
      translate(vertici_ost_om[0], vertici_ost_om[1]);
@@ -395,7 +406,7 @@ float[] vertici_ost_om(int nfigura, float l1, float l2, float posx, float posy, 
      rotateZ(alpha);
      sphere(5);
      popMatrix();
-     
+     */
     break;
 
   case 6: //TRAPEZIO

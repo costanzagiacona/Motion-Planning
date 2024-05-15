@@ -4,7 +4,7 @@ void make_tree(Nodo current) {
   int s = nodo.size();
   int id_vert = s;
   String s_lab = String.valueOf(s);
-  float toll = 25; //<============================================= forse da cambiare
+  float toll = 25; 
   //float toll = 12;
 
   Nodo n = new Nodo(s_lab, x_vert, y_vert, id_vert);  // ogni nodo ha label e coordinate (x,y)
@@ -13,12 +13,7 @@ void make_tree(Nodo current) {
     if (abs(ni.x-x_vert) < toll && abs(ni.y-y_vert) < toll) {
       //se già esiste, o se è sufficientemente vicino ad un vertice già esistente
       return;
-      //albero.linkNodes(ni, n);
     }
-    //else if (abs(ni.x-x_vert) >= toll && abs(ni.y-y_vert) >= toll) {
-    //  albero.linkNodes(ni, n);
-    //  albero.addChild(current, n);
-    //}
   }
   albero.addChild(current, n);
 }
@@ -40,7 +35,6 @@ void print_tree()
   {
     for (Nodo ni : nodo) // per ogni nodo nel grafo
     {
-
       strokeWeight(5);
       fill(#4BA240);
       stroke(#4BA240);

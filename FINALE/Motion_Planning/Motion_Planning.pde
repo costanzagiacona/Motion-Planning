@@ -245,13 +245,12 @@ void draw()
     rotateZ(orientamento); //modifica orientamento (vedere in "Interazioni")
     if (nfiguraost == 4) //cerchio
     {
-      formaost(nfiguraost, (lato1/3)+(incrost/2),  (lato1/3)+(incrost/2)); //funzione in 'Forma'
+      formaost(nfiguraost, (lato1/3)+(incrost/2), (lato1/3)+(incrost/2)); //funzione in 'Forma'
       fill(#C6C4C0); //grigio
       translate(0, 0, -10);
       formaost(nfiguraost, (lato1/3)+(incrost/2)+1.5*k, (lato1/3)+(incrost/2)+1.5*k); //ombra
       popMatrix();
-    } 
-    else
+    } else
     {
       formaost(nfiguraost, lato1+incrost, lato2+incrost);
       fill(#C6C4C0); //grigio
@@ -376,10 +375,8 @@ void draw()
         x2 = nodo_successivo.x;
         y2 = nodo_successivo.y;
 
-
         t = 0;
         ti = t;
-
 
         A = (2*pow(ti, 3)+3*Dt*pow(ti, 2))/(pow(Dt, 3));
         B = -(6*pow(ti, 2)+6*Dt*ti)/(pow(Dt, 3));
@@ -471,9 +468,37 @@ void draw()
           //C = (6*ti+3*Dt)/(pow(Dt, 3));
           //D = -2/(pow(Dt, 3));
 
-          bezier_function();
-        } 
-        else
+          bezier_function(); //<>//
+
+          // robot percorre la curva di bezier
+          //for (int l = curva_bezier.size()-1; l > 2; l = l-2) { //<>//
+          //  float[] new_pos = move(curva_bezier.get(l-1), curva_bezier.get(l), curva_bezier.get(l-3), curva_bezier.get(l-2));
+            // le coordinate di destinazione diventano quelle del robot, che così si sposta lì
+            //pos_x_r = new_pos[0];
+            //pos_y_r = new_pos[1];
+
+            //println(curva_bezier.get(l-1), curva_bezier.get(l), curva_bezier.get(l-3), curva_bezier.get(l-2)); //<>//
+
+            //if (abs(pos_x_r - x2) < toll2 && abs(pos_y_r - y2) < toll2 )
+            //{
+            //  // coordinate nodo di partenza
+            //  x1 = curva_bezier.get(l-1);
+            //  y1 = curva_bezier.get(l);
+            //  //coordinate nodo di destinazione
+            //  x2 = curva_bezier.get(l-3);
+            //  y2 = curva_bezier.get(l-2);
+
+            //  t = 0;
+            //  ti = t;
+
+            //  A = (2*pow(ti, 3)+3*Dt*pow(ti, 2))/(pow(Dt, 3));
+            //  B = -(6*pow(ti, 2)+6*Dt*ti)/(pow(Dt, 3));
+            //  C = (6*ti+3*Dt)/(pow(Dt, 3));
+            //  D = -2/(pow(Dt, 3));
+              
+            //}
+          //}
+        } else
         {
           print_tree();
           // x2, y2 sono le coordinate del target
