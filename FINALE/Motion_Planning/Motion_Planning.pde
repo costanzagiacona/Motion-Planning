@@ -1,4 +1,4 @@
-//VARIABILI
+//VARIABILI //<>// //<>// //<>//
 // ---------- OSTACOLO ----------
 //posizione  centro ostacolo non ancora instanziato
 float x = 0;
@@ -155,7 +155,7 @@ int bezier = 0;
 int exploring = 0;
 int num_nodi = 0;
 
-
+int l = 0;
 
 //---------- PROGRAMMA ----------
 void setup()
@@ -458,96 +458,148 @@ void draw()
         if (abs(pos_x_r - x2) < toll2 && abs(pos_y_r - y2) < toll2 ) //se sono arrivata al nodo destinazione
         {
           //print_tree();
-          sembezier = true;
+          //sembezier = true;
 
           t = 0;
           ti = t;
 
-          //A = (2*pow(ti, 3)+3*Dt*pow(ti, 2))/(pow(Dt, 3));
-          //B = -(6*pow(ti, 2)+6*Dt*ti)/(pow(Dt, 3));
-          //C = (6*ti+3*Dt)/(pow(Dt, 3));
-          //D = -2/(pow(Dt, 3));
+          A = (2*pow(ti, 3)+3*Dt*pow(ti, 2))/(pow(Dt, 3));
+          B = -(6*pow(ti, 2)+6*Dt*ti)/(pow(Dt, 3));
+          C = (6*ti+3*Dt)/(pow(Dt, 3));
+          D = -2/(pow(Dt, 3));
 
-          bezier_function(); //<>//
+          bezier_function();
+
+          //println(curva_bezier.size());
+          /*
+          
+           for(int l=0; l<curva_bezier.size()-1; l=l+2)
+           {
+           stroke(0,0,255);
+           point(curva_bezier.get(l),curva_bezier.get(l+1));
+           }
+           */
+
+          l = curva_bezier.size()-1;
+
+          sembezier = true;
+
+          /*
+          for (int l = 0; l < curva_bezier.size()-2; l = l+2)
+           {
+           //pos_x_r = curva_bezier.get(l);
+           //pos_y_r = curva_bezier.get(l+1);
+           pos_x_r = -180;
+           pos_y_r = 150;
+           }
+           */
 
           // robot percorre la curva di bezier
-          //for (int l = curva_bezier.size()-1; l > 2; l = l-2) { //<>//
-          //  float[] new_pos = move(curva_bezier.get(l-1), curva_bezier.get(l), curva_bezier.get(l-3), curva_bezier.get(l-2));
-            // le coordinate di destinazione diventano quelle del robot, che così si sposta lì
-            //pos_x_r = new_pos[0];
-            //pos_y_r = new_pos[1];
-
-            //println(curva_bezier.get(l-1), curva_bezier.get(l), curva_bezier.get(l-3), curva_bezier.get(l-2)); //<>//
-
-            //if (abs(pos_x_r - x2) < toll2 && abs(pos_y_r - y2) < toll2 )
-            //{
-            //  // coordinate nodo di partenza
-            //  x1 = curva_bezier.get(l-1);
-            //  y1 = curva_bezier.get(l);
-            //  //coordinate nodo di destinazione
-            //  x2 = curva_bezier.get(l-3);
-            //  y2 = curva_bezier.get(l-2);
-
-            //  t = 0;
-            //  ti = t;
-
-            //  A = (2*pow(ti, 3)+3*Dt*pow(ti, 2))/(pow(Dt, 3));
-            //  B = -(6*pow(ti, 2)+6*Dt*ti)/(pow(Dt, 3));
-            //  C = (6*ti+3*Dt)/(pow(Dt, 3));
-            //  D = -2/(pow(Dt, 3));
-              
-            //}
-          //}
+          //for (int l = curva_bezier.size()-1; l > 2; l = l-2)
+          /*          for (int l = 0; l < curva_bezier.size()-3; l = l+2)
+           {
+           //float[] new_pos = move(curva_bezier.get(l-1), curva_bezier.get(l), curva_bezier.get(l-3), curva_bezier.get(l-2));
+           float[] new_pos = move(curva_bezier.get(l), curva_bezier.get(l+1), curva_bezier.get(l+2), curva_bezier.get(l+3));
+           // le coordinate di destinazione diventano quelle del robot, che così si sposta lì
+           c
+           
+           //println(curva_bezier.get(l-1), curva_bezier.get(l), curva_bezier.get(l-3), curva_bezier.get(l-2));
+           
+           if (abs(pos_x_r - x2) < toll2 && abs(pos_y_r - y2) < toll2 ) //raggiunto il punto di interesse
+           {
+           // coordinate nodo di partenza
+           //x1 = curva_bezier.get(l-1);
+           //y1 = curva_bezier.get(l);
+           
+           x1 = curva_bezier.get(l);
+           y1 = curva_bezier.get(l+1);
+           
+           //coordinate nodo di destinazione
+           x2 = curva_bezier.get(l+2);
+           y2 = curva_bezier.get(l+2);
+           //x2 = curva_bezier.get(l-3);
+           //y2 = curva_bezier.get(l-2);
+           
+           t = 0;
+           ti = t;
+           
+           A = (2*pow(ti, 3)+3*Dt*pow(ti, 2))/(pow(Dt, 3));
+           B = -(6*pow(ti, 2)+6*Dt*ti)/(pow(Dt, 3));
+           C = (6*ti+3*Dt)/(pow(Dt, 3));
+           D = -2/(pow(Dt, 3));
+           
+           }
+           }
+           */
+          //bezier_function();
         } else
         {
-          print_tree();
-          // x2, y2 sono le coordinate del target
-          float[] new_pos = move(x1, y1, x2, y2);
-          // spostamento robot nel punto del target
-          pos_x_r = new_pos[0];
-          pos_y_r = new_pos[1];
-
-
-          //disegno bezier
-
-          //println("numero nodi :", nodi_visitati_bezier.size(), "----------------------------------------------------");
-          for (Nodo n : nodi_visitati_bezier ) //per ogni nodo in cui è passato il robot
+          if (!sembezier)
           {
-            stroke(255);
+            print_tree();
+            // x2, y2 sono le coordinate del target
+            float[] new_pos = move(x1, y1, x2, y2);
+            // spostamento robot nel punto del target
+            pos_x_r = new_pos[0];
+            pos_y_r = new_pos[1];
 
-            //println(n.label);
-          }
-          //println("numero nodi contati",num_nodi);
-          int contatore = 0;
+
+            //disegno bezier
+
+            //println("numero nodi :", nodi_visitati_bezier.size(), "----------------------------------------------------");
+            /*   for (Nodo n : nodi_visitati_bezier ) //per ogni nodo in cui è passato il robot
+             {
+             stroke(255);
+             
+             //println(n.label);
+             }
+             */
+            //println("numero nodi contati",num_nodi);
+            int contatore = 0;
 
 
-          //println("-----------");
-          for (Nodo n : nodi_visitati_bezier )
-          {
-            stroke(255);
-            strokeWeight(5);
-            if (contatore < nodi_visitati_bezier.size()-1) //se non è l'ultimo nodo
+            //println("-----------");
+            for (Nodo n : nodi_visitati_bezier )
             {
-              nodo_successivo = nodi_visitati_bezier.get(contatore+1); //prendo il nodo successivo
-              //println(contatore, "<", nodi_visitati_bezier.size());
-              //println(n.label, "->", nodo_successivo.label);
-              line(n.x, n.y, nodo_successivo.x, nodo_successivo.y);
-            } else
-            {
-              //println(n.label, "-> target");
-              line(n.x, n.y, xot, yot);
+              stroke(255);
+              strokeWeight(5);
+              if (contatore < nodi_visitati_bezier.size()-1) //se non è l'ultimo nodo
+              {
+                nodo_successivo = nodi_visitati_bezier.get(contatore+1); //prendo il nodo successivo
+                //println(contatore, "<", nodi_visitati_bezier.size());
+                //println(n.label, "->", nodo_successivo.label);
+                line(n.x, n.y, nodo_successivo.x, nodo_successivo.y);
+              } else
+              {
+                //println(n.label, "-> target");
+                line(n.x, n.y, xot, yot);
+              }
+
+              contatore++;
             }
-
-            contatore++;
+            strokeWeight(2);
+            //sembezier = true;
           }
-          strokeWeight(2);
-          //sembezier = true;
         }
       }
     }
   }
 
-  //if (sembezier) bezier();
+  if (sembezier)
+  {
+    bezier_function();
+
+    if ( !(abs(pos_x_r - 180) < 1 && abs(pos_y_r - (-180)) < 1) )  // se non sono arrivato a source
+    {
+      pos_x_r = curva_bezier.get(l-1);
+      pos_y_r = curva_bezier.get(l);
+
+      l = l-2;
+    }
+  }
+
+
+
   noStroke();
   t++;
 }

@@ -92,8 +92,8 @@ void infoi()
     fill(0);
     text("Scanning...",0,0);
     textSize(20);
-    text("Premi 'a' per aumentare la velcoità di scan",0,50);
-    text("Premi 'A' per diminuire la velcoità di scan",0,80);
+    text("Premi 'a' per aumentare la velocità di scan",0,50);
+    text("Premi 'A' per diminuire la velocità di scan",0,80);
   }
   if (arrived == true)
   {

@@ -215,8 +215,8 @@ boolean sovrapposizione(float posx, float posy, float l1, float l2, float alpha,
   //------------------------- SOVRAPPOSIZIONE OSTACOLI TRA LORO ---------------------------------
 
   /* verifica se un vertice dell'ostacolo da istanziare compenetra un ostacolo esistente */
-  for (int i = 0; i < vert_ghost_obs.length; i=i+2) { //<>//
-    if (is_in_obstacle(vert_ghost_obs[i], vert_ghost_obs[i+1]) != -1 ) { //<>//
+  for (int i = 0; i < vert_ghost_obs.length; i=i+2) {
+    if (is_in_obstacle(vert_ghost_obs[i], vert_ghost_obs[i+1]) != -1 ) {
       v1 = true;
       println("collisione con", is_in_obstacle(vert_ghost_obs[i], vert_ghost_obs[i+1]));
       //circle(vert_ghost_obs[i], vert_ghost_obs[i+1], 40);
