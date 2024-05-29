@@ -47,16 +47,13 @@ void keyPressed()
   }
 
   // modifica velocità scanner
-  if (key == 'a')
+  if (key == 'A') //scannero velocità massima
   {
-    num_iter -= 40;
-    if (num_iter < 360) num_iter = 360;
+    num_iter = 300;
   }
-  if (key == 'A')
+  if (key == 'a') //scanner velocità minima
   {
-    num_iter += 40;
-    if (num_iter > 1800) num_iter = 1800;
-    //println("num_iter ->", num_iter);
+    num_iter = 500;
   }
 
   if (keyCode == ENTER)

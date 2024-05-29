@@ -23,7 +23,7 @@ void bezier_function()
 
   noFill();
   stroke(0, 0, 255); // blu
-  if (num_nodi_b == 1) //c'è solo source e trova subito target
+  if (num_nodi_b == 1) /* --- SOLO NODI SOURCE E TARGET --- */
   {
     //per calcolare punti intermedi
     nodo_corrente = root;
@@ -60,7 +60,7 @@ void bezier_function()
         stroke(0, 0, 255);
         point(x, y);
 
-        if (curva_bezier.size() <= (k+1)*(2*n+2)) //aggiungiamo nodi solo se inferiori a 50 + inizio + fine
+        if (curva_bezier.size() <= (k+1)*(cost*n+2)) //aggiungiamo nodi solo se inferiori a 50 + inizio + fine
         {
           //println("INSERISCO PUNTI SEGMENTO", i);
           curva_bezier.add(x);
@@ -83,7 +83,7 @@ void bezier_function()
       stroke(0, 0, 255);
       point(x, y);
 
-      if (curva_bezier.size() < (2*n+2)) //aggiungiamo nodi solo se inferiori a 80 + inizio + fine
+      if (curva_bezier.size() < (cost*n+2)) //aggiungiamo nodi solo se inferiori a 80 + inizio + fine
       {
         // println("INSERISCO PUNTI SEGMENTO 79-80", i);
         curva_bezier.add(x);
@@ -93,7 +93,8 @@ void bezier_function()
 
     a1 = c1;
     b1 = d1;
-  } else //c'è almeno un nodo in più oltre source
+  } 
+  else /* --- CI SONO PIU NODI --- */
   {
     //println(bez, "line");
     for (int i = 0; i < num_nodi_b-1; i++)
@@ -166,7 +167,7 @@ void bezier_function()
 
         if (curva_bezier.size() < (num_nodi_b-1)*(cost*n+2)) //aggiungiamo nodi solo se inferiori a 80 + inizio + fine
         {
-          println("INSERISCO PUNTI SEGMENTO 79-80", i);
+          //println("INSERISCO PUNTI SEGMENTO 79-80", i);
           curva_bezier.add(x);
           curva_bezier.add(y);
         }
@@ -211,7 +212,7 @@ void bezier_function()
 
         if (curva_bezier.size() <= (k+1)*(cost*n+2)) //aggiungiamo nodi solo se inferiori a 50 + inizio + fine
         {
-          println("INSERISCO PUNTI TARGET", k);
+          //println("INSERISCO PUNTI TARGET", k);
           curva_bezier.add(x);
           curva_bezier.add(y);
         }
@@ -232,7 +233,7 @@ void bezier_function()
 
       if (curva_bezier.size() < (num_nodi_b)*(cost*n+2)) //aggiungiamo nodi solo se inferiori a 50 + inizio + fine
       {
-        println("INSERISCO PUNTI TARGET 79-80");
+        //println("INSERISCO PUNTI TARGET 79-80");
         curva_bezier.add(x);
         curva_bezier.add(y);
       }

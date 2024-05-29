@@ -11,13 +11,15 @@ void infoi()
   fill(0);
   stroke(0);
   textAlign(TOP, LEFT);
-  text("Sistema di riferimento:", 1100, 0);
+  text("Sistema di riferimento : ", 1100, 0);
   fill(#2AB459);
   text("x, ", 1290, 0);
   fill(#F04030);
   text("y, ", 1310, 0);
   fill(#FAF24C);
   text("z ", 1330, 0);
+  fill(0);
+  text ("Il target è verde", 1100, 30);
   
   textAlign(BOTTOM, LEFT);
   fill(0);
@@ -78,7 +80,8 @@ void infoi()
     }
 
 
-    if (sovrapposizioneost) {
+    if (sovrapposizioneost) 
+    {
       fill(255, 0, 0);
       textSize(30);
       textAlign(CENTER, CENTER);
@@ -92,8 +95,8 @@ void infoi()
     fill(0);
     text("Scanning...",0,0);
     textSize(20);
-    text("Premi 'a' per aumentare la velocità di scan",0,50);
-    text("Premi 'A' per diminuire la velocità di scan",0,80);
+    text("Premi 'A' per aumentare la velocità di scan",0,50);
+    text("Premi 'a' per diminuire la velocità di scan",0,80);
   }
   if (arrived == true)
   {

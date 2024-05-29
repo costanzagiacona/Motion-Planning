@@ -56,9 +56,9 @@ class Ostacolo
       fill(#2AB74C);
       pushMatrix();
       rotate(-PI/4);
-      textSize(30);
-      fill(0);
-      text("target", -30, 50);
+      //textSize(30);
+      //fill(0);
+      //text("target", -30, 50); //siamo nel sist rif target
       popMatrix();
       fill(#2AB74C);
     }

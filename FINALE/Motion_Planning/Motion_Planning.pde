@@ -127,8 +127,9 @@ ArrayList<Nodo> nodi_visitati_bezier = new ArrayList<Nodo>();
 
 //---------- SCANNER ----------
 boolean s = false;   //true se ho trovato il target, modificata in scan
-int num_iter = 700; //per far girare lo scanner
-float start_alpha = (2*PI)/360; //angolo iniziale con cui si sposta lo scanner
+//int num_iter = 700; //per far girare lo scanner
+int num_iter = 500;
+float start_alpha = (2*PI)/300; //angolo iniziale con cui si sposta lo scanner
 float alpha = start_alpha;//angolo con cui si sposta lo scanner
 float[] x_prev = {0, 0};   //coordinate dei punti i-1,i-2 RISPETTO A SR0
 float[] y_prev = {0, 0};
@@ -480,9 +481,17 @@ void draw()
            }
            */
 
-          l = curva_bezier.size()-1;
+          //l = curva_bezier.size()-1;
+          if (!sembezier)
+          {
+            pos_x_r = x_home;
+            pos_y_r = y_home;
+          }
 
           sembezier = true;
+
+          //posizioniamo il robot all'inizio
+          //posizioniamo il robot in source
 
           /*
           for (int l = 0; l < curva_bezier.size()-2; l = l+2)
@@ -589,13 +598,35 @@ void draw()
   {
     bezier_function();
 
-    if ( !(abs(pos_x_r - 180) < 1 && abs(pos_y_r - (-180)) < 1) )  // se non sono arrivato a source
+    //MOVIMENTO DA SOURCE VERSO TARGET
+    //movimento bezier
+    if ( !(abs(pos_x_r - xot) < 1.5 && abs(pos_y_r - (yot)) < 1.5) )  // se non sono arrivato a source
     {
-      pos_x_r = curva_bezier.get(l-1);
-      pos_y_r = curva_bezier.get(l);
+      pos_x_r = curva_bezier.get(l);
+      pos_y_r = curva_bezier.get(l+1);
+      //println(" sto arrivando al target");
+      //println("posizione attuale:", pos_x_r, pos_y_r);
 
-      l = l-2;
+      l = l+2;
     }
+    else
+    {
+      pos_x_r = xot;
+      pos_y_r = yot;
+      //println("sono arrivato al target");
+      //sembezier = false;
+    }
+
+
+    /* //SI MUOVE DAL TARGET AL SOURCE
+     if ( !(abs(pos_x_r - x_home) < 1 && abs(pos_y_r - (y_home)) < 1) )  // se non sono arrivato a source
+     {
+     pos_x_r = curva_bezier.get(l-1);
+     pos_y_r = curva_bezier.get(l);
+     
+     l = l-2;
+     }
+     */
   }
 
 
