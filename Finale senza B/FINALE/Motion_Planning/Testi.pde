@@ -11,13 +11,13 @@ void infoi()
   fill(0);
   stroke(0);
   textAlign(TOP, LEFT);
-  text("Sistema di riferimento : ", 1100, 0);
+  text("Sistema di riferimento: ", 1100, 0);
   fill(#2AB459);
-  text("x, ", 1290, 0);
+  text("x, ", 1295, 0);
   fill(#F04030);
-  text("y, ", 1310, 0);
+  text("y, ", 1315, 0);
   fill(#FAF24C);
-  text("z ", 1330, 0);
+  text("z ", 1335, 0);
   fill(0);
   text ("Il target è verde", 1100, 30);
   

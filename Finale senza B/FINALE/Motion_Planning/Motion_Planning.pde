@@ -16,7 +16,7 @@ boolean sovrapposizioneost = false;
 //incremento dimensione lati
 float incrost = 0;
 //ostacolo ombra
-float k = 30; //incremento lato per ostacolo ombra
+float k = 50; //incremento lato per ostacolo ombra
 
 
 //---------- SPAZIO DI LAVORO ----------
@@ -87,12 +87,10 @@ float r_r = 20;  //stima del diametro del robot rappresentato come un cerchio
 float xot = -180;              //    <=====
 float yot = 250;              //     <=====
 //dimensione lato target
-float r_target = 20;
-float h_target = 5; // ------------------------------------------------------------------> cercare nel codice altrimenti cancellare
-//se un ostacolo è il target questo flag è true
+float r_target = 20;//se un ostacolo è il target questo flag è true
 boolean is_t = true; //nella classe ostacolo
 //identificatore
-int id_target = 0; //max 6 ostacoli
+int id_target = 0; 
 
 
 //---------- ALBERO ----------
@@ -426,29 +424,9 @@ void draw()
           C = (6*ti+3*Dt)/(pow(Dt, 3));
           D = -2/(pow(Dt, 3));
 
-          /*
-          //mostriamo le spezzate
-           for (Nodo n : nodi_visitati_line )
-           {
-           stroke(255,0,0);
-           strokeWeight(5);
-           if (contatore < nodi_visitati_line.size()-1) //se non è l'ultimo nodo
-           {
-           nodo_successivo = nodi_visitati_line.get(contatore+1); //prendo il nodo successivo
-           line(n.x, n.y, nodo_successivo.x, nodo_successivo.y);
-           } else
-           {
-           //println(n.label, "-> target");
-           stroke(0,0,255);
-           line(n.x, n.y, xot, yot);
-           }
-           
-           contatore++;
-           }
-           */
           if (!semline) //se semline è false entra nel ciclo
           {
-            println("TORNO A CASAAAAA");
+            //println("TORNO A CASA");
             pos_x_r = x_home;
             pos_y_r = y_home;
 
@@ -475,29 +453,6 @@ void draw()
             pos_x_r = new_pos[0];
             pos_y_r = new_pos[1];
 
-            //int contatore = 0;
-
-            //Disegno line tra i punti visitati
-            //println("-----------");
-            /*            for (Nodo n : nodi_visitati_line )
-             {
-             stroke(255);
-             strokeWeight(5);
-             if (contatore < nodi_visitati_line.size()-1) //se non è l'ultimo nodo
-             {
-             nodo_successivo = nodi_visitati_line.get(contatore+1); //prendo il nodo successivo
-             println(contatore, "<", nodi_visitati_line.size());
-             println(n.label, "->", nodo_successivo.label);
-             //line(n.x, n.y, nodo_successivo.x, nodo_successivo.y);
-             } else
-             {
-             //println(n.label, "-> target");
-             //line(n.x, n.y, xot, yot);
-             }
-             
-             contatore++;
-             }
-             */
             strokeWeight(2);
             //semline = true;
           }
@@ -529,103 +484,125 @@ void draw()
 
       contatore++;
     }
-    
+
     strokeWeight(3);
     //l = 0;
 
     //MOVIMENTO DA SOURCE VERSO TARGET
     if ( !(abs(pos_x_r - xot) < 1.5 && abs(pos_y_r - (yot)) < 1.5) )  // se non sono arrivato a source
     {
-      //for (int ll=0; ll<nodi_visitati_line.size()-2; ll++)
-      if (l < nodi_visitati_line.size()-2 )
+      if (nodi_visitati_line.size() > 1) //se c'è un altro nodo oltre source
       {
-        float[] new_pos = move(x1, y1, x2, y2);
-        // spostamento robot nel punto del target
-        pos_x_r = new_pos[0];
-        pos_y_r = new_pos[1];
-
-        float toll2 = 1; //variabile di tolleranza
-        if (abs(pos_x_r - x2) < toll2 && abs(pos_y_r - y2) < toll2 )
+        //for (int ll=0; ll<nodi_visitati_line.size()-2; ll++)
+        if (l < nodi_visitati_line.size()-2 )
         {
-          // coordinate nodo di partenza
-          nodo_corrente = nodi_visitati_line.get(l+1);
+          float[] new_pos = move(x1, y1, x2, y2);
+          // spostamento robot nel punto del target
+          pos_x_r = new_pos[0];
+          pos_y_r = new_pos[1];
+
+          float toll2 = 1; //variabile di tolleranza
+          if (abs(pos_x_r - x2) < toll2 && abs(pos_y_r - y2) < toll2 )
+          {
+            // coordinate nodo di partenza
+            nodo_corrente = nodi_visitati_line.get(l+1);
+            x1 = nodo_corrente.x;
+            y1 = nodo_corrente.y;
+            //coordinate nodo di destinazione
+            nodo_successivo = nodi_visitati_line.get(l+2);
+            x2 = nodo_successivo.x;
+            y2 = nodo_successivo.y;
+
+            t = 0;
+            ti = t;
+
+            A = (2*pow(ti, 3)+3*Dt*pow(ti, 2))/(pow(Dt, 3));
+            B = -(6*pow(ti, 2)+6*Dt*ti)/(pow(Dt, 3));
+            C = (6*ti+3*Dt)/(pow(Dt, 3));
+            D = -2/(pow(Dt, 3));
+
+            //nodo_corrente = nodo_successivo;
+
+            l++;
+          }
+        } else if ( l == nodi_visitati_line.size()-2 )
+        { //dal penultimo all'ultimo nodo
+          //println("dal penultimo all'ultimo nodo");
+          nodo_corrente = nodi_visitati_line.get(l);
           x1 = nodo_corrente.x;
           y1 = nodo_corrente.y;
-          //coordinate nodo di destinazione
-          nodo_successivo = nodi_visitati_line.get(l+2);
+          nodo_successivo = nodi_visitati_line.get( nodi_visitati_line.size()-1 );
           x2 = nodo_successivo.x;
           y2 = nodo_successivo.y;
 
-          t = 0;
-          ti = t;
+          float[] new_pos = move(x1, y1, x2, y2);
+          // spostamento robot nel punto del target
+          pos_x_r = new_pos[0];
+          pos_y_r = new_pos[1];
 
-          A = (2*pow(ti, 3)+3*Dt*pow(ti, 2))/(pow(Dt, 3));
-          B = -(6*pow(ti, 2)+6*Dt*ti)/(pow(Dt, 3));
-          C = (6*ti+3*Dt)/(pow(Dt, 3));
-          D = -2/(pow(Dt, 3));
+          float toll2 = 1; //variabile di tolleranza
+          if (abs(pos_x_r - x2) < toll2 && abs(pos_y_r - y2) < toll2 )
+          {
+            t = 0;
+            ti = t;
 
-          //nodo_corrente = nodo_successivo;
+            A = (2*pow(ti, 3)+3*Dt*pow(ti, 2))/(pow(Dt, 3));
+            B = -(6*pow(ti, 2)+6*Dt*ti)/(pow(Dt, 3));
+            C = (6*ti+3*Dt)/(pow(Dt, 3));
+            D = -2/(pow(Dt, 3));
 
-          l++;
+            l++;
+          }
         }
-      } 
-      else if ( l == nodi_visitati_line.size()-2 )
-      { //dal penultimo all'ultimo nodo
-        //println("dal penultimo all'ultimo nodo");
-        nodo_corrente = nodi_visitati_line.get(l);
-        x1 = nodo_corrente.x;
-        y1 = nodo_corrente.y;
-        nodo_successivo = nodi_visitati_line.get( nodi_visitati_line.size()-1 );
-        x2 = nodo_successivo.x;
-        y2 = nodo_successivo.y;
-
-        float[] new_pos = move(x1, y1, x2, y2);
-        // spostamento robot nel punto del target
-        pos_x_r = new_pos[0];
-        pos_y_r = new_pos[1];
-
-        float toll2 = 1; //variabile di tolleranza
-        if (abs(pos_x_r - x2) < toll2 && abs(pos_y_r - y2) < toll2 )
+        if ( l > nodi_visitati_line.size()-2 )
+          //da ultimo nodo a target
         {
-          t = 0;
-          ti = t;
+          nodo_corrente = nodo_successivo;
+          x1 = nodo_corrente.x;
+          y1 = nodo_corrente.y;
 
-          A = (2*pow(ti, 3)+3*Dt*pow(ti, 2))/(pow(Dt, 3));
-          B = -(6*pow(ti, 2)+6*Dt*ti)/(pow(Dt, 3));
-          C = (6*ti+3*Dt)/(pow(Dt, 3));
-          D = -2/(pow(Dt, 3));
-          
-           l++;
+          x2 = xot;
+          y2 = yot;
+
+          float[] new_pos = move(x1, y1, x2, y2);
+          // spostamento robot nel punto del target
+          pos_x_r = new_pos[0];
+          pos_y_r = new_pos[1];
+
+          float toll2 = 1; //variabile di tolleranza
+          if (abs(pos_x_r - x2) < toll2 && abs(pos_y_r - y2) < toll2 )
+          {
+            t = 0;
+            ti = t;
+
+            A = (2*pow(ti, 3)+3*Dt*pow(ti, 2))/(pow(Dt, 3));
+            B = -(6*pow(ti, 2)+6*Dt*ti)/(pow(Dt, 3));
+            C = (6*ti+3*Dt)/(pow(Dt, 3));
+            D = -2/(pow(Dt, 3));
+          }
         }
-       
       }
-      if ( l > nodi_visitati_line.size()-2 ) 
-      //da ultimo nodo a target
+      else // c'è solo source
       {
-        nodo_corrente = nodo_successivo;
-        x1 = nodo_corrente.x;
-        y1 = nodo_corrente.y;
-        
-        x2 = xot;
-        y2 = yot;
+          x2 = xot;
+          y2 = yot;
 
-        float[] new_pos = move(x1, y1, x2, y2);
-        // spostamento robot nel punto del target
-        pos_x_r = new_pos[0];
-        pos_y_r = new_pos[1];
+          float[] new_pos = move(x1, y1, x2, y2);
+          // spostamento robot nel punto del target
+          pos_x_r = new_pos[0];
+          pos_y_r = new_pos[1];
 
-        float toll2 = 1; //variabile di tolleranza
-        if (abs(pos_x_r - x2) < toll2 && abs(pos_y_r - y2) < toll2 )
-        {
-          t = 0;
-          ti = t;
+          float toll2 = 1; //variabile di tolleranza
+          if (abs(pos_x_r - x2) < toll2 && abs(pos_y_r - y2) < toll2 )
+          {
+            t = 0;
+            ti = t;
 
-          A = (2*pow(ti, 3)+3*Dt*pow(ti, 2))/(pow(Dt, 3));
-          B = -(6*pow(ti, 2)+6*Dt*ti)/(pow(Dt, 3));
-          C = (6*ti+3*Dt)/(pow(Dt, 3));
-          D = -2/(pow(Dt, 3));
-        }    
-
+            A = (2*pow(ti, 3)+3*Dt*pow(ti, 2))/(pow(Dt, 3));
+            B = -(6*pow(ti, 2)+6*Dt*ti)/(pow(Dt, 3));
+            C = (6*ti+3*Dt)/(pow(Dt, 3));
+            D = -2/(pow(Dt, 3));
+          }
       }
     }
   }

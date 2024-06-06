@@ -1,9 +1,3 @@
-void mouseDragged()
-{
-  angoloY = angoloYpartenza - PI*mouseX/float(1000); //DA MODIFICARE <===  !!!!!!
-  angoloX = angoloXpartenza - PI*mouseY/float(1000);
-}
-
 void keyPressed()
 {
   if (semsp) //CAMBIO FIGURA SPAZIO DI LAVORO
@@ -106,8 +100,8 @@ void keyPressed()
         lato1 = 50; //dimensioni di default
         lato2 = 70;
         // dimensioni ombra
-        if (nfiguraost == 4) k = 1.5*25;
-        else k = 30;
+        if (nfiguraost == 4) k = 1.5*25; //cerchio
+        else k = 50;
         semins = 1; //passo alla parte successiva
       }
     }
@@ -157,7 +151,7 @@ void keyPressed()
       if (key == '+') //aumento dimensione ombra ostacolo
       {
         k += kp;
-        if(k > 45) k = 45;
+        if(k > 60) k = 60;
       }
 
       if (key == '-') //diminuisco dimensione ombra ostacolo

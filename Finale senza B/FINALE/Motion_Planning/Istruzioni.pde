@@ -13,7 +13,6 @@
 
 //cose da fare
 /* 
- IF Cè SOLO UN NODO FAI LINE FINALE CON MOVIMENTO
 */
 
 
