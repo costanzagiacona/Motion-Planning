@@ -46,29 +46,29 @@ class Ostacolo
     ombra_k = k;
 
     //orientamento
-    translate(posx_o, posy_o, 5); //5 posiziona l'ostacolo sul pavimento
+    translate(posx_o, posy_o);
     rotateZ(alpha);
 
     //il target e gli ostacoli hanno colori diversi
-    if (target == false) fill(#A70202);
+    if (target == false) 
+    {
+      translate(0,0,5);  //5 posiziona l'ostacolo sul pavimento
+      fill(#A70202);
+      formaost(forma, lato1, lato2);
+    }
     else 
     {
-      fill(#2AB74C);
-      pushMatrix();
-      rotate(-PI/4);
-      //textSize(30);
-      //fill(0);
-      //text("target", -30, 50); //siamo nel sist rif target
-      popMatrix();
-      fill(#2AB74C);
+      translate(0,0,-1);
+      fill(#2AB74C, 40);
+      //creazione ostacolo
+      formaost(forma, lato1, lato2);
+
     }
     //noFill();
 
     //if ( nfigura == 4) l1 = l1/2;
 
-    //creazione ostacolo
-    formaost(forma, lato1, lato2);
-
+    
     //ombra
     pushMatrix();
     //noFill();

@@ -246,6 +246,15 @@ boolean sovrapposizione(float posx, float posy, float l1, float l2, float alpha,
         println("Sovrapposizione ostacolo ombra con ostacolo", o.id);
         return v1;
       }
+      //controllo sovrapposizione con SOURCE
+      x_1 = cos(alpha)*(x_home - posx) + sin(alpha)*(y_home - posy);
+      y_1 = cos(alpha)*(y_home - posy) + sin(alpha)*(posx - x_home);
+      if (abs(x_1) <= ((l1 + k_om)/2 + tol) && abs(y_1) <= ((l2 + k_om)/2 + tol)) // +k fa riferimento alla misura dell'ostacolo ombra
+      {
+        v1 = true; //c'è sovrapposizione
+        println("Sovrapposizione ostacolo ombra con SOURCE", o.id);
+        return v1;
+      }
     }
 
     /* controllo centro ostacolo */

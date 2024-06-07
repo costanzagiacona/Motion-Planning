@@ -72,6 +72,7 @@ boolean scan(float x, float y, float len_max, color colore)
   yi_0 = yi + y;
 
   detected_obs = is_in_obstacle(xi_0, yi_0);        // ID dell'ostacolo incontrato dal laser
+  //println("OSTACOLO TROVATO", detected_obs);
   //println("Il laser ha visto l'ostacolo ",detected_obs );
   fill(200, 0, 0);
 
@@ -83,6 +84,7 @@ boolean scan(float x, float y, float len_max, color colore)
   /* se il laser e l'oggetto si trovano lungo
    i lati dello stesso oggetto, same_obstacle è true quindi non viene utilizzato il laser poichè quell'oggetto è gia stato studiato*/
     same_obstacle = true; //robot e laser sono sullo stesso oggetto
+    //println("stesso ostacolo, same_obstacle ->", same_obstacle);
     //println("Il robot e laser sono sullo stesso oggetto");
    } 
    else 
@@ -95,7 +97,7 @@ boolean scan(float x, float y, float len_max, color colore)
   //same_obstacle = false;
 
   // laser
-  if (!same_obstacle)
+  if (!same_obstacle) //non sono sullo stesso ostacolo
   {
     stroke(180, 0, 0);
     circle(xi, yi, 5); //pallino finale laser
@@ -109,6 +111,7 @@ boolean scan(float x, float y, float len_max, color colore)
   if (detected_obs == id_target) //se ho trovato il target
    {
    popMatrix();
+   //println("TARGET TROVATO", detected_obs);
    vertex_found = true;
    return true;
    }
@@ -134,7 +137,7 @@ void detect_vert(float xi, float yi) //trova vertice ---------------------------
   float m_i2_i1, m_i1_i; //pendenza retta
   float threshold = 1.0/100;
 
-  /* condizioni di verticalità NON FUNZIONA FIXARE*/
+  /* condizioni di verticalità */
 
   if (x_prev[1] == x_prev[0]) 
   {

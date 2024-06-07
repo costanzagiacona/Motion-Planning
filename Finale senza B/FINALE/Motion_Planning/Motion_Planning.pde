@@ -87,7 +87,7 @@ float r_r = 20;  //stima del diametro del robot rappresentato come un cerchio
 float xot = -180;              //    <=====
 float yot = 250;              //     <=====
 //dimensione lato target
-float r_target = 20;//se un ostacolo è il target questo flag è true
+float r_target = 25;//se un ostacolo è il target questo flag è true
 boolean is_t = true; //nella classe ostacolo
 //identificatore
 int id_target = 0; 
@@ -208,12 +208,14 @@ void draw()
 
   //posizionamento sulla superficie del tavolo
   translate(0, 0, 10);
-  drawAxes(40);
+  //drawAxes(40);
 
   /*DISEGNO ROBOT*/
   pushMatrix();
   translate(pos_x_r, pos_y_r); //SR robot
   //disegno robot
+  strokeWeight(3);
+  fill(255, 255, 55); //giallo
   formaost(4, r_r, r_r); //funzione in 'Forma'
   popMatrix();
 
@@ -221,7 +223,7 @@ void draw()
   //creo il target come un ostacolo ma pongo l'ultima variabile a true per
   //far sapere al programma che è il punto di arrivo
   pushMatrix();
-  Ostacolo_creazione(id_target, xot, yot, r_target, r_target, PI/4, 5, true, 25); //funzione in 'Ostacoli'
+  Ostacolo_creazione(id_target, xot, yot, r_target, r_target, PI/4, 4, true, 0); //funzione in 'Ostacoli'
   popMatrix();
 
 
@@ -441,6 +443,8 @@ void draw()
               x2 = nodo_successivo.x;
               y2 = nodo_successivo.y;
             }
+            
+            delay(1000); // 1 secondo
           }
         } else
         {
@@ -522,6 +526,8 @@ void draw()
             D = -2/(pow(Dt, 3));
 
             //nodo_corrente = nodo_successivo;
+            
+            delay(1000); // 1 secondo
 
             l++;
           }
@@ -550,7 +556,8 @@ void draw()
             B = -(6*pow(ti, 2)+6*Dt*ti)/(pow(Dt, 3));
             C = (6*ti+3*Dt)/(pow(Dt, 3));
             D = -2/(pow(Dt, 3));
-
+            
+            delay(1000); // 1 secondo
             l++;
           }
         }
@@ -579,6 +586,8 @@ void draw()
             B = -(6*pow(ti, 2)+6*Dt*ti)/(pow(Dt, 3));
             C = (6*ti+3*Dt)/(pow(Dt, 3));
             D = -2/(pow(Dt, 3));
+            
+            delay(1000); // 1 secondo
           }
         }
       }
