@@ -6,7 +6,7 @@ class Albero
   Albero(Nodo r) 
   {
     radice = r;
-    nodo.add(radice); //inizializzato in MP 5
+    nodo.add(radice); // nodo inizializzato in MP 109
   }
  
  // aggiunge il nodo all'albero
@@ -17,6 +17,7 @@ class Albero
       nodo.add(nodo1);
     }
   }
+  
  
  // rimuove il nodo dall'albero
   void rimuovoNodo(int index)

@@ -23,6 +23,8 @@ class Nodo
     id = _id;
   }
 
+// ----------------------
+
   //verifica se nodo esiste in una certa posizione
   public boolean equals(Object obj)
   {
@@ -41,7 +43,7 @@ class Nodo
  // links.add(n);
   }
 
-  //restituisce i nodi in links  --------------------------------------------------- da vedere questa e quando usiamo le altre
+  //restituisce i nodi in links  
   ArrayList<Nodo> getIncomingLinks() {
     return links;
   }

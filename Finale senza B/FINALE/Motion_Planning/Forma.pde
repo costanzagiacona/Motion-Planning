@@ -75,7 +75,7 @@ void formasp(int nfigura) //input -> numero figura
   popMatrix();
 }
 
-
+//calcolo posizione vertici in base alla figura
 void vertici_sp(int nfigura, float l1, float l2) //SR0
 {
   float h=0;

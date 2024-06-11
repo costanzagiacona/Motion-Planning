@@ -142,8 +142,8 @@ float[] intersectionWall_pol(float x, float y, float cx, float cy, float len_x, 
 
 /*
       v1
- /    \
- /      \
+    /    \
+   /      \
  v3  ----  v2
  */
 
@@ -260,8 +260,6 @@ float[] intersectionObstacles(float x, float y, float len_x, float len_y) //x,y 
     if (o.forma == 5)
     {
       //println("COLLISIONI SCAN -> intersezione ostacolo TRIANGOLO", closest_collision[0]);
-
-      /*qui il confronto con il min non serve perchè il robot sta dentro al tavolo, non vedrà mai due bordi contemporaneamente */
 
       //è sufficiente ci sia una sola collisione
       dx = intersectionLine(o.vert_SR0_om[0] - x, o.vert_SR0_om[1] - y, o.vert_SR0_om[2] - x, o.vert_SR0_om[3] - y, 0, 0, len_x, len_y); // v1-v2

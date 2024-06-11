@@ -6,11 +6,11 @@ float y = 0;
 //orientamento ostacolo non ancora instanziato
 float orientamento = 0; //radianti
 //variabile che indica quale figura hai scelto
-int nfiguraost = 1; //figura ostacolo
+int nfiguraost = 1; //figura ostacolo di default
 //vettore di ostacoli istanziati
 ArrayList<Ostacolo> ostacolo_ArrayList= new ArrayList<Ostacolo>();
 //numero massimo di ostacoli
-int MAX_OST = 6;
+int MAX_OST = 6; //non più usato 
 //sovrapposizioni ostacolo con ostacolo e\o ostacolo con tavolo
 boolean sovrapposizioneost = false;
 //incremento dimensione lati
@@ -24,11 +24,11 @@ float k = 50; //incremento lato per ostacolo ombra
 float xsp = 0;
 float ysp = 0;
 //variabile che indica quale figura hai scelto
-int nfigurasp = 1; //figura spazio di lavoro
+int nfigurasp = 1; //figura spazio di lavoro default
 //dimensioni iniziali
 float lato1 = 50, lato2 = 70;
 //vettore dimensione lati figure dopo che è stato incrementato
-//dimensione 6 perchè sono 6 figure e vogliamo salvare ogni possibie
+//dimensione 6 perchè sono 6 figure e vogliamo salvare ogni possibile
 // modifica per migliorare la vista all'utente
 float[] posxsp = new float[6]; //lunghezza lato sp lungo x
 float[] posysp = new float[6]; //lunghezza lato sp lungo y
@@ -49,7 +49,7 @@ float kp = 5; //incremento lati figure tramite interazioni -> incremento += kp;
 //per modificare la camera
 float eyeX = 0;
 float eyeY = 0;
-// parametri visualizzazione // ------------------------------------------------------------------> cercare nel codice e commentare bene
+// parametri visualizzazione 
 float angoloX = 0;
 float angoloY = 0;
 float angoloXpartenza = 0;
@@ -57,7 +57,7 @@ float angoloYpartenza = 0;
 
 
 // ---------- SEMAFORI ----------
-// SP
+// SPAZIO LAVORO
 //semaforo modifica spazio di lavoro
 //se true puoi modificare dimensione e figura, dopo aver premuto ENTER diventa false
 boolean semsp = true;
@@ -120,7 +120,7 @@ float A, B, C, D;      // coefficienti polinomio a minima energia
 boolean print = true; //disegno il grafo sul tavolo
 boolean label_print = true; //mostro i numeri dei nodi
 
-//lista di nodi visitati, ordinata,  per creare curva di BEZIER
+//lista di nodi visitati, ordinata,  per creare spezzata finale
 //ArrayList<Nodo> nodi_visitati_line;
 ArrayList<Nodo> nodi_visitati_line = new ArrayList<Nodo>();
 
@@ -148,7 +148,7 @@ float Dt = 30;  //NON è un differenziale: tf = ti + Dt
 float ti;
 
 //---------- CONTATORI ----------
-int i = 0;
+int i = 0; //contatore generico
 int j = 0; //posizione nel mio percorso tra nodo partenza e nodo destinazione
 int numero_ostacoli = 3; //numero corrente di ostacoli (conta da 0)
 int id_ost = 2;
@@ -156,7 +156,7 @@ int bezier = 0;
 int exploring = 0;
 int num_nodi = 0;
 int contatore = 0; //numero nodi visitati in nodi_visitati_line
-int l = 0;
+int l = 0; //usato per disegnare spezzata finale
 
 //---------- PROGRAMMA ----------
 void setup()
@@ -175,7 +175,7 @@ void setup()
 
   root = first_root;
   root.visitato= true;
-  //il percorso di Bezier deve partire dalla radice
+  //il percorso della spezzata finale deve partire dalla radice
   nodi_visitati_line.add(first_root);
 }
 
@@ -195,7 +195,7 @@ void draw()
   rotateX(PI/4);
   rotateZ(PI/10);
 
-  //posso spostare la visuale con il cursore
+  //posso spostare la visuale 
   rotateY(-angoloY);
   rotateX(angoloX);
 
@@ -204,7 +204,7 @@ void draw()
 
 
   /*SPAZIO DI LAVORO*/
-  formasp(nfigurasp);
+  formasp(nfigurasp); // funzione in 'Forma'
 
   //posizionamento sulla superficie del tavolo
   translate(0, 0, 10);
@@ -221,7 +221,7 @@ void draw()
 
   //*TARGET*/
   //creo il target come un ostacolo ma pongo l'ultima variabile a true per
-  //far sapere al programma che è il punto di arrivo
+  //far sapere al programma che è il target, ovvero il punto di arrivo
   pushMatrix();
   Ostacolo_creazione(id_target, xot, yot, r_target, r_target, PI/4, 4, true, 0); //funzione in 'Ostacoli'
   popMatrix();
@@ -229,10 +229,10 @@ void draw()
 
   /*CREAZIONE OSTACOLI DI DEFAULT*/
   //Ostacolo_creazione(0, -200, 10, lato1, lato2, PI/4, 1); //quadrato
-  Ostacolo_creazione(1, 200, 10, lato1, lato2, PI/4, 1, false, 25); //quadrato ------
+  Ostacolo_creazione(1, 200, 10, lato1, lato2, PI/4, 1, false, 25); //quadrato 
   //Ostacolo_creazione(2, 200, 100, lato1+50, lato2, PI/4, 4); //cerchio
   //Ostacolo_creazione(2, -150, 250, lato1+30, lato2+30, -PI/3, 6); //trapezio
-  Ostacolo_creazione(2, 170, 230, lato1+30, lato2+30, -PI/3, 6, false, 25); //trapezio ----
+  Ostacolo_creazione(2, 170, 230, lato1+30, lato2+30, -PI/3, 6, false, 25); //trapezio 
 
 
   /*CREAZIONE OSTACOLI DA PARTE DELL'UTENTE*/
@@ -245,14 +245,14 @@ void draw()
     if (nfiguraost == 4) //cerchio
     {
       formaost(nfiguraost, (lato1/3)+(incrost/2), (lato1/3)+(incrost/2)); //funzione in 'Forma'
-      fill(#C6C4C0); //grigio
-      translate(0, 0, -10);
+      fill(#C6C4C0); //grigio ombra
+      translate(0, 0, -10); //diverso da altri ostacoli perchè approssimazione
       formaost(nfiguraost, (lato1/3)+(incrost/2)+1.5*k, (lato1/3)+(incrost/2)+1.5*k); //ombra
       popMatrix();
     } else
     {
       formaost(nfiguraost, lato1+incrost, lato2+incrost);
-      fill(#C6C4C0); //grigio
+      fill(#C6C4C0); //grigio ombra
       translate(0, 0, -10);
       formaost(nfiguraost, lato1+incrost+k, lato2+incrost+k); //ombra
       popMatrix();
@@ -306,7 +306,7 @@ void draw()
 
         j = 0; //parto dal nodo 0 del mio percorso per arrivare al target
         exploring = exploring_node;
-        exploring_node = trova_nodo(exploring);
+        exploring_node = trova_nodo(exploring); //funzione in 'Grafo'
         nodo_successivo = nodo.get(exploring_node); //prendo l'ultimo nodo appena inserito
         nodo_successivo.visitato = true; //stiamo visitando il nodo
 
@@ -384,7 +384,6 @@ void draw()
 
           float toll2 = 1; //variabile di tolleranza
           //x2 e y2 coordinate nodo destinazione, quello in cui il robot si sta spostando
-          //potrebbe essere che per arrivare al mio nodo destinazione ci sia un percorso composto da più nodi
           //se il robot è arrivato a destinazione (nel nodo destinazione), anche se
           //non si sono sovrapposti precisamente, proseguo con il prossimo nodo o se sono arrivata mi fermo e riprendo lo scan
           if (abs(pos_x_r - x2) < toll2 && abs(pos_y_r - y2) < toll2 )
@@ -428,7 +427,7 @@ void draw()
 
           if (!semline) //se semline è false entra nel ciclo
           {
-            //println("TORNO A CASA");
+            //entra solamente la prima volta in modo che riposizioni il robot alla partenza e percorra la spezzata fino al target
             pos_x_r = x_home;
             pos_y_r = y_home;
 
@@ -437,7 +436,7 @@ void draw()
             nodo_corrente = nodi_visitati_line.get(0); //root - mi riposiziono a casa
             x1 = nodo_corrente.x;
             y1 = nodo_corrente.y;
-            if (nodi_visitati_line.size()-1 > 1)
+            if (nodi_visitati_line.size()-1 > 1) //ho altro nodo oltre source
             {
               nodo_successivo = nodi_visitati_line.get(1);
               x2 = nodo_successivo.x;
@@ -448,7 +447,7 @@ void draw()
           }
         } else
         {
-          if (!semline)
+          if (!semline) //non sono ancora arrivato sopra target
           {
             print_tree();
             // x2, y2 sono le coordinate del target
@@ -469,7 +468,7 @@ void draw()
   {
     contatore = 0;
     //println("nodo", contatore, "->",  nodi_visitati_line.get(contatore).label );
-    //DISEGNO SPEZZATE
+    //* DISEGNO SPEZZATE *//
     for (Nodo n : nodi_visitati_line )
     {
 
@@ -492,16 +491,15 @@ void draw()
     strokeWeight(3);
     //l = 0;
 
-    //MOVIMENTO DA SOURCE VERSO TARGET
-    if ( !(abs(pos_x_r - xot) < 1.5 && abs(pos_y_r - (yot)) < 1.5) )  // se non sono arrivato a source
+    //* MOVIMENTO DA SOURCE VERSO TARGET *//
+    if ( !(abs(pos_x_r - xot) < 1.5 && abs(pos_y_r - (yot)) < 1.5) )  // se non sono arrivato a target
     {
       if (nodi_visitati_line.size() > 1) //se c'è un altro nodo oltre source
       {
-        //for (int ll=0; ll<nodi_visitati_line.size()-2; ll++)
-        if (l < nodi_visitati_line.size()-2 )
-        {
+        if (l < nodi_visitati_line.size()-2 ) //-2 perchè somma 2 sotto 
+        { // prendo quello di arrivo e quello successivo ancora
           float[] new_pos = move(x1, y1, x2, y2);
-          // spostamento robot nel punto del target
+          // spostamento robot 
           pos_x_r = new_pos[0];
           pos_y_r = new_pos[1];
 
@@ -509,7 +507,7 @@ void draw()
           if (abs(pos_x_r - x2) < toll2 && abs(pos_y_r - y2) < toll2 )
           {
             // coordinate nodo di partenza
-            nodo_corrente = nodi_visitati_line.get(l+1);
+            nodo_corrente = nodi_visitati_line.get(l+1); 
             x1 = nodo_corrente.x;
             y1 = nodo_corrente.y;
             //coordinate nodo di destinazione

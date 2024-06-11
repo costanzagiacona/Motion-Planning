@@ -138,6 +138,7 @@ void Ostacolo_creazione(int n, float posx_o, float posy_o, float l1, float l2, f
  
  */
 
+//calcolo vertici
 float[] vertici_ost_om(int nfigura, float l1, float l2, float posx, float posy, float alpha, float k) //SR0
 {
   float h=0;

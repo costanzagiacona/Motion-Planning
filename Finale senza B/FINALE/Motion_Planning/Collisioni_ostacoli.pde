@@ -56,8 +56,7 @@ boolean sovrapposizione(float posx, float posy, float l1, float l2, float alpha,
   float k_om = k/2;
   boolean v1 = false; //non ci sono sovrapposizioni
 
-  //verifica se CENTRO ostacolo è all'interno dello spazio di lavoro
-  float h = 0;
+  float h = 0; //verifica se CENTRO ostacolo è all'interno dello spazio di lavoro
   float[] dx = new float[3];
   float[] sx = new float[3];
   float[] up = new float[3];
@@ -246,6 +245,7 @@ boolean sovrapposizione(float posx, float posy, float l1, float l2, float alpha,
         println("Sovrapposizione ostacolo ombra con ostacolo", o.id);
         return v1;
       }
+      
       //controllo sovrapposizione con SOURCE
       x_1 = cos(alpha)*(x_home - posx) + sin(alpha)*(y_home - posy);
       y_1 = cos(alpha)*(y_home - posy) + sin(alpha)*(posx - x_home);

@@ -91,7 +91,7 @@ void keyPressed()
     {
       if (key == 'o')
       {
-        //inizializzo variabili
+        //inizializzo variabili 
         x = 0; //posizione ostacolo
         y = 0;
         orientamento = 0;

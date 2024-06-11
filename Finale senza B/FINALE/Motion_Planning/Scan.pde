@@ -15,7 +15,7 @@ boolean scan(float x, float y, float len_max, color colore)
   len_y = sin(alpha)*len_max;
 
 
-  stroke(colore); // <-------------------- NON USATO
+  //stroke(colore); // <-------------------- NON USATO
   stroke(#6DCEF0);
 
   fill(255);
