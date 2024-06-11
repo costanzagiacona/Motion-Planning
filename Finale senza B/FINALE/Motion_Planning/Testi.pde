@@ -25,10 +25,11 @@ void infoi()
   
   textAlign(BOTTOM, LEFT);
   fill(0);
-  text("Premi 'g' per ruotare il tavolo verso l'alto", 0, 700);
-  text("Premi 'G' per ruotare il tavolo verso il basso", 0, 730);
+  text("Premi 'u' per ruotare il tavolo verso l'alto", 0, 700);
+  text("Premi 'n' per ruotare il tavolo verso il basso", 0, 730);
   text("Premi 'h' per ruotare il tavolo verso sinistra", 0, 760);
-  text("Premi 'H' per ruotare il tavolo verso destra", 0, 790);
+  text("Premi 'j' per ruotare il tavolo verso destra", 0, 790);
+  text("Premi 'c' per tornare alla configurazione iniziale", 0, 820);
 
   if (semsp == true)
   {
@@ -45,6 +46,7 @@ void infoi()
     text("5) triangolo ", 0, 180);
     text("6) trapezio ", 0, 210);
     text("Premi ENTER per confermare", 0, 250);
+    text("Premi + e - per modificare la dimensione", 0, 280);
   }
 
   if (semost == true)

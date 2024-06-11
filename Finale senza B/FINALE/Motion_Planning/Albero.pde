@@ -18,7 +18,6 @@ class Albero
     }
   }
   
- 
  // rimuove il nodo dall'albero
   void rimuovoNodo(int index)
   {

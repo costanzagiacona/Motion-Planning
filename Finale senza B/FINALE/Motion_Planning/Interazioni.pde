@@ -25,19 +25,26 @@ void keyPressed()
   if (keyCode == 'Y') eyeY += 25;
   if (keyCode == 'y') eyeY -= 25;
 
-  // visual home lungo Y
+  // visuale lungo Y
   if (key == 'h') {
     angoloY += 0.05;
   }
-  if (key == 'H') {
+  if (key == 'j') {
     angoloY -= 0.05;
   }
-  // visual home lungo X
-  if (key == 'g') {
+  // visuale lungo X
+  if (key == 'u') {
     angoloX += 0.05;
   }
-  if (key == 'G') {
+  if (key == 'n') {
     angoloX -= 0.05;
+  }
+  // visual home
+  if (key == 'c') {
+    angoloX = 0;
+    angoloY = 0;
+    angoloXpartenza = 0;
+    angoloYpartenza = 0;
   }
 
   // modifica velocità scanner
@@ -73,13 +80,13 @@ void keyPressed()
     if (key == '+') //aumento dimensione spazio lavoro
     {
       incrsp += kp;
-      if (incrsp > 100) incrsp=100;
+      if (incrsp > 100) incrsp = 100;
     }
 
     if (key == '-') //diminuisco dimensione spazio lavoro
     {
       incrsp -= kp;
-      if (incrsp < kp) incrsp = kp;
+      if (incrsp < kp) incrsp = 0;
     }
   }
 
@@ -111,10 +118,10 @@ void keyPressed()
     {
       //rilevo sovrapposizione con altri ostacoli o tavolo
       if (nfiguraost == 4) {
-        sovrapposizioneost = sovrapposizione(x, y, (lato1/3)+(incrost/2), (lato1/3)+(incrost/2), orientamento, 1.5*k);
+        sovrapposizioneost = sovrapposizione(x, y, (lato1/3)+(incrost/2), (lato1/3)+(incrost/2), orientamento);
       }//funzione in 'Collisioni ostacoli'
       else {
-        sovrapposizioneost = sovrapposizione(x, y, lato1+incrost, lato2+incrost, orientamento, k);
+        sovrapposizioneost = sovrapposizione(x, y, lato1+incrost, lato2+incrost, orientamento);
       } //funzione in 'Collisioni ostacoli'
 
       if (key == '+') //aumento dimensione ostacolo
@@ -126,7 +133,7 @@ void keyPressed()
       if (key == '-') //diminuisco dimensione ostacolo
       {
         incrost -= kp;
-        if (incrost < kp) incrost = kp;
+        if (incrost < kp) incrost = 0;
       }
 
       //orientamento ostacoli
@@ -157,7 +164,7 @@ void keyPressed()
       if (key == '-') //diminuisco dimensione ombra ostacolo
       {
         k -= kp;
-        if (k < r_r/2) k = r_r/2; //non può essere più piccolo di metà del robot
+        if (k < 2*r_r) k = 2*r_r; //non può essere più piccolo del robot
       }
 
       //modifica POSIZIONE
@@ -186,9 +193,9 @@ void keyPressed()
 
       //sovrapposizioneost = sovrapposizione(x, y, lato1+incrost, lato2+incrost, orientamento);
       if (nfiguraost == 4) {
-        sovrapposizioneost = sovrapposizione(x, y, (lato1/3)+(incrost/2), (lato1/3)+(incrost/2), orientamento, 1.5*k);
+        sovrapposizioneost = sovrapposizione(x, y, (lato1/3)+(incrost/2), (lato1/3)+(incrost/2), orientamento);
       } else {
-        sovrapposizioneost = sovrapposizione(x, y, lato1+incrost, lato2+incrost, orientamento, k);
+        sovrapposizioneost = sovrapposizione(x, y, lato1+incrost, lato2+incrost, orientamento);
       } //funzione in 'Collisioni ostacoli'
 
       if (keyCode == TAB)

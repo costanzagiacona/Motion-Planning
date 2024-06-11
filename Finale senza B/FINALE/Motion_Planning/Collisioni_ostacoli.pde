@@ -8,7 +8,7 @@ int is_in_obstacle(float x_0, float y_0) //input - coordinate punto rispetto sis
   float x_1, y_1, beta, px, py, temp1, temp2;
 
   //valore di tolleranza numerica (perché sin e cos sono approssimati)
-  float tol = 1.5+4;
+  float tol = 5.5;
   //float tol = 1.0;
 
   for (Ostacolo o : ostacolo_ArrayList) //per ogni ostacolo nella lista
@@ -34,7 +34,6 @@ int is_in_obstacle(float x_0, float y_0) //input - coordinate punto rispetto sis
       temp2 = o.lato2;
     }
 
-
     //controlliamo se il punto si trova all'interno dell'ostacolo
     //if (abs(x_1) <= ((o.lato1)/2 + tol) && abs(y_1) <= ((o.lato2)/2 + tol))
     if (abs(x_1) <= ((temp1)/2 + tol) && abs(y_1) <= ((temp2)/2 + tol))
@@ -48,9 +47,8 @@ int is_in_obstacle(float x_0, float y_0) //input - coordinate punto rispetto sis
 
 
 //funzione che verifica se due ostacoli sono sovrapposti o se un ostacolo è fuori dallo spazio operativo
-boolean sovrapposizione(float posx, float posy, float l1, float l2, float alpha, float k_o) //x ostacolo, y ostacolo, lati ostacolo, orientamento ostacolo (nel SR ostacolo)
+boolean sovrapposizione(float posx, float posy, float l1, float l2, float alpha) //x ostacolo, y ostacolo, lati ostacolo, orientamento ostacolo (nel SR ostacolo)
 {
-
   float[] vert_ghost_obs;  // coordinate vertici ostacolo da istanziare
   //float k_om = k_o/2;   // valore dell'ombra
   float k_om = k/2;
@@ -81,8 +79,6 @@ boolean sovrapposizione(float posx, float posy, float l1, float l2, float alpha,
     vert_ghost_obs = vertici_ost_om(nfiguraost, l1+k_om, l2+k_om, x, y, alpha, k);
   }
 
-
-
   //----------------- SOVRAPPOSIZIONE CON TAVOLO----------------------
   /*
    Per vedere se l'oggetto esce dal tavolo si fa uno studio diviso in due parti:
@@ -97,7 +93,7 @@ boolean sovrapposizione(float posx, float posy, float l1, float l2, float alpha,
   case 2: //rettangolo
     if (x >= posxsp[nfigurasp-1]/2 || x <= - posxsp[nfigurasp-1]/2 )
     {
-      //println(" TAVOLO oggetto uscito x");
+      println(" TAVOLO oggetto uscito x");
       v1 = true;
       return v1;
     }
@@ -138,7 +134,7 @@ boolean sovrapposizione(float posx, float posy, float l1, float l2, float alpha,
       v1 = true;
       return v1;
     }
-
+    
     break;
 
   case 4: //cerchio

@@ -14,6 +14,3 @@
 //cose da fare
 /* 
 */
-
-
-//TESTI da vedere con fullscreen

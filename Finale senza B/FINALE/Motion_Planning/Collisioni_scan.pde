@@ -2,7 +2,7 @@
 
 //Intersezione tra due rette
 float[] intersectionLine(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4)
-{ //retta 1 (x1,y1)-----(x2,,y2) & retta 2 (x3,y3) ----- (x4,y4)
+{ //retta 1 (x1,y1)-----(x2,y2) & retta 2 (x3,y3) ----- (x4,y4)
 
   //parametrizzazione delle rette rispetto ai parametri t e u
 
@@ -21,11 +21,11 @@ float[] intersectionLine(float x1, float y1, float x2, float y2, float x3, float
    stessa cosa per u
    
    se entrambi compresi tra 0 e 1 c'è una intersezione, ovvero c'è una collisione:
-   u >= 0.05 significa che l'intersezione non può stare nell'origine della seconda retta
+   u >= 0.01 significa che l'intersezione non può stare nell'origine della seconda retta
    (che per come passiamo i parametri noi è il raggio laser)
    ---------------------------------------------------------------------------------------*/
 
-  if (t >=0 && t <= 1 && u >= 0.01 && u <= 1)
+  if (t >= 0 && t <= 1 && u >= 0.01 && u <= 1)
   {
     ret[0] = 1;
     ret[1] = x1 + (t * (x2-x1));
@@ -96,7 +96,7 @@ float[] intersectionWall_qr(float x, float y, float cx, float cy, float len_x, f
  v3 ----- v4
  */
 
-//intersezione con il tavolo POLIGONI
+//intersezione con il tavolo POLIGONI (rombo e trapezio)
 float[] intersectionWall_pol(float x, float y, float cx, float cy, float len_x, float len_y)
 {
   float[] dx = new float[3];
@@ -221,18 +221,17 @@ float[] intersectionWall_c(float x, float y, float cx, float cy, float len_x, fl
     }
   }
 
-
   return wall_collision;
 }
 
 /*--------------------------------- CONTROLLO INTERSEZIONE OSTACOLI --------------------------*/
 
-/*il seguente blocco di controllo verifica se c'è un'intersezione di ritorno dalle intersectionLine con i contorni degli ostacoli.
+/*il seguente blocco di controllo verifica se c'è un'intersezione del laser con i contorni degli ostacoli.
  in particolare se la 0esima posizione sugli array è pari a 1, significa che c'è collisione, e le variabili globali intersectionX e intersection Y
- verranno impostate pari ai float in posizione 1 e 2. poi, tale valore sarà confrontato con i ritorni dalle collisioni successive, per tenere
+ verranno impostate pari ai float in posizione 1 e 2. Poi, tale valore sarà confrontato con i ritorni dalle collisioni successive, per tenere
  in memoria solamente la collisione con il bordo più vicino al robot */
 
-float[] intersectionObstacles(float x, float y, float len_x, float len_y) //x,y posizione robot mentre lenx,leny sono le dimensioni del robot
+float[] intersectionObstacles(float x, float y, float len_x, float len_y) //x,y posizione robot mentre lenx,leny sono le dimensioni del laser
 {
   float[] dx = new float[3];
   float[] sx = new float[3];
@@ -249,7 +248,6 @@ float[] intersectionObstacles(float x, float y, float len_x, float len_y) //x,y 
 
   for (int i=0; i< ostacolo_ArrayList.size(); i++) //per ogni ostacolo
   {
-
     Ostacolo o = ostacolo_ArrayList.get(i);
 
     /* l'uso di -x e -y serve a trasformare le coordinate assolute dell'ostacolo in coordinate relative rispetto
@@ -315,22 +313,11 @@ float[] intersectionObstacles(float x, float y, float len_x, float len_y) //x,y 
           }
         }
       }
-      /*
-      intersection = intersectionLine(o.vert_SR0_om[8]-x, o.vert_SR0_om[9]-y, o.vert_SR0_om[10]-x, o.vert_SR0_om[11]-y, 0, 0, len_x, len_y);
-       if (intersection[0] == 1)
-       {
-       if (min_distance(intersection[1], intersection[2], closest_collision[1], closest_collision[2])) {
-       closest_collision[0] = 1;
-       closest_collision[1] = intersection[1]; //se c'è ostacolo il raggio del laser diminuisce e non oltrepassa l'ostacolo
-       closest_collision[2] = intersection[2];
-       }
-       }*/
     }
     /*------ ROMBO -------*/
     else if (o.forma == 3)
     {
       //println("COLLISIONI SCAN -> intersezione ostacolo POLIGONI", closest_collision[0]);
-
       sx = intersectionLine(o.vert_SR0_om[0] -x, o.vert_SR0_om[1] -y, o.vert_SR0_om[6] -x, o.vert_SR0_om[7] - y, 0, 0, len_x, len_y);
       if (sx[0]==1) {
         //println("intersezione ostacolo vertice sx");
@@ -375,7 +362,6 @@ float[] intersectionObstacles(float x, float y, float len_x, float len_y) //x,y 
     /*------ ALTRI OSTACOLI -------*/
     else {
       //println("COLLISIONI SCAN -> intersezione ostacolo POLIGONI", closest_collision[0]);
-
       sx = intersectionLine(o.vert_SR0_om[0] -x, o.vert_SR0_om[1] -y, o.vert_SR0_om[4] -x, o.vert_SR0_om[5] - y, 0, 0, len_x, len_y);
       if (sx[0]==1) {
         //println("intersezione ostacolo vertice sx");

@@ -10,7 +10,7 @@ int nfiguraost = 1; //figura ostacolo di default
 //vettore di ostacoli istanziati
 ArrayList<Ostacolo> ostacolo_ArrayList= new ArrayList<Ostacolo>();
 //numero massimo di ostacoli
-int MAX_OST = 6; //non più usato 
+int MAX_OST = 6; //non più usato
 //sovrapposizioni ostacolo con ostacolo e\o ostacolo con tavolo
 boolean sovrapposizioneost = false;
 //incremento dimensione lati
@@ -49,7 +49,7 @@ float kp = 5; //incremento lati figure tramite interazioni -> incremento += kp;
 //per modificare la camera
 float eyeX = 0;
 float eyeY = 0;
-// parametri visualizzazione 
+// parametri visualizzazione
 float angoloX = 0;
 float angoloY = 0;
 float angoloXpartenza = 0;
@@ -76,21 +76,22 @@ boolean semline = false;
 
 //---------- ROBOT ----------
 //posizione
-float pos_x_r = 180;             //    <====
-float pos_y_r = -180;           //    <====
+float pos_x_r = 180;
+float pos_y_r = -180;
 //raggio robot
 float r_r = 20;  //stima del diametro del robot rappresentato come un cerchio
 
 
 //---------- TARGET ----------
 //posizione
-float xot = -180;              //    <=====
-float yot = 250;              //     <=====
+float xot = -180;
+float yot = 250;
 //dimensione lato target
-float r_target = 25;//se un ostacolo è il target questo flag è true
+float r_target = 25;
+//se un ostacolo è il target questo flag è true
 boolean is_t = true; //nella classe ostacolo
-//identificatore
-int id_target = 0; 
+//identificatore target
+int id_target = 0;
 
 
 //---------- ALBERO ----------
@@ -98,7 +99,7 @@ int id_target = 0;
 //l'albero parte dalla posizione iniziale del robot
 float x_home = pos_x_r;
 float y_home = pos_y_r;
-//instanzio l'albero
+//istanzio l'albero
 Albero albero;
 
 
@@ -117,20 +118,16 @@ boolean arrived = false; //se trovo il target sono arrivato
 
 float x1, x2, y1, y2; //coordinate ipotetico nodo1 e ipotetico nodo2
 float A, B, C, D;      // coefficienti polinomio a minima energia
-boolean print = true; //disegno il grafo sul tavolo
-boolean label_print = true; //mostro i numeri dei nodi
 
 //lista di nodi visitati, ordinata,  per creare spezzata finale
-//ArrayList<Nodo> nodi_visitati_line;
 ArrayList<Nodo> nodi_visitati_line = new ArrayList<Nodo>();
 
 
 //---------- SCANNER ----------
 boolean s = false;   //true se ho trovato il target, modificata in scan
-//int num_iter = 700; //per far girare lo scanner
 int num_iter = 500;
 float start_alpha = (2*PI)/300; //angolo iniziale con cui si sposta lo scanner
-float alpha = start_alpha;//angolo con cui si sposta lo scanner
+float alpha = start_alpha;  //angolo con cui si sposta lo scanner
 float[] x_prev = {0, 0};   //coordinate dei punti i-1,i-2 RISPETTO A SR0
 float[] y_prev = {0, 0};
 float x_vert, y_vert; //coordinate vertice trovato, modificato in scan
@@ -152,7 +149,6 @@ int i = 0; //contatore generico
 int j = 0; //posizione nel mio percorso tra nodo partenza e nodo destinazione
 int numero_ostacoli = 3; //numero corrente di ostacoli (conta da 0)
 int id_ost = 2;
-int bezier = 0;
 int exploring = 0;
 int num_nodi = 0;
 int contatore = 0; //numero nodi visitati in nodi_visitati_line
@@ -170,11 +166,11 @@ void setup()
   Nodo first_root = new Nodo("source", x_home, y_home, 0); //creo il nodo radice nella posizione iniziale del robot
   target = new Nodo("target", xot, yot, 560); //creo nodo target
   nodo = new ArrayList<Nodo>(); //creo lista nodi
-  albero = new Albero(first_root); //instanzio albero
+  albero = new Albero(first_root); //istanzio albero
   nodo_corrente = first_root; //mi posiziono sulla radice
 
   root = first_root;
-  root.visitato= true;
+  root.visitato = true;
   //il percorso della spezzata finale deve partire dalla radice
   nodi_visitati_line.add(first_root);
 }
@@ -195,13 +191,12 @@ void draw()
   rotateX(PI/4);
   rotateZ(PI/10);
 
-  //posso spostare la visuale 
+  //posso spostare la visuale
   rotateY(-angoloY);
   rotateX(angoloX);
 
   //spostiamo il sist riferimento più in alto per far vedere meglio le figure
   translate(0, -100, 0);
-
 
   /*SPAZIO DI LAVORO*/
   formasp(nfigurasp); // funzione in 'Forma'
@@ -229,10 +224,10 @@ void draw()
 
   /*CREAZIONE OSTACOLI DI DEFAULT*/
   //Ostacolo_creazione(0, -200, 10, lato1, lato2, PI/4, 1); //quadrato
-  Ostacolo_creazione(1, 200, 10, lato1, lato2, PI/4, 1, false, 25); //quadrato 
+  Ostacolo_creazione(1, 200, 10, lato1, lato2, PI/4, 1, false, 40); //quadrato
   //Ostacolo_creazione(2, 200, 100, lato1+50, lato2, PI/4, 4); //cerchio
   //Ostacolo_creazione(2, -150, 250, lato1+30, lato2+30, -PI/3, 6); //trapezio
-  Ostacolo_creazione(2, 170, 230, lato1+30, lato2+30, -PI/3, 6, false, 25); //trapezio 
+  Ostacolo_creazione(2, 170, 210, lato1+30, lato2+30, -PI/3, 6, false, 40); //trapezio
 
 
   /*CREAZIONE OSTACOLI DA PARTE DELL'UTENTE*/
@@ -259,8 +254,7 @@ void draw()
     }
   }
 
-
-  //mostriamo a schermo tutti gli ostacoli instanziati
+  //mostriamo a schermo tutti gli ostacoli istanziati
   //altrimenti non vedremo quelli inseriti dall'utente poichè la funzione
   //'Ostacolo creazione' sta in 'Interazioni' e non nel 'draw'
   for (Ostacolo o : ostacolo_ArrayList)
@@ -278,7 +272,7 @@ void draw()
     {
       //FASE DI SCANNER
       //input - pos x robot, pos y robot, lunghezza laser, colore laser
-      s = scan(pos_x_r, pos_y_r, laser_len, #6920E0); //eseguo lo scan, false se non trova target
+      s = scan(pos_x_r, pos_y_r, laser_len); //eseguo lo scan, false se non trova target
 
       //NUOVO VERTICE
       if (vertex_found) //viene posto a true in scan
@@ -313,7 +307,6 @@ void draw()
         // coordinate nodo di partenza
         x1 = nodo_corrente.x;
         y1 = nodo_corrente.y;
-
 
         // coordinate del target (punto da raggiungere)
         x2 = xot;
@@ -370,7 +363,6 @@ void draw()
 
       if (!s)//scan terminato, target non trovato
       {
-
         if (!arrived)
         {
           print_tree(); //mostro il grafo
@@ -416,7 +408,6 @@ void draw()
 
         if (abs(pos_x_r - x2) < toll2 && abs(pos_y_r - y2) < toll2 ) //se sono arrivata al nodo destinazione
         {
-
           t = 0;
           ti = t;
 
@@ -425,7 +416,7 @@ void draw()
           C = (6*ti+3*Dt)/(pow(Dt, 3));
           D = -2/(pow(Dt, 3));
 
-          if (!semline) //se semline è false entra nel ciclo
+          if (!semline) //se semline è false entra nell'if
           {
             //entra solamente la prima volta in modo che riposizioni il robot alla partenza e percorra la spezzata fino al target
             pos_x_r = x_home;
@@ -442,7 +433,7 @@ void draw()
               x2 = nodo_successivo.x;
               y2 = nodo_successivo.y;
             }
-            
+            // aspetto un secondo prima che il robot percorra la spezzata
             delay(1000); // 1 secondo
           }
         } else
@@ -471,7 +462,6 @@ void draw()
     //* DISEGNO SPEZZATE *//
     for (Nodo n : nodi_visitati_line )
     {
-
       stroke(255);
       strokeWeight(5);
       if (contatore < nodi_visitati_line.size()-1) //se non è l'ultimo nodo
@@ -484,7 +474,6 @@ void draw()
         //println(n.label, "-> target");
         line(n.x, n.y, xot, yot);
       }
-
       contatore++;
     }
 
@@ -496,18 +485,18 @@ void draw()
     {
       if (nodi_visitati_line.size() > 1) //se c'è un altro nodo oltre source
       {
-        if (l < nodi_visitati_line.size()-2 ) //-2 perchè somma 2 sotto 
+        if (l < nodi_visitati_line.size()-2 ) //-2 perchè somma 2 sotto
         { // prendo quello di arrivo e quello successivo ancora
           float[] new_pos = move(x1, y1, x2, y2);
-          // spostamento robot 
+          // spostamento robot
           pos_x_r = new_pos[0];
           pos_y_r = new_pos[1];
 
           float toll2 = 1; //variabile di tolleranza
-          if (abs(pos_x_r - x2) < toll2 && abs(pos_y_r - y2) < toll2 )
+          if (abs(pos_x_r - x2) < toll2 && abs(pos_y_r - y2) < toll2 ) // fase di movimento da un nodo al successivo
           {
             // coordinate nodo di partenza
-            nodo_corrente = nodi_visitati_line.get(l+1); 
+            nodo_corrente = nodi_visitati_line.get(l+1);
             x1 = nodo_corrente.x;
             y1 = nodo_corrente.y;
             //coordinate nodo di destinazione
@@ -523,8 +512,6 @@ void draw()
             C = (6*ti+3*Dt)/(pow(Dt, 3));
             D = -2/(pow(Dt, 3));
 
-            //nodo_corrente = nodo_successivo;
-            
             delay(1000); // 1 secondo
 
             l++;
@@ -554,7 +541,7 @@ void draw()
             B = -(6*pow(ti, 2)+6*Dt*ti)/(pow(Dt, 3));
             C = (6*ti+3*Dt)/(pow(Dt, 3));
             D = -2/(pow(Dt, 3));
-            
+
             delay(1000); // 1 secondo
             l++;
           }
@@ -584,32 +571,31 @@ void draw()
             B = -(6*pow(ti, 2)+6*Dt*ti)/(pow(Dt, 3));
             C = (6*ti+3*Dt)/(pow(Dt, 3));
             D = -2/(pow(Dt, 3));
-            
+
             delay(1000); // 1 secondo
           }
         }
-      }
-      else // c'è solo source
+      } else // c'è solo source
       {
-          x2 = xot;
-          y2 = yot;
+        x2 = xot;
+        y2 = yot;
 
-          float[] new_pos = move(x1, y1, x2, y2);
-          // spostamento robot nel punto del target
-          pos_x_r = new_pos[0];
-          pos_y_r = new_pos[1];
+        float[] new_pos = move(x1, y1, x2, y2);
+        // spostamento robot nel punto del target
+        pos_x_r = new_pos[0];
+        pos_y_r = new_pos[1];
 
-          float toll2 = 1; //variabile di tolleranza
-          if (abs(pos_x_r - x2) < toll2 && abs(pos_y_r - y2) < toll2 )
-          {
-            t = 0;
-            ti = t;
+        float toll2 = 1; //variabile di tolleranza
+        if (abs(pos_x_r - x2) < toll2 && abs(pos_y_r - y2) < toll2 )
+        {
+          t = 0;
+          ti = t;
 
-            A = (2*pow(ti, 3)+3*Dt*pow(ti, 2))/(pow(Dt, 3));
-            B = -(6*pow(ti, 2)+6*Dt*ti)/(pow(Dt, 3));
-            C = (6*ti+3*Dt)/(pow(Dt, 3));
-            D = -2/(pow(Dt, 3));
-          }
+          A = (2*pow(ti, 3)+3*Dt*pow(ti, 2))/(pow(Dt, 3));
+          B = -(6*pow(ti, 2)+6*Dt*ti)/(pow(Dt, 3));
+          C = (6*ti+3*Dt)/(pow(Dt, 3));
+          D = -2/(pow(Dt, 3));
+        }
       }
     }
   }

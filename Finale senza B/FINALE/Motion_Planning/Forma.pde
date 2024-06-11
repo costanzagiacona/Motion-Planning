@@ -132,13 +132,13 @@ void vertici_sp(int nfigura, float l1, float l2) //SR0
     // ultimo vertice aggiunto manualmente
     vertici_cerchio[12] = vertici_cerchio[0]; // x primo vertice
     vertici_cerchio[13] = vertici_cerchio[1]; // y primo vertice
-/*
+    /*
     for (int j = 0; j < 12; j=j+2) {
-      line(vertici_cerchio[j], vertici_cerchio[j+1], vertici_cerchio[j+2], vertici_cerchio[j+3]);
-      //println("vertice n.", j, vertici_ost_om[j], vertici_ost_om[j+1], vertici_ost_om[j+2], vertici_ost_om[j+3]);
-    }
-    line(vertici_cerchio[10], vertici_cerchio[11], vertici_cerchio[12], vertici_cerchio[13]);
-*/
+     line(vertici_cerchio[j], vertici_cerchio[j+1], vertici_cerchio[j+2], vertici_cerchio[j+3]);
+     //println("vertice n.", j, vertici_ost_om[j], vertici_ost_om[j+1], vertici_ost_om[j+2], vertici_ost_om[j+3]);
+     }
+     line(vertici_cerchio[10], vertici_cerchio[11], vertici_cerchio[12], vertici_cerchio[13]);
+     */
     break;
 
   case 5: //TRIANGOLO

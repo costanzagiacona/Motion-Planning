@@ -4,7 +4,7 @@ void make_tree(Nodo current) {
   int s = nodo.size();
   int id_vert = s;
   String s_lab = String.valueOf(s);
-  float toll = 25; 
+  float toll = 25;
   //float toll = 12;
 
   Nodo n = new Nodo(s_lab, x_vert, y_vert, id_vert);  // ogni nodo ha label e coordinate (x,y)
@@ -22,7 +22,7 @@ void make_tree(Nodo current) {
 // visualizza a schermo l'albero
 void print_tree()
 {
-  float x_c  = albero.radice.x;
+  float x_c = albero.radice.x;
   float y_c = albero.radice.y;
 
   fill(#EFF54F);
@@ -31,34 +31,30 @@ void print_tree()
   circle(x_c, y_c, 40);
   translate(0, 0, -2);
 
-  if (print)
+  for (Nodo ni : nodo) // per ogni nodo nel grafo
   {
-    for (Nodo ni : nodo) // per ogni nodo nel grafo
+    // disegna il nodo
+    strokeWeight(5);
+    fill(#4BA240);
+    stroke(#4BA240);
+    circle(ni.x, ni.y, r_nodo);
+    fill(0);
+
+    // stampa label
+    translate(0, 0, 20);
+    textSize(30);
+    text(ni.label, ni.x, ni.y);
+    translate(0, 0, -20);
+
+    for (Nodo near : ni.links) // disegna arco tra nodo corrente (ni) e quelli adiacenti (near)
     {
-      strokeWeight(5);
-      fill(#4BA240);
-      stroke(#4BA240);
-      circle(ni.x, ni.y, r_nodo);
-      fill(0);
+      strokeWeight(1); // spessore arco
+      line(ni.x, ni.y, near.x, near.y);
+    }
 
-      if (label_print) // stampa label
-      {
-        translate(0, 0, 20);
-        textSize(30);
-        text(ni.label, ni.x, ni.y);
-        translate(0, 0, -20);
-      }
-
-      for (Nodo near : ni.links) // disegna arco tra nodo corrente (ni) e quelli adiacenti (near)
-      {
-        strokeWeight(1); // spessore arco
-        line(ni.x, ni.y, near.x, near.y);
-      }
-
-      if (s) // se target trovato
-      {
-        line(nodo_corrente.x, nodo_corrente.y, xot, yot );  // disegna arco tra posizione corrente robot e target
-      }
+    if (s) // se target trovato
+    {
+      line(nodo_corrente.x, nodo_corrente.y, xot, yot );  // disegna arco tra posizione corrente robot e target
     }
   }
   strokeWeight(3); //reinserisco la dimensione dei lati altrimenti il tavolo viene disegnato più spesso

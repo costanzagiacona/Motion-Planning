@@ -19,12 +19,8 @@ class Ostacolo
   //modifica ombra
   public float ombra_k;
 
-  //coordinate vertici ostacolo rispetto SR ostacolo
-  public float[] vert_array_SR_ost = new float[8];
   //coordinate vertici SR0
   public float[] vert_SR0 = new float[8];
-  //coordinate vertici ostacolo OMBRA rispetto SR ostacolo
-  public float[] vert_array_SR_ost_om = new float[8];
   //coordinate vertici SR0
   public float[] vert_SR0_om;
 
@@ -62,12 +58,10 @@ class Ostacolo
       fill(#2AB74C, 40);
       //creazione ostacolo
       formaost(forma, lato1, lato2);
-
     }
     //noFill();
 
     //if ( nfigura == 4) l1 = l1/2;
-
     
     //ombra
     pushMatrix();
